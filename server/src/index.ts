@@ -2,18 +2,11 @@ import 'reflect-metadata'
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 import * as dotenv from 'dotenv'
-// import UserResolver from './resolvers/user-resolver';
-import { buildSchema, Resolver, Query } from 'type-graphql'
+import UserResolver from './modules/resolvers/user-resolver'
+import { buildSchema } from 'type-graphql'
 import { connect } from 'mongoose'
 dotenv.config()
 
-@Resolver()
-class UserResolver {
-  @Query(() => String)
-  getAllUsers(): String {
-    return 'helllo'
-  }
-}
 async function startApolloServer() {
   const schema = await buildSchema({
     resolvers: [UserResolver],

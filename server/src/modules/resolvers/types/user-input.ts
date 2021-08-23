@@ -1,5 +1,11 @@
 import { Field, InputType } from 'type-graphql'
-import { IsDate, IsEmail, IsString, MaxLength } from 'class-validator'
+import {
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator'
 
 @InputType()
 export class UserInput {
@@ -9,6 +15,7 @@ export class UserInput {
 
   @Field()
   @IsString({ message: 'Masukan Password dengan benar' })
+  @IsNotEmpty({ message: 'Password tidak boleh kosong' })
   password!: string
 
   @IsString({ message: 'Masukan nama dengan benar' })
@@ -21,7 +28,7 @@ export class UserInput {
   dateOfBirth?: Date
 
   @Field({ defaultValue: 'Hi saya orang baik!!!' })
-  @IsString({ message: 'Masukan format bio yag benar' })
+  @IsString({ message: 'Masukan format bio yang benar' })
   bio?: string
 
   @Field({ defaultValue: 'original' })
