@@ -1,9 +1,17 @@
 import { ObjectType, Field, ID } from 'type-graphql'
-import { prop as Property, getModelForClass, post } from '@typegoose/typegoose'
+import { prop as Property, getModelForClass, pre } from '@typegoose/typegoose'
+import bcrypt from 'bcrypt'
 
-@post<User>('save', function (user) {
-  console.log('executed')
-  console.log(user)
+@pre<User>('save', async function () {
+  if (this.password) {
+    try {
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(this.password, salt)
+      this.password = hashedPassword
+    } catch (error) {
+      console.log(error)
+    }
+  }
 })
 @ObjectType()
 export class User {

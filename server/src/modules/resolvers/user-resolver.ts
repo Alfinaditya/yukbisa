@@ -31,9 +31,14 @@ class UserResolver {
 
   @Mutation(() => User)
   async createUser(@Arg('input') userInput: UserInput): Promise<User | null> {
-    // console.log(userInput)
-    // return null
-    const newUser = new UserModel({ ...userInput })
+    const newUser = new UserModel({
+      name: userInput.name,
+      email: userInput.email,
+      password: userInput.password,
+      dateOfBirth: userInput.dateOfBirth,
+      bio: userInput.bio,
+      provider: userInput.provider,
+    })
     try {
       await newUser.save()
       return newUser
