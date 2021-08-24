@@ -6,7 +6,11 @@ import UserResolver from './modules/resolvers/user-resolver'
 import { buildSchema } from 'type-graphql'
 import { connect } from 'mongoose'
 import cors from 'cors'
-
+import cookieParser from 'cookie-parser'
+import { verify } from 'jsonwebtoken'
+import { UserModel } from './entities/user'
+import { createAccessToken, createRefreshToken } from './createToken'
+import { sendRefreshToken } from './sendRefreshToken'
 dotenv.config()
 // todo login google
 // todo login jwt
@@ -19,6 +23,31 @@ async function startApolloServer() {
   //     credentials: true,
   //   })
   // )
+  app.use(cookieParser())
+  app.get('/', (_req, res) => {
+    res.send('hello from express')
+  })
+  app.post('/refresh_token', async (req, res) => {
+    const token = req.cookies.jid
+    let payload: any = null
+    if (!token) {
+      return res.send({ ok: false, accessToken: '' })
+    }
+    // if token
+    try {
+      payload = verify(token, process.env.REFRESH_TOKEN_KEY!)
+    } catch (err) {
+      console.log(err)
+      return res.send({ ok: false, accessToken: '' })
+    }
+    // if user
+    const user = await UserModel.findById({ _id: payload.id })
+    if (!user) {
+      return res.send({ ok: false, accessToken: '' })
+    }
+    sendRefreshToken(res, createRefreshToken(user))
+    return res.send({ ok: true, accessToken: createAccessToken(user) })
+  })
 
   const schema = await buildSchema({
     resolvers: [UserResolver],

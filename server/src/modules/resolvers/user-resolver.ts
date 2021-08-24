@@ -1,10 +1,23 @@
 import { UserModel, User } from '../../entities/user'
-import { Resolver, Query, Mutation, Arg, ObjectType, Field } from 'type-graphql'
-import { UserInput } from './types/user-input'
-import jwt from 'jsonwebtoken'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Arg,
+  ObjectType,
+  Field,
+  Ctx,
+  UseMiddleware,
+} from 'type-graphql'
+import { UserLoginInput, UserRegisterInput } from './types/user-input'
+import { compare } from 'bcrypt'
+import { MyContext } from '../../types/Mycontext'
+import { createAccessToken, createRefreshToken } from '../../createToken'
+import { authMiddleware } from '../../middlewares/authMiddleware'
+import { sendRefreshToken } from '../../sendRefreshToken'
 
 @ObjectType()
-class RegisterResponse {
+class UserResponse {
   @Field()
   accessToken!: string
   @Field(() => User)
@@ -13,15 +26,11 @@ class RegisterResponse {
 
 @Resolver()
 class UserResolver {
-  @Query(() => [User])
-  async getAllUsers(): Promise<User[] | null> {
-    try {
-      const users = await UserModel.find()
-      return users
-    } catch (err) {
-      console.log(err)
-      return null
-    }
+  @Query(() => String)
+  @UseMiddleware(authMiddleware)
+  bye(@Ctx() { payload }: MyContext): string {
+    console.log(payload)
+    return `user id mu dlah ${payload!.id}`
   }
 
   // @Query(()=>User)
@@ -38,10 +47,28 @@ class UserResolver {
   //     }
   // }
 
-  @Mutation(() => RegisterResponse)
+  @Mutation(() => UserResponse)
+  async login(
+    @Arg('input') userInput: UserLoginInput,
+    @Ctx() ctx: MyContext
+  ): Promise<UserResponse | null> {
+    const user = await UserModel.findOne({ email: userInput.email })
+    if (!user) {
+      throw new Error('Login gagal')
+    }
+    const valid = await compare(userInput.password!, user.password!)
+    if (!valid) {
+      throw new Error('Login gagal')
+    }
+    sendRefreshToken(ctx.res, createRefreshToken(user))
+    return { accessToken: createAccessToken(user), user }
+  }
+
+  @Mutation(() => UserResponse)
   async register(
-    @Arg('input') userInput: UserInput
-  ): Promise<RegisterResponse | null> {
+    @Arg('input') userInput: UserRegisterInput,
+    @Ctx() ctx: MyContext
+  ): Promise<UserResponse | null> {
     const newUser = new UserModel({
       name: userInput.name,
       email: userInput.email,
@@ -52,10 +79,9 @@ class UserResolver {
     })
     try {
       await newUser.save()
-      console.log(newUser)
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY!)
+      sendRefreshToken(ctx.res, createRefreshToken(newUser))
       return {
-        accessToken: token,
+        accessToken: createAccessToken(newUser),
         user: newUser,
       }
     } catch (err) {

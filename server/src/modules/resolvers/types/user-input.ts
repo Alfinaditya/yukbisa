@@ -8,7 +8,7 @@ import {
 } from 'class-validator'
 
 @InputType()
-export class UserInput {
+export class UserRegisterInput {
   @Field()
   @IsEmail()
   email!: string
@@ -16,7 +16,7 @@ export class UserInput {
   @Field()
   @IsString({ message: 'Masukan Password dengan benar' })
   @IsNotEmpty({ message: 'Password Tidak boleh kosong' })
-  password?: string
+  password!: string
 
   @IsString({ message: 'Masukan nama dengan benar' })
   @MaxLength(15, { message: 'Nama Terlalu panjang' })
@@ -34,4 +34,16 @@ export class UserInput {
   @Field({ defaultValue: 'original' })
   @IsString()
   provider!: string
+}
+
+@InputType()
+export class UserLoginInput {
+  @Field()
+  @IsEmail()
+  email!: string
+
+  @Field()
+  @IsString({ message: 'Masukan Password dengan benar' })
+  @IsNotEmpty({ message: 'Password Tidak boleh kosong' })
+  password!: string
 }

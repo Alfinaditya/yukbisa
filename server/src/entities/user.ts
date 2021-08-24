@@ -20,26 +20,26 @@ export class User {
 
   @Field()
   @Property({ required: true, unique: true })
-  public email!: string
+  email!: string
 
   @Property()
-  protected password?: string
+  password?: string
 
   @Field()
   @Property({ required: true, unique: true })
-  public name!: string
+  name!: string
 
   @Field()
   @Property()
-  public dateOfBirth?: Date
+  dateOfBirth?: Date
 
   @Field()
   @Property()
-  public bio?: string
+  bio?: string
 
   @Field()
   @Property({ required: true })
-  public provider!: string
+  provider!: string
 }
 
 @ObjectType()
