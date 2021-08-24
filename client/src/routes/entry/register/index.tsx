@@ -1,8 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { FormEvent, useState } from 'react'
-import { CREATE_USER } from '../../../graphql/mutations/user'
-
-// Todo create Mutation createUser,
+import { CREATE_USER } from '../../../apollo/mutations/user'
+import cookie from 'js-cookie'
 
 // Todo create interface User
 // Todo install react hook form
@@ -19,7 +18,10 @@ const Register = () => {
     },
   ] = useMutation(CREATE_USER)
   if (createUserLoading) return <p>Loading....</p>
-  if (createUserError) return <p>Error....</p>
+  if (createUserError) return <p>Error</p>
+  if (createUserData) {
+    cookie.set('INFO_LOGIN', `Bearer ${createUserData.register.accessToken}`)
+  }
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const body = { email, name, password }

@@ -5,9 +5,21 @@ import * as dotenv from 'dotenv'
 import UserResolver from './modules/resolvers/user-resolver'
 import { buildSchema } from 'type-graphql'
 import { connect } from 'mongoose'
-dotenv.config()
+import cors from 'cors'
 
+dotenv.config()
+// todo login google
+// todo login jwt
+// todo fix cors error
 async function startApolloServer() {
+  const app = express()
+  // app.use(
+  //   cors({
+  //     origin: 'http://localhost:3000',
+  //     credentials: true,
+  //   })
+  // )
+
   const schema = await buildSchema({
     resolvers: [UserResolver],
   })
@@ -16,11 +28,15 @@ async function startApolloServer() {
     useUnifiedTopology: true,
   })
   await mongoose.connection
-  const server = new ApolloServer({ schema })
+  const server = new ApolloServer({
+    schema,
+    context: ({ req, res }) => ({ req, res }),
+  })
   await server.start()
-  const app = express()
+
   server.applyMiddleware({ app })
-  app.listen(3001, () => {
+  const PORT = process.env.PORT || 3001
+  app.listen(PORT, () => {
     console.log('server running on port http://localhost:3001')
   })
 }

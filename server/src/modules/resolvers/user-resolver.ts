@@ -1,6 +1,15 @@
 import { UserModel, User } from '../../entities/user'
-import { Resolver, Query, Mutation, Arg } from 'type-graphql'
+import { Resolver, Query, Mutation, Arg, ObjectType, Field } from 'type-graphql'
 import { UserInput } from './types/user-input'
+import jwt from 'jsonwebtoken'
+
+@ObjectType()
+class RegisterResponse {
+  @Field()
+  accessToken!: string
+  @Field(() => User)
+  user!: User
+}
 
 @Resolver()
 class UserResolver {
@@ -29,8 +38,10 @@ class UserResolver {
   //     }
   // }
 
-  @Mutation(() => User)
-  async createUser(@Arg('input') userInput: UserInput): Promise<User | null> {
+  @Mutation(() => RegisterResponse)
+  async register(
+    @Arg('input') userInput: UserInput
+  ): Promise<RegisterResponse | null> {
     const newUser = new UserModel({
       name: userInput.name,
       email: userInput.email,
@@ -41,11 +52,17 @@ class UserResolver {
     })
     try {
       await newUser.save()
-      return newUser
+      console.log(newUser)
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY!)
+      return {
+        accessToken: token,
+        user: newUser,
+      }
     } catch (err) {
       console.log(err.errors)
       return null
     }
   }
 }
+
 export default UserResolver

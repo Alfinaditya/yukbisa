@@ -42,6 +42,13 @@ export class User {
   public provider!: string
 }
 
+@ObjectType()
+export class AuthData {
+  @Field()
+  @Property()
+  public token!: string
+}
+
 export const UserModel = getModelForClass(User, {
   schemaOptions: { timestamps: true },
 })
