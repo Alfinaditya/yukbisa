@@ -40,13 +40,9 @@ export class User {
   @Field()
   @Property({ required: true })
   provider!: string
-}
 
-@ObjectType()
-export class AuthData {
-  @Field()
-  @Property()
-  public token!: string
+  @Property({ type: () => Number, default: 0 })
+  tokenVersion!: number
 }
 
 export const UserModel = getModelForClass(User, {

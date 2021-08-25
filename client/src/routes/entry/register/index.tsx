@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client'
-import { FormEvent, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { CREATE_USER } from '../../../apollo/mutations/user'
 import cookie from 'js-cookie'
-
+import { RouteComponentProps } from 'react-router-dom'
 // Todo create interface User
 // Todo install react hook form
-const Register = () => {
+const Register: React.FC<RouteComponentProps> = ({ history }) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -16,19 +16,22 @@ const Register = () => {
       loading: createUserLoading,
       error: createUserError,
     },
-  ] = useMutation(CREATE_USER)
+  ] = useMutation(CREATE_USER, { fetchPolicy: 'network-only' })
   if (createUserLoading) return <p>Loading....</p>
   if (createUserError) return <p>Error</p>
   if (createUserData) {
-    cookie.set('INFO_LOGIN', `Bearer ${createUserData.register.accessToken}`)
+    console.log(createUserData)
+    // cookie.set('INFO_LOGIN', `Bearer ${createUserData.register.accessToken}`)
   }
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const body = { email, name, password }
     createUser({ variables: { input: body } })
+    history.push('/')
   }
   return (
     <div>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <label>Email</label>
         <input

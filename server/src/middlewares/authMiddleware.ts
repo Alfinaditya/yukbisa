@@ -1,6 +1,6 @@
 import { MyContext } from '../types/Mycontext'
 import { MiddlewareFn } from 'type-graphql'
-import jwt from 'jsonwebtoken'
+import { verify } from 'jsonwebtoken'
 
 export const authMiddleware: MiddlewareFn<MyContext> = ({ context }, next) => {
   const authorization = context.req.headers['authorization']
@@ -10,7 +10,7 @@ export const authMiddleware: MiddlewareFn<MyContext> = ({ context }, next) => {
   try {
     const token = authorization.split(' ')[1]
     console.log(token)
-    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_KEY!)
+    const payload = verify(token, process.env.ACCESS_TOKEN_KEY!)
     context.payload = payload as any
   } catch (err) {
     console.log(err)

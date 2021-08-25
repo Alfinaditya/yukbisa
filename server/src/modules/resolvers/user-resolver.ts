@@ -15,6 +15,7 @@ import { MyContext } from '../../types/Mycontext'
 import { createAccessToken, createRefreshToken } from '../../createToken'
 import { authMiddleware } from '../../middlewares/authMiddleware'
 import { sendRefreshToken } from '../../sendRefreshToken'
+import { verify } from 'jsonwebtoken'
 
 @ObjectType()
 class UserResponse {
@@ -33,6 +34,27 @@ class UserResolver {
     return `user id mu dlah ${payload!.id}`
   }
 
+  @Query(() => [User])
+  async users() {
+    const users = await UserModel.find()
+    return users
+  }
+
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() ctx: MyContext): Promise<User | null> {
+    const authorization = ctx.req.headers['authorization']
+    if (!authorization) {
+      return null
+    }
+    try {
+      const token = authorization.split(' ')[1]
+      const payload: any = verify(token, process.env.ACCESS_TOKEN_KEY!)
+      const user = UserModel.findById({ _id: payload.id })
+      return user
+    } catch (err) {
+      return null
+    }
+  }
   // @Query(()=>User)
   // async getUserById(@Arg('_id') _id:string):Promise<User | null>{
   //     try{
@@ -47,6 +69,11 @@ class UserResolver {
   //     }
   // }
 
+  //   @Mutation(()=>Boolean)
+  //  async revokeRefreshTokensForUser(@Arg('id',()=>Int) id:number){
+  //     // const user=UserModel.findById({_id:id})
+  //   }
+
   @Mutation(() => UserResponse)
   async login(
     @Arg('input') userInput: UserLoginInput,
@@ -56,12 +83,23 @@ class UserResolver {
     if (!user) {
       throw new Error('Login gagal')
     }
+    console.log(user)
     const valid = await compare(userInput.password!, user.password!)
     if (!valid) {
       throw new Error('Login gagal')
     }
     sendRefreshToken(ctx.res, createRefreshToken(user))
     return { accessToken: createAccessToken(user), user }
+  }
+
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(@Arg('_id') _id: string) {
+    const user = await UserModel.updateOne(
+      { _id },
+      { $inc: { tokenVersion: 1 } }
+    )
+    console.log(user)
+    return true
   }
 
   @Mutation(() => UserResponse)
@@ -79,6 +117,7 @@ class UserResolver {
     })
     try {
       await newUser.save()
+      console.log(newUser)
       sendRefreshToken(ctx.res, createRefreshToken(newUser))
       return {
         accessToken: createAccessToken(newUser),

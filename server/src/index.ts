@@ -17,12 +17,12 @@ dotenv.config()
 // todo fix cors error
 async function startApolloServer() {
   const app = express()
-  // app.use(
-  //   cors({
-  //     origin: 'http://localhost:3000',
-  //     credentials: true,
-  //   })
-  // )
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  )
   app.use(cookieParser())
   app.get('/', (_req, res) => {
     res.send('hello from express')
@@ -45,6 +45,9 @@ async function startApolloServer() {
     if (!user) {
       return res.send({ ok: false, accessToken: '' })
     }
+    if (user?.tokenVersion !== payload.tokenVersion) {
+      return res.send({ ok: false, accessToken: '' })
+    }
     sendRefreshToken(res, createRefreshToken(user))
     return res.send({ ok: true, accessToken: createAccessToken(user) })
   })
@@ -63,7 +66,7 @@ async function startApolloServer() {
   })
   await server.start()
 
-  server.applyMiddleware({ app })
+  server.applyMiddleware({ app, cors: false })
   const PORT = process.env.PORT || 3001
   app.listen(PORT, () => {
     console.log('server running on port http://localhost:3001')
