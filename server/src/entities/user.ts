@@ -30,6 +30,10 @@ export class User {
   name!: string
 
   @Field()
+  @Property({ default: '/profile.png' })
+  displayImage!: string
+
+  @Field()
   @Property()
   dateOfBirth?: Date
 

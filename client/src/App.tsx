@@ -1,12 +1,8 @@
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import Register from './routes/entry/register'
-import Home from './routes/home'
-import Login from './routes/entry/login'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { setAccessToken } from './auth/accessToken'
-import Account from './routes/account'
+import Routes from './Routes'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -29,21 +25,7 @@ function App() {
   if (loading) return <p>Loading....</p>
   return (
     <div className='App'>
-      <Router>
-        <Link to='/login'>Login</Link>
-        <br />
-        <Link to='/register'>Register</Link>
-        <br />
-        <Link to='/'>Yuk Bisa</Link>
-        <br />
-        <Link to='/account'>Account</Link>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/register' component={Register} />
-          <Route path='/login' component={Login} />
-          <Route path='/account' component={Account} />
-        </Switch>
-      </Router>
+      <Routes />
     </div>
   )
 }

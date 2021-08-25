@@ -5,15 +5,18 @@ const Account = () => {
   const { loading, data } = useQuery(GET_ME, {
     fetchPolicy: 'network-only',
   })
-  let me: any = null
-  if (loading) {
-    me = <p>Loading....</p>
-  } else if (data && data.me) {
-    me = <p>{data.me.email}</p>
-  } else {
-    me = <p>You are not auth</p>
-  }
-  return <div>{me}</div>
+  console.log(data)
+  return (
+    <div>
+      {loading && <p>Loading...</p>}
+      {data && data.me && (
+        <div>
+          <h1>{data.me.email}</h1>
+          <img src={data.me.displayImage} alt={data.me.email} />
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default Account
