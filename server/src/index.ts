@@ -9,12 +9,10 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { verify } from 'jsonwebtoken'
 import { UserModel } from './entities/user'
-import { createAccessToken, createRefreshToken } from './createToken'
-import { sendRefreshToken } from './sendRefreshToken'
+import { createAccessToken, createRefreshToken } from './auth/createToken'
+import { sendRefreshToken } from './auth/sendRefreshToken'
 dotenv.config()
 // todo login google
-// todo login jwt
-// todo fix cors error
 async function startApolloServer() {
   const app = express()
   app.use(
@@ -27,6 +25,7 @@ async function startApolloServer() {
   app.get('/', (_req, res) => {
     res.send('hello from express')
   })
+
   app.post('/refresh_token', async (req, res) => {
     const token = req.cookies.jid
     let payload: any = null

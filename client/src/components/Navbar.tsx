@@ -10,6 +10,8 @@ const Navbar = () => {
       <Link to='/'>Yuk Bisa</Link>
       <br />
       <Link to='/account'>Account</Link>
+      <br />
+      <a>Log out</a>
     </div>
   )
 }

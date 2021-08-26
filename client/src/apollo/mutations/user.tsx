@@ -4,19 +4,13 @@ export const CREATE_USER = gql`
   mutation CreateUser($input: UserRegisterInput!) {
     register(input: $input) {
       accessToken
-      user {
-        _id
-      }
     }
   }
 `
 export const LOGIN_USER = gql`
-  mutation ($input: UserLoginInput!) {
+  mutation LoginUser($input: UserLoginInput!) {
     login(input: $input) {
       accessToken
-      user {
-        _id
-      }
     }
   }
 `

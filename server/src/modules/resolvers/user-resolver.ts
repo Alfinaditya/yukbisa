@@ -12,17 +12,15 @@ import {
 import { UserLoginInput, UserRegisterInput } from './types/user-input'
 import { compare } from 'bcrypt'
 import { MyContext } from '../../types/Mycontext'
-import { createAccessToken, createRefreshToken } from '../../createToken'
+import { createAccessToken, createRefreshToken } from '../../auth/createToken'
 import { authMiddleware } from '../../middlewares/authMiddleware'
-import { sendRefreshToken } from '../../sendRefreshToken'
+import { sendRefreshToken } from '../../auth/sendRefreshToken'
 import { verify } from 'jsonwebtoken'
 
 @ObjectType()
 class UserResponse {
   @Field()
   accessToken!: string
-  @Field(() => User)
-  user!: User
 }
 
 @Resolver()
@@ -49,30 +47,18 @@ class UserResolver {
     try {
       const token = authorization.split(' ')[1]
       const payload: any = verify(token, process.env.ACCESS_TOKEN_KEY!)
-      const user = UserModel.findById({ _id: payload.id })
+      const user = await UserModel.findById({ _id: payload.id })
       return user
     } catch (err) {
       return null
     }
   }
-  // @Query(()=>User)
-  // async getUserById(@Arg('_id') _id:string):Promise<User | null>{
-  //     try{
-  //         const users=await UserModel.findById({_id})
-  //         // const doc=new UserModel()
-  //         // console.log(doc.sayHello('killua'))
-  //         return users
-  //     }
-  //     catch(err){
-  //         console.log(err)
-  //         return null
-  //     }
-  // }
 
-  //   @Mutation(()=>Boolean)
-  //  async revokeRefreshTokensForUser(@Arg('id',()=>Int) id:number){
-  //     // const user=UserModel.findById({_id:id})
-  //   }
+  @Mutation(() => Boolean)
+  async logout(@Ctx() { res }: MyContext) {
+    sendRefreshToken(res, '')
+    return true
+  }
 
   @Mutation(() => UserResponse)
   async login(
@@ -89,7 +75,7 @@ class UserResolver {
       throw new Error('Login gagal')
     }
     sendRefreshToken(ctx.res, createRefreshToken(user))
-    return { accessToken: createAccessToken(user), user }
+    return { accessToken: createAccessToken(user) }
   }
 
   @Mutation(() => Boolean)
@@ -117,12 +103,8 @@ class UserResolver {
     })
     try {
       await newUser.save()
-      console.log(newUser)
       sendRefreshToken(ctx.res, createRefreshToken(newUser))
-      return {
-        accessToken: createAccessToken(newUser),
-        user: newUser,
-      }
+      return { accessToken: createAccessToken(newUser) }
     } catch (err) {
       console.log(err.errors)
       return null
