@@ -3,10 +3,9 @@ import { GET_ME } from '../../apollo/queries/user'
 import { Me } from '../../ts/user'
 
 const Account = () => {
-  const { loading, data } = useQuery<Me>(GET_ME, {
-    fetchPolicy: 'network-only',
-  })
+  const { loading, data, error } = useQuery<Me>(GET_ME)
   if (loading) return <p>Loading...</p>
+  if (error) return <p>Something went wrong</p>
   return (
     <div>
       {data && data.me && (

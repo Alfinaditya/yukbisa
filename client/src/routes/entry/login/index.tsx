@@ -1,9 +1,11 @@
 import { useMutation } from '@apollo/client'
 import { FormEvent, useState } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 import { LOGIN_USER } from '../../../apollo/mutations/user'
+import { GET_ME } from '../../../apollo/queries/user'
 import { setAccessToken } from '../../../auth/accessToken'
 
-const Login = () => {
+const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
@@ -12,12 +14,27 @@ const Login = () => {
   if (loading) return <p>Loading....</p>
   if (error) return <p>Error</p>
   if (data) {
+    console.log(data)
     setAccessToken(data.login.accessToken)
   }
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const body = { email, password }
-    loginUser({ variables: { input: body } })
+    await loginUser({
+      variables: { input: body },
+      update: (store, { data }) => {
+        if (!data) {
+          return null
+        }
+        store.writeQuery({
+          query: GET_ME,
+          data: {
+            me: data.login.user,
+          },
+        })
+      },
+    })
+    history.push('/')
   }
   return (
     <div>

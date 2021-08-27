@@ -4,9 +4,6 @@ import { useEffect } from 'react'
 import { setAccessToken } from './auth/accessToken'
 import Routes from './Routes'
 
-// todo Create types from graphql
-// todo pahami code yang tadi tutorial
-
 function App() {
   const [loading, setLoading] = useState(true)
   useEffect(() => {

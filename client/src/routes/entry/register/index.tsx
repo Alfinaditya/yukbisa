@@ -3,6 +3,7 @@ import React, { FormEvent, useState } from 'react'
 import { CREATE_USER } from '../../../apollo/mutations/user'
 import { RouteComponentProps } from 'react-router-dom'
 import { setAccessToken } from '../../../auth/accessToken'
+import { GET_ME } from '../../../apollo/queries/user'
 // Todo create interface User
 // Todo install react hook form
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
@@ -16,11 +17,30 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
   if (error) return <p>Error</p>
   if (data) {
     setAccessToken(data.register.accessToken)
+    console.log(data.register.accessToken)
   }
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const body = { email, name, password }
-    createUser({ variables: { input: body } })
+    try {
+      await createUser({
+        variables: { input: body },
+        update: (store, { data }) => {
+          if (!data) {
+            return null
+          }
+          store.writeQuery({
+            query: GET_ME,
+            data: {
+              me: data.register.user,
+            },
+          })
+        },
+      })
+      history.push('/')
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <div>
