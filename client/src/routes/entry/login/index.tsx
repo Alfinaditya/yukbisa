@@ -36,6 +36,9 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
     })
     history.push('/')
   }
+  function handleLoginGoogle() {
+    window.location.replace('http://localhost:3001/auth/google')
+  }
   return (
     <div>
       <h1>Login</h1>
@@ -56,6 +59,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
         />
         <button type='submit'>Submit</button>
       </form>
+      <button onClick={handleLoginGoogle}>Login Google</button>
     </div>
   )
 }

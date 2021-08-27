@@ -34,15 +34,15 @@ export class User {
   displayImage!: string
 
   @Field({ nullable: true })
-  @Property()
+  @Property({ default: null })
   dateOfBirth?: Date
 
   @Field()
-  @Property()
+  @Property({ required: true, default: 'Hi saya orang baik!!!' })
   bio?: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: true, default: 'original' })
   provider!: string
 
   @Property({ type: () => Number, default: 0 })

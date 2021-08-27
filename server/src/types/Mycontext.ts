@@ -6,3 +6,8 @@ export interface MyContext {
   next: NextFunction
   payload?: { id: string }
 }
+
+export interface UserDonations {
+  name: string
+  message: string
+}

@@ -22,18 +22,6 @@ export class UserRegisterInput {
   @MaxLength(15, { message: 'Nama Terlalu panjang' })
   @Field()
   name!: string
-
-  @Field({ defaultValue: null })
-  @IsDate({ message: 'Masukan Format tanggal dengan benar' })
-  dateOfBirth?: Date
-
-  @Field({ defaultValue: 'Hi saya orang baik!!!' })
-  @IsString({ message: 'Masukan format bio yang benar' })
-  bio?: string
-
-  @Field({ defaultValue: 'original' })
-  @IsString()
-  provider!: string
 }
 
 @InputType()

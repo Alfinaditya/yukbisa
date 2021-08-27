@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import './config/passport-config'
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 import * as dotenv from 'dotenv'
@@ -7,12 +8,15 @@ import { buildSchema } from 'type-graphql'
 import { connect } from 'mongoose'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import session from 'express-session'
 import { verify } from 'jsonwebtoken'
 import { UserModel } from './entities/user'
 import { createAccessToken, createRefreshToken } from './auth/createToken'
 import { sendRefreshToken } from './auth/sendRefreshToken'
+import socialMediaAuth from './auth/socialMediaAuth'
+import passport from 'passport'
 dotenv.config()
-// todo login google
+
 async function startApolloServer() {
   const app = express()
   app.use(
@@ -21,7 +25,18 @@ async function startApolloServer() {
       credentials: true,
     })
   )
+  app.use(express.urlencoded({ extended: false }))
+  app.use(express.json())
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET!,
+      resave: false,
+      saveUninitialized: false,
+    })
+  )
   app.use(cookieParser())
+  app.use(passport.initialize())
+  app.use(passport.session())
   app.get('/', (_req, res) => {
     res.send('hello from express')
   })
@@ -50,14 +65,11 @@ async function startApolloServer() {
     sendRefreshToken(res, createRefreshToken(user))
     return res.send({ ok: true, accessToken: createAccessToken(user) })
   })
-
+  app.use('/auth', socialMediaAuth)
   const schema = await buildSchema({
     resolvers: [UserResolver],
   })
-  const mongoose = await connect(process.env.DB_HOST!, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  const mongoose = await connect(process.env.DB_HOST!)
   await mongoose.connection
   const server = new ApolloServer({
     schema,

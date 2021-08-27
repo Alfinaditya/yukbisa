@@ -25,12 +25,6 @@ class UserResponse {
 
 @Resolver()
 class UserResolver {
-  // @Query(() => String)
-  // @UseMiddleware(authMiddleware)
-  // bye(@Ctx() { payload }: MyContext): string {
-  //   return `user id mu dlah ${payload!.id}`
-  // }
-
   @Query(() => User, { nullable: true })
   async me(@Ctx() ctx: MyContext): Promise<User | null> {
     const authorization = ctx.req.headers['authorization']
@@ -89,9 +83,6 @@ class UserResolver {
       name: userInput.name,
       email: userInput.email,
       password: userInput.password,
-      dateOfBirth: userInput.dateOfBirth,
-      bio: userInput.bio,
-      provider: userInput.provider,
     })
     try {
       await newUser.save()
