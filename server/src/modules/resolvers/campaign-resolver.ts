@@ -1,6 +1,15 @@
-import { Resolver, Query, Mutation, Arg } from 'type-graphql'
+import { authMiddleware } from '../../middlewares/authMiddleware'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Arg,
+  UseMiddleware,
+  Ctx,
+} from 'type-graphql'
 import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput } from './types/campaign-input'
+import { MyContext } from '../../types/Mycontext'
 
 // @ObjectType()
 // class UserResponse {
@@ -22,12 +31,31 @@ class CampaignResolver {
       return null
     }
   }
+  @Mutation(() => String)
+  testMutation(@Arg('input') input: string) {
+    console.log(input)
+    return input
+  }
 
+  @UseMiddleware(authMiddleware)
   @Mutation(() => Campaign)
   async addCampaign(
-    @Arg('input') input: CampaignInput
+    @Arg('input') input: CampaignInput,
+    @Ctx() ctx: MyContext
   ): Promise<Campaign | null> {
-    const newCampaign = new CampaignModel({ ...input })
+    console.log(input)
+    const newCampaign = new CampaignModel({
+      beneficiaryName: input.beneficiaryName,
+      title: input.title,
+      endPoint: input.endPoint,
+      target: input.target,
+      phoneNumber: input.phoneNumber,
+      purposeDescription: input.purposeDescription,
+      imageId: 'sfsdfsdafsas',
+      image: input.image,
+      story: input.story,
+      fundraisingUserId: ctx.payload!.id,
+    })
     try {
       await newCampaign.save()
       console.log(newCampaign)

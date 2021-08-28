@@ -26,7 +26,7 @@ async function startApolloServer() {
       credentials: true,
     })
   )
-  app.use(express.urlencoded({ extended: false }))
+  app.use(express.urlencoded({ extended: false, limit: '10mb' }))
   app.use(express.json())
   app.use(
     session({

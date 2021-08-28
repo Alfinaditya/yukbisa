@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql'
-import { Length, IsNotEmpty, IsString, MaxLength } from 'class-validator'
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 @InputType()
 export class CampaignInput {
@@ -8,7 +8,7 @@ export class CampaignInput {
   beneficiaryName!: string
 
   @Field()
-  @Length(10, 100)
+  @MaxLength(50, { message: 'Nomor telepon Terlalu panjang' })
   @IsNotEmpty({ message: 'Title Tidak boleh kosong' })
   @IsString({ message: 'isi title dengan benar' })
   title!: string
@@ -33,11 +33,6 @@ export class CampaignInput {
   @IsNotEmpty({ message: 'Target Tidak boleh kosong' })
   @Field()
   target!: number
-
-  @IsString({ message: 'Masukan id dengan benar' })
-  @IsNotEmpty({ message: 'Image id tidak boleh kosong' })
-  @Field()
-  imageId!: string
 
   @IsString({ message: 'Masukan id dengan benar' })
   @IsNotEmpty({ message: 'Image tidak boleh kosong' })
