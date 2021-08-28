@@ -1,11 +1,5 @@
 import { Field, InputType } from 'type-graphql'
-import {
-  IsDate,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-} from 'class-validator'
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 @InputType()
 export class UserRegisterInput {

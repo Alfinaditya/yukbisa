@@ -1,17 +1,5 @@
-import { UserModel, User } from '../../entities/user'
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Arg,
-  ObjectType,
-  Field,
-  Ctx,
-} from 'type-graphql'
-import { MyContext } from '../../types/Mycontext'
-import { createAccessToken, createRefreshToken } from '../../auth/createToken'
-import { sendRefreshToken } from '../../auth/sendRefreshToken'
-import { Campaign,campaignModel } from '../../entities/campaign'
+import { Resolver, Query, Mutation, Arg } from 'type-graphql'
+import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput } from './types/campaign-input'
 
 // @ObjectType()
@@ -23,27 +11,32 @@ import { CampaignInput } from './types/campaign-input'
 // }
 
 @Resolver()
-class UserResolver {
-  @Mutation(() => Campaign)
-  async Addcampaign(
-    @Arg('input') userInput: CampaignInput,
-    @Ctx() ctx: MyContext
-  ): Promise<Campaign | null> {
+class CampaignResolver {
+  @Query(() => [Campaign])
+  async campaigns(): Promise<Campaign[] | null> {
+    try {
+      const campaigns = await CampaignModel.find()
+      return campaigns
+    } catch (err) {
+      console.log(err)
       return null
-//     const newUser = new UserModel({
-//       name: userInput.name,
-//       email: userInput.email,
-//       password: userInput.password,
-//     })
-//     try {
-//       await newUser.save()
-//       sendRefreshToken(ctx.res, createRefreshToken(newUser))
-//       return { accessToken: createAccessToken(newUser), user: newUser }
-//     } catch (err) {
-//       console.log(err.errors)
-//       return null
-//     }
-//   }
+    }
+  }
+
+  @Mutation(() => Campaign)
+  async addCampaign(
+    @Arg('input') input: CampaignInput
+  ): Promise<Campaign | null> {
+    const newCampaign = new CampaignModel({ ...input })
+    try {
+      await newCampaign.save()
+      console.log(newCampaign)
+      return newCampaign
+    } catch (err) {
+      console.log(err.errors)
+      return null
+    }
+  }
 }
 
-export default UserResolver
+export default CampaignResolver

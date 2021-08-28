@@ -56,7 +56,11 @@ class UserResolver {
     if (!user) {
       throw new Error('Login gagal')
     }
+    if (user.provider === 'google') {
+      throw new Error('Silahkan login menggunakan google')
+    }
     const valid = await compare(userInput.password!, user.password!)
+    console.log(valid)
     if (!valid) {
       throw new Error('Login gagal')
     }

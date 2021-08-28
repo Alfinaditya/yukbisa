@@ -1,17 +1,10 @@
 import { Field, InputType } from 'type-graphql'
-import {
-  Length,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-  IsInt,
-} from 'class-validator'
+import { Length, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 @InputType()
 export class CampaignInput {
   @Field()
-  @IsEmail()
+  @IsNotEmpty({ message: 'Nama Penerima Tidak boleh kosong' })
   beneficiaryName!: string
 
   @Field()
@@ -24,7 +17,7 @@ export class CampaignInput {
   @IsNotEmpty({ message: 'Endpoint Tidak boleh kosong' })
   @MaxLength(15, { message: 'Endpoint Terlalu panjang' })
   @Field()
-  endpoint!: string
+  endPoint!: string
 
   @IsString({ message: 'Masukan nomor telepon dengan benar' })
   @IsNotEmpty({ message: 'Nomor telepon Tidak boleh kosong' })
@@ -36,6 +29,10 @@ export class CampaignInput {
   @IsNotEmpty({ message: 'Tujuan Tidak boleh kosong' })
   @Field()
   purposeDescription!: string
+
+  @IsNotEmpty({ message: 'Target Tidak boleh kosong' })
+  @Field()
+  target!: number
 
   @IsString({ message: 'Masukan id dengan benar' })
   @IsNotEmpty({ message: 'Image id tidak boleh kosong' })
@@ -51,20 +48,4 @@ export class CampaignInput {
   @IsNotEmpty({ message: 'story tidak boleh kosong' })
   @Field()
   story!: string
-
-  @IsInt({ message: 'Masukan jumlah yang benar' })
-  @IsNotEmpty({ message: 'jumlah tidak boleh kosong' })
-  @Field()
-  currentAmount!: number
-
-  //   user donations
-
-  @IsString({ message: 'Masukan nama dengan benar' })
-  @IsNotEmpty({ message: 'Nama tidak boleh kosong' })
-  @Field()
-  name!: string
-
-  @IsString({ message: 'Masukan pesan dengan benar' })
-  @Field()
-  mesage!: string
 }
