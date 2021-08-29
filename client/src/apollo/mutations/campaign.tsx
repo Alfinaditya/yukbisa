@@ -8,15 +8,3 @@ export const ADD_CAMPAIGN = gql`
     }
   }
 `
-export const GET_CAMPAIGNS = gql`
-  query GetCampaigns {
-    campaigns {
-      _id
-      image
-      title
-      endPoint
-      currentAmount
-      fundraisingUserName
-    }
-  }
-`

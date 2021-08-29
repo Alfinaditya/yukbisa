@@ -33,6 +33,20 @@ class CampaignResolver {
       return null
     }
   }
+
+  @Query(() => Campaign)
+  async campaginByEndPoint(
+    @Arg('endPoint') endPoint: string
+  ): Promise<Campaign | null> {
+    console.log(endPoint)
+    try {
+      const campaign = await CampaignModel.findOne({ endPoint })
+      return campaign
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }
   @Mutation(() => String)
   testMutation(@Arg('input') input: string) {
     console.log(input)
