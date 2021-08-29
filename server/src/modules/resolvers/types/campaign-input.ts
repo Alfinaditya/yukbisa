@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql'
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator'
+import { IsNotEmpty, IsString, MaxLength, IsLowercase } from 'class-validator'
 
 @InputType()
 export class CampaignInput {
@@ -16,6 +16,7 @@ export class CampaignInput {
   @IsString({ message: 'Masukan endpoint dengan benar' })
   @IsNotEmpty({ message: 'Endpoint Tidak boleh kosong' })
   @MaxLength(15, { message: 'Endpoint Terlalu panjang' })
+  @IsLowercase({ message: 'Wajib huruf kecil' })
   @Field()
   endPoint!: string
 

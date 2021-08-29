@@ -13,14 +13,6 @@ import { MyContext } from '../../types/Mycontext'
 import Cloudinary from '../../config/cloudinary-config'
 import { UserModel } from '../../entities/user'
 
-// @ObjectType()
-// class UserResponse {
-//   @Field()
-//   accessToken!: string
-//   @Field(() => User)
-//   user!: User
-// }
-
 @Resolver()
 class CampaignResolver {
   @Query(() => [Campaign])
@@ -38,7 +30,6 @@ class CampaignResolver {
   async campaginByEndPoint(
     @Arg('endPoint') endPoint: string
   ): Promise<Campaign | null> {
-    console.log(endPoint)
     try {
       const campaign = await CampaignModel.findOne({ endPoint })
       return campaign
@@ -74,9 +65,13 @@ class CampaignResolver {
       imageId: result.public_id,
       image: result.secure_url,
       story: input.story,
-      fundraisingUserName: user?.name,
-      fundraisingUserId: ctx.payload!.id,
+      fundraiser: {
+        id: user!._id,
+        name: user!.name,
+        image: user!.displayImage,
+      },
     })
+    console.log(newCampaign)
     try {
       await newCampaign.save()
       return newCampaign

@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { createEndpoint, encodedImage } from '../../helpers/helper'
 import { useMutation } from '@apollo/client'
 import { ADD_CAMPAIGN } from '../../apollo/mutations/campaign'
+import { GET_CAMPAIGNS } from '../../apollo/queries/campaign'
 
 type Inputs = {
   beneficiaryName: string
@@ -20,6 +21,7 @@ const Campaign = () => {
   const [target, setTarget] = useState<string | undefined>('0')
   const [addCampaign, { data, loading, error }] = useMutation(ADD_CAMPAIGN, {
     fetchPolicy: 'network-only',
+    refetchQueries: [{ query: GET_CAMPAIGNS }],
   })
   const [phoneNumber, setPhoneNumber] = useState('')
   const {
@@ -47,8 +49,9 @@ const Campaign = () => {
         story: data.story,
       }
       try {
-        console.log(body)
-        await addCampaign({ variables: { input: body } })
+        await addCampaign({
+          variables: { input: body },
+        })
       } catch (error) {
         console.log(error)
       }

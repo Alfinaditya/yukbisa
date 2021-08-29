@@ -1,15 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Link } from 'react-router-dom'
 import { GET_CAMPAIGNS } from '../../apollo/queries/campaign'
-
-interface Campaign {
-  _id: string
-  image: string
-  title: string
-  currentAmount: number
-  endPoint: string
-  fundraisingUserName: string
-}
+import { Campaigns } from '../../ts/campaign'
 
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
@@ -23,12 +15,12 @@ const Home = () => {
     <div>
       {data &&
         data?.campaigns &&
-        data?.campaigns.map((campaign: Campaign) => (
+        data?.campaigns.map((campaign: Campaigns) => (
           <div key={campaign._id}>
             <Link to={`/campaign/${campaign.endPoint}`}>
               <img src={campaign.image} alt={campaign.title} />
               <h1>{campaign.title}</h1>
-              <p>{campaign.fundraisingUserName}</p>
+              <p>{campaign.fundraiser.name}</p>
               <p>{campaign.currentAmount}</p>
             </Link>
           </div>

@@ -9,5 +9,13 @@ export class UserDonations {
 
   @Field()
   @Property()
+  image?: string
+
+  @Field()
+  @Property()
   message?: string
+
+  @Field()
+  @Property()
+  amount?: number
 }

@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as Property, getModelForClass, Ref } from '@typegoose/typegoose'
 import { UserDonations } from './userDonations'
+import { Fundraiser } from './fundraiser'
 
 @ObjectType()
 export class Campaign {
@@ -16,7 +17,7 @@ export class Campaign {
   title!: string
 
   @Field()
-  @Property({ required: true, unique: true })
+  @Property({ required: true, unique: true, lowercase: true })
   endPoint!: string
 
   @Field()
@@ -47,17 +48,13 @@ export class Campaign {
   @Property({ required: true })
   target!: number
 
+  @Field(() => Fundraiser)
+  @Property({ required: true })
+  fundraiser!: Fundraiser
+
   @Field(() => UserDonations)
   @Property({ ref: () => UserDonations, default: [] })
   userDonations?: Ref<UserDonations>[]
-
-  @Field()
-  @Property({ required: true })
-  fundraisingUserName!: string
-
-  @Field(() => ID)
-  @Property({ required: true })
-  fundraisingUserId!: string
 }
 
 export const CampaignModel = getModelForClass(Campaign, {
