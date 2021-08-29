@@ -10,6 +10,7 @@ import {
 import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput } from './types/campaign-input'
 import { MyContext } from '../../types/Mycontext'
+import Cloudinary from '../../config/cloudinary-config'
 
 // @ObjectType()
 // class UserResponse {
@@ -43,7 +44,10 @@ class CampaignResolver {
     @Arg('input') input: CampaignInput,
     @Ctx() ctx: MyContext
   ): Promise<Campaign | null> {
-    console.log(input)
+    const result = await Cloudinary.uploader.upload(input.image, {
+      folder: 'Yuk Bisa/campaigns',
+      allowed_formats: ['jpg,jpeg,png'],
+    })
     const newCampaign = new CampaignModel({
       beneficiaryName: input.beneficiaryName,
       title: input.title,
@@ -51,14 +55,13 @@ class CampaignResolver {
       target: input.target,
       phoneNumber: input.phoneNumber,
       purposeDescription: input.purposeDescription,
-      imageId: 'sfsdfsdafsas',
-      image: input.image,
+      imageId: result.public_id,
+      image: result.secure_url,
       story: input.story,
       fundraisingUserId: ctx.payload!.id,
     })
     try {
       await newCampaign.save()
-      console.log(newCampaign)
       return newCampaign
     } catch (err) {
       console.log(err.errors)

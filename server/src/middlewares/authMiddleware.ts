@@ -4,7 +4,6 @@ import { verify } from 'jsonwebtoken'
 
 export const authMiddleware: MiddlewareFn<MyContext> = ({ context }, next) => {
   const authorization = context.req.headers['authorization']
-  console.log('express jancok')
   if (!authorization) {
     throw new Error('You are not auth')
   }
