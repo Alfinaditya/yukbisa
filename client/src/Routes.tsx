@@ -4,8 +4,9 @@ import Navbar from './components/Navbar'
 import Register from './routes/entry/register'
 import Home from './routes/home'
 import Login from './routes/entry/login'
-import Campaign from './routes/campaign'
+import AddCampaign from './routes/addCampaign'
 import MyDonations from './routes/myDonations'
+import DetailsCampaign from './routes/details/Campaign'
 
 const Routes = () => {
   return (
@@ -13,10 +14,12 @@ const Routes = () => {
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route path='/my-donations' component={MyDonations} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route path='/account' component={Account} />
-        <Route path='/campaign' component={Campaign} />
+        <Route path='/campaign/:id' component={DetailsCampaign} />
+        <Route path='/add-campaign' component={AddCampaign} />
         <Route path='/my-donations' component={MyDonations} />
       </Switch>
     </Router>

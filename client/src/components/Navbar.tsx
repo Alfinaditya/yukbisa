@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { GET_ME } from '../apollo/queries/user'
 import { setAccessToken } from '../auth/accessToken'
 import { Me } from '../ts/user'
-
+import { ReactComponent as BrandSvg } from '../assets/brand.svg'
 const LOGOUT = gql`
   mutation Logout {
     logout
@@ -24,7 +24,9 @@ const Navbar = () => {
 
   return (
     <div>
-      <Link to='/'>Yuk Bisa</Link>
+      <Link to='/'>
+        <BrandSvg />
+      </Link>
       <br />
       <Link to='/'>Home</Link>
       <br />
@@ -37,7 +39,7 @@ const Navbar = () => {
           <br />
         </>
       )}
-      <Link to='/campaign'>Galang Dana</Link>
+      <Link to='/add-campaign'>Galang Dana</Link>
       <br />
       <Link to='/my-donations'>Donasi Saya</Link>
       <br />

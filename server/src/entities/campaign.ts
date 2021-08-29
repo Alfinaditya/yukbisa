@@ -51,6 +51,10 @@ export class Campaign {
   @Property({ ref: () => UserDonations, default: [] })
   userDonations?: Ref<UserDonations>[]
 
+  @Field()
+  @Property({ required: true })
+  fundraisingUserName!: string
+
   @Field(() => ID)
   @Property({ required: true })
   fundraisingUserId!: string

@@ -11,6 +11,7 @@ import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput } from './types/campaign-input'
 import { MyContext } from '../../types/Mycontext'
 import Cloudinary from '../../config/cloudinary-config'
+import { UserModel } from '../../entities/user'
 
 // @ObjectType()
 // class UserResponse {
@@ -48,6 +49,7 @@ class CampaignResolver {
       folder: 'Yuk Bisa/campaigns',
       allowed_formats: ['jpg,jpeg,png'],
     })
+    const user = await UserModel.findById(ctx.payload!.id)
     const newCampaign = new CampaignModel({
       beneficiaryName: input.beneficiaryName,
       title: input.title,
@@ -58,6 +60,7 @@ class CampaignResolver {
       imageId: result.public_id,
       image: result.secure_url,
       story: input.story,
+      fundraisingUserName: user?.name,
       fundraisingUserId: ctx.payload!.id,
     })
     try {
