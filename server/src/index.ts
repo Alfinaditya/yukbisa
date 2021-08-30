@@ -16,6 +16,7 @@ import { sendRefreshToken } from './auth/sendRefreshToken'
 import socialMediaAuth from './auth/socialMediaAuth'
 import passport from 'passport'
 import CampaignResolver from './modules/resolvers/campaign-resolver'
+import DonationResolver from './modules/resolvers/donation-resolver'
 dotenv.config()
 
 async function startApolloServer() {
@@ -68,7 +69,7 @@ async function startApolloServer() {
   })
   app.use('/auth', socialMediaAuth)
   const schema = await buildSchema({
-    resolvers: [UserResolver, CampaignResolver],
+    resolvers: [UserResolver, CampaignResolver, DonationResolver],
   })
   const mongoose = await connect(process.env.DB_HOST!)
   await mongoose.connection

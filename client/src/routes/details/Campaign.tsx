@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import { Link, useParams, useRouteMatch } from 'react-router-dom'
 import { GET_CAMPAIGN_BY_ENDPOINT } from '../../apollo/queries/campaign'
 import { Campaign } from '../../ts/campaign'
 
 const DetailsCampaign = () => {
-  const { id } = useParams<{ id?: string }>()
+  const { slug } = useParams<{ slug?: string }>()
+  let { url } = useRouteMatch()
   const { loading, data } = useQuery<Campaign>(GET_CAMPAIGN_BY_ENDPOINT, {
     variables: {
-      input: id,
+      input: slug,
     },
   })
   if (loading) return <p>Loading...</p>
@@ -22,7 +23,9 @@ const DetailsCampaign = () => {
             src={data.campaginByEndPoint.image}
             alt={data.campaginByEndPoint.title}
           />
-          <button>Donasi Sekarang</button>
+          <Link to={`${url}/donation?slug=${slug}`}>
+            <button>Donasi Sekarang</button>
+          </Link>
           <h1>{data.campaginByEndPoint.title}</h1>
           <p>
             {data.campaginByEndPoint.currentAmount} Terkumpul dari{' '}

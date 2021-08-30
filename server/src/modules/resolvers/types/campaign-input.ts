@@ -35,7 +35,7 @@ export class CampaignInput {
   @Field()
   target!: number
 
-  @IsString({ message: 'Masukan id dengan benar' })
+  @IsString({ message: 'Masukan image dengan benar' })
   @IsNotEmpty({ message: 'Image tidak boleh kosong' })
   @Field()
   image!: string

@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 @pre<User>('save', async function () {
   if (this.password) {
     try {
+      this.displayImageId = this._id
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
       this.password = hashedPassword
@@ -28,6 +29,10 @@ export class User {
   @Field()
   @Property({ required: true, unique: true })
   name!: string
+
+  @Field()
+  @Property({ required: true, unique: true, default: ID })
+  displayImageId!: string
 
   @Field()
   @Property({ default: '/profile.png' })
