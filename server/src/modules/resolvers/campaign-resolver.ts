@@ -38,6 +38,17 @@ class CampaignResolver {
       return null
     }
   }
+  @Query(() => [Campaign])
+  async campaginsByName(@Arg('name') name: string): Promise<Campaign[] | null> {
+    try {
+      const campaigns = await CampaignModel.find({ 'fundraiser.name': name })
+      return campaigns
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }
+
   @Mutation(() => String)
   testMutation(@Arg('input') input: string) {
     console.log(input)

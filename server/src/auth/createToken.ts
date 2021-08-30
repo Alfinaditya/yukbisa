@@ -2,9 +2,13 @@ import { User } from '../entities/user'
 import jwt from 'jsonwebtoken'
 
 export const createAccessToken = (user: User) => {
-  const token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_KEY!, {
-    expiresIn: '15m',
-  })
+  const token = jwt.sign(
+    { id: user._id, name: user.name, image: user.displayImage },
+    process.env.ACCESS_TOKEN_KEY!,
+    {
+      expiresIn: '15m',
+    }
+  )
   return token
 }
 

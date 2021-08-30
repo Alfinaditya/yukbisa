@@ -58,6 +58,7 @@ async function startApolloServer() {
     }
     // if user
     const user = await UserModel.findById({ _id: payload.id })
+
     if (!user) {
       return res.send({ ok: false, accessToken: '' })
     }

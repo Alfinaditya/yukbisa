@@ -2,7 +2,7 @@ import { Field, InputType } from 'type-graphql'
 import { IsLowercase, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 @InputType()
-export class UserRegisterInput {
+export class DonationInput {
   @IsString({ message: 'Masukan nama dengan benar' })
   @MaxLength(15, { message: 'Nama Terlalu panjang' })
   @Field()
@@ -13,9 +13,8 @@ export class UserRegisterInput {
   @Field()
   image!: string
 
-  @IsNotEmpty({ message: 'Message tidak boleh kosong' })
-  @Field()
-  message!: string
+  @Field({ nullable: true })
+  message?: string
 
   @Field()
   @IsNotEmpty({ message: 'Jumlah tidak boleh kosong' })
