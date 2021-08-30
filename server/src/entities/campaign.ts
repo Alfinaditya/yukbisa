@@ -1,6 +1,5 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as Property, getModelForClass, Ref } from '@typegoose/typegoose'
-import { UserDonations } from './userDonations'
 import { Fundraiser } from './fundraiser'
 
 @ObjectType()
@@ -51,10 +50,6 @@ export class Campaign {
   @Field(() => Fundraiser)
   @Property({ required: true })
   fundraiser!: Fundraiser
-
-  @Field(() => UserDonations)
-  @Property({ ref: () => UserDonations, default: [] })
-  userDonations?: Ref<UserDonations>[]
 }
 
 export const CampaignModel = getModelForClass(Campaign, {
