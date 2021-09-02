@@ -1,29 +1,17 @@
-import { ObjectType, Field } from 'type-graphql'
-import { getModelForClass, prop as Property } from '@typegoose/typegoose'
+import { ObjectType, Field, ID } from 'type-graphql'
+import { mongoose, prop as Property } from '@typegoose/typegoose'
 
 @ObjectType()
 export class UserDonation {
-  @Field()
+  @Field(() => ID)
   @Property({ required: true })
-  name!: string
-
-  @Field()
-  @Property({ required: true })
-  image!: string
-
-  @Field({ nullable: true })
-  @Property()
-  message?: string
+  readonly userId!: mongoose.Types.ObjectId
 
   @Field()
   @Property({ required: true })
   amount!: number
 
-  @Field()
-  @Property({ required: true, lowercase: true })
-  endPoint!: string
+  @Field({ nullable: true })
+  @Property()
+  message?: string
 }
-
-export const UserDonationModel = getModelForClass(UserDonation, {
-  schemaOptions: { timestamps: true },
-})

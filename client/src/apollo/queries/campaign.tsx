@@ -8,9 +8,6 @@ export const GET_CAMPAIGNS = gql`
       title
       endPoint
       currentAmount
-      fundraiser {
-        name
-      }
     }
   }
 `
@@ -23,10 +20,6 @@ export const GET_CAMPAIGN_BY_ENDPOINT = gql`
       currentAmount
       target
       beneficiaryName
-      fundraiser {
-        name
-        image
-      }
       purposeDescription
       story
     }

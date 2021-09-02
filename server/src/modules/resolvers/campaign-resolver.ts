@@ -6,19 +6,33 @@ import {
   Arg,
   UseMiddleware,
   Ctx,
+  ObjectType,
+  Field,
 } from 'type-graphql'
 import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput } from './types/campaign-input'
 import { MyContext } from '../../types/Mycontext'
 import Cloudinary from '../../config/cloudinary-config'
-import { UserModel } from '../../entities/user'
+import { User, UserModel } from '../../entities/user'
+import { mongoose, prop as Property, Ref } from '@typegoose/typegoose'
+import { Campaigns } from '../../entities/campaigns'
+import { CampaignDetails } from '../../entities/campaignDetails'
 
 @Resolver()
 class CampaignResolver {
-  @Query(() => [Campaign])
-  async campaigns(): Promise<Campaign[] | null> {
+  @Query(() => [Campaigns])
+  async campaigns(): Promise<Campaigns[] | null> {
     try {
-      const campaigns = await CampaignModel.find()
+      const campaigns = await CampaignModel.aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'fundraiserId',
+            foreignField: '_id',
+            as: 'userDetails',
+          },
+        },
+      ])
       return campaigns
     } catch (err) {
       console.log(err)
@@ -26,34 +40,79 @@ class CampaignResolver {
     }
   }
 
-  @Query(() => Campaign)
-  async campaginByEndPoint(
-    @Arg('endPoint') endPoint: string
-  ): Promise<Campaign | null> {
+  @Query(() => [CampaignDetails])
+  async campaginByEndPoint(@Arg('endPoint') endPoint: string) {
+    console.log(endPoint)
     try {
-      const campaign = await CampaignModel.findOne({ endPoint })
+      const campaign = await CampaignModel.aggregate([
+        { $match: { endPoint: endPoint } },
+        {
+          $unwind: { path: '$userDonations', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userDonations.userId',
+            foreignField: '_id',
+            as: 'userDonations.user',
+          },
+        },
+        {
+          $unwind: {
+            path: '$userDonations.user',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $group: {
+            _id: '$_id',
+            userDonations: {
+              $push: '$userDonations',
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'campaigns',
+            localField: '_id',
+            foreignField: '_id',
+            as: 'campaignDetails',
+          },
+        },
+        {
+          $unwind: {
+            path: '$campaignDetails',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $addFields: {
+            'campaignDetails.users': '$userDonations',
+          },
+        },
+        {
+          $replaceRoot: {
+            newRoot: '$campaignDetails',
+          },
+        },
+      ])
+      console.log(campaign)
       return campaign
     } catch (err) {
       console.log(err)
       return null
     }
   }
-  @Query(() => [Campaign])
-  async campaginsByName(@Arg('name') name: string): Promise<Campaign[] | null> {
-    try {
-      const campaigns = await CampaignModel.find({ 'fundraiser.name': name })
-      return campaigns
-    } catch (err) {
-      console.log(err)
-      return null
-    }
-  }
-
-  @Mutation(() => String)
-  testMutation(@Arg('input') input: string) {
-    console.log(input)
-    return input
-  }
+  // @Query(() => [Campaign])
+  // async campaginsByName(@Arg('name') name: string): Promise<Campaign[] | null> {
+  //   try {
+  //     const campaigns = await CampaignModel.find({ 'fundraiser.name': name })
+  //     return campaigns
+  //   } catch (err) {
+  //     console.log(err)
+  //     return null
+  //   }
+  // }
 
   @UseMiddleware(authMiddleware)
   @Mutation(() => Campaign)
@@ -65,7 +124,8 @@ class CampaignResolver {
       folder: 'Yuk Bisa/campaigns',
       allowed_formats: ['jpg,jpeg,png'],
     })
-    const user = await UserModel.findById(ctx.payload!.id)
+    // result.public_id
+    // result.secure_url
     const newCampaign = new CampaignModel({
       beneficiaryName: input.beneficiaryName,
       title: input.title,
@@ -76,13 +136,8 @@ class CampaignResolver {
       imageId: result.public_id,
       image: result.secure_url,
       story: input.story,
-      fundraiser: {
-        id: user!._id,
-        name: user!.name,
-        image: user!.displayImage,
-      },
+      fundraiserId: new mongoose.Types.ObjectId(ctx.payload!.id),
     })
-    console.log(newCampaign)
     try {
       await newCampaign.save()
       return newCampaign

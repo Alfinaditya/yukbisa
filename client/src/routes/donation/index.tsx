@@ -22,12 +22,11 @@ const Donation = () => {
   const slug = new URLSearchParams(search).get('slug')
   const [addDonation, { data, loading, error }] = useMutation(ADD_DONATION, {
     fetchPolicy: 'network-only',
-    refetchQueries: [
-      { query: GET_CAMPAIGNS },
-      { query: GET_CAMPAIGN_BY_ENDPOINT, variables: { input: slug } },
-    ],
+    // refetchQueries: [
+    //   { query: GET_CAMPAIGNS },
+    //   { query: GET_CAMPAIGN_BY_ENDPOINT, variables: { input: slug } },
+    // ],
   })
-  console.log(token)
   if (error) {
     console.log(JSON.stringify(error, null, 2))
   }
@@ -38,14 +37,13 @@ const Donation = () => {
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const body = {
-      name: token.name,
-      image: token.image,
+      userId: token.id,
       amount: parseInt(amount),
       message,
       endPoint: slug,
     }
-    addDonation({ variables: { input: body } })
     console.log(body)
+    addDonation({ variables: { input: body } })
   }
   return (
     <div>

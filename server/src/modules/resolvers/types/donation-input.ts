@@ -3,15 +3,8 @@ import { IsLowercase, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 @InputType()
 export class DonationInput {
-  @IsString({ message: 'Masukan nama dengan benar' })
-  @MaxLength(15, { message: 'Nama Terlalu panjang' })
-  @Field()
-  name!: string
-
-  @IsString({ message: 'Masukan image dengan benar' })
-  @IsNotEmpty({ message: 'Image tidak boleh kosong' })
-  @Field()
-  image!: string
+  @Field({ nullable: true })
+  userId!: string
 
   @Field({ nullable: true })
   message?: string

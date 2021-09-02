@@ -1,15 +1,9 @@
-type Fundraiser = {
-  name: string
-  image: string
-}
-
 export interface Campaigns {
   _id: string
   image: string
   title: string
   currentAmount: number
   endPoint: string
-  fundraiser: Fundraiser
 }
 
 type campaign = {
@@ -18,7 +12,6 @@ type campaign = {
   currentAmount: number
   target: number
   beneficiaryName: string
-  fundraiser: Fundraiser
   purposeDescription: string
   story: string
 }

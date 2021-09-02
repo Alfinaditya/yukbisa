@@ -20,7 +20,6 @@ const Home = () => {
             <Link to={`/campaign/${campaign.endPoint}`}>
               <img src={campaign.image} alt={campaign.title} />
               <h1>{campaign.title}</h1>
-              <p>{campaign.fundraiser.name}</p>
               <p>{campaign.currentAmount}</p>
             </Link>
           </div>

@@ -17,7 +17,10 @@ const DetailsCampaign = () => {
     <div>
       <h1>Details Campaign</h1>
       <p>Halooo ganggg</p>
-      {data && data.campaginByEndPoint && (
+      <Link to={`${url}/donation?slug=${slug}`}>
+        <button>Donasi Sekarang</button>
+      </Link>
+      {/* {data && data.campaginByEndPoint && (
         <div>
           <img
             src={data.campaginByEndPoint.image}
@@ -32,17 +35,12 @@ const DetailsCampaign = () => {
             {data.campaginByEndPoint.target}
           </p>
           <h2>Informasi Penggalang Dana</h2>
-          <p>{data.campaginByEndPoint.fundraiser.name}</p>
-          <img
-            src={data.campaginByEndPoint.fundraiser.image}
-            alt={data.campaginByEndPoint.fundraiser.name}
-          />
           <p>{data.campaginByEndPoint.beneficiaryName}</p>
           <p>{data.campaginByEndPoint.purposeDescription}</p>
           <h1>Cerita</h1>
           <p>{data.campaginByEndPoint.story}</p>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

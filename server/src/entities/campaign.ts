@@ -1,6 +1,11 @@
 import { ObjectType, Field, ID } from 'type-graphql'
-import { prop as Property, getModelForClass, Ref } from '@typegoose/typegoose'
-import { Fundraiser } from './fundraiser'
+import {
+  prop as Property,
+  getModelForClass,
+  Ref,
+  mongoose,
+} from '@typegoose/typegoose'
+import { UserDonation } from './userDonation'
 
 @ObjectType()
 export class Campaign {
@@ -43,13 +48,35 @@ export class Campaign {
   @Property({ required: true, default: 0 })
   currentAmount!: number
 
+  @Field(() => [UserDonation])
+  @Property({ default: [] })
+  userDonations!: Ref<UserDonation>[]
+
   @Field()
   @Property({ required: true })
   target!: number
 
-  @Field(() => Fundraiser)
+  @Field(() => ID)
   @Property({ required: true })
-  fundraiser!: Fundraiser
+  fundraiserId!: mongoose.Types.ObjectId
+
+  // @Field(() => [User])
+  // @Property({
+  //   ref: () => User,
+  //   foreignField: '_id',
+  //   localField: 'fundraiserId', // compare
+  //   justOne: false,
+  // })
+  // userDetails!: Ref<User>[]
+
+  // @Field(() => [User])
+  // @Property({
+  //   ref: () => User,
+  //   foreignField: '_id',
+  //   localField: 'userDonations.userId', // compare
+  //   justOne: false,
+  // })
+  // users!: Ref<User>[]
 }
 
 export const CampaignModel = getModelForClass(Campaign, {
