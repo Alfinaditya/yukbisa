@@ -6,15 +6,12 @@ import {
   Arg,
   UseMiddleware,
   Ctx,
-  ObjectType,
-  Field,
 } from 'type-graphql'
 import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput } from './types/campaign-input'
 import { MyContext } from '../../types/Mycontext'
 import Cloudinary from '../../config/cloudinary-config'
-import { User, UserModel } from '../../entities/user'
-import { mongoose, prop as Property, Ref } from '@typegoose/typegoose'
+import { mongoose } from '@typegoose/typegoose'
 import { Campaigns } from '../../entities/campaigns'
 import { CampaignDetails } from '../../entities/campaignDetails'
 
@@ -41,8 +38,9 @@ class CampaignResolver {
   }
 
   @Query(() => [CampaignDetails])
-  async campaginByEndPoint(@Arg('endPoint') endPoint: string) {
-    console.log(endPoint)
+  async campaign(
+    @Arg('endPoint') endPoint: string
+  ): Promise<CampaignDetails[] | null> {
     try {
       const campaign = await CampaignModel.aggregate([
         { $match: { endPoint: endPoint } },
@@ -87,7 +85,7 @@ class CampaignResolver {
         },
         {
           $addFields: {
-            'campaignDetails.users': '$userDonations',
+            'campaignDetails.userDetails': '$userDonations',
           },
         },
         {
@@ -95,8 +93,16 @@ class CampaignResolver {
             newRoot: '$campaignDetails',
           },
         },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'fundraiserId',
+            foreignField: '_id',
+            as: 'fundraiserDetails',
+          },
+        },
+        { $unwind: '$fundraiserDetails' },
       ])
-      console.log(campaign)
       return campaign
     } catch (err) {
       console.log(err)

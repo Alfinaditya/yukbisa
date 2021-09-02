@@ -7,12 +7,11 @@ import { getAccessToken } from '../../auth/accessToken'
 import jwtDecode from 'jwt-decode'
 import {
   GET_CAMPAIGNS,
-  GET_CAMPAIGN_BY_ENDPOINT,
+  GET_CAMPAIGN_DETAILS,
 } from '../../apollo/queries/campaign'
 interface Token {
   id: string
   name: string
-  image: string
 }
 const Donation = () => {
   const [amount, setAmount] = useState<any>('')
@@ -22,10 +21,10 @@ const Donation = () => {
   const slug = new URLSearchParams(search).get('slug')
   const [addDonation, { data, loading, error }] = useMutation(ADD_DONATION, {
     fetchPolicy: 'network-only',
-    // refetchQueries: [
-    //   { query: GET_CAMPAIGNS },
-    //   { query: GET_CAMPAIGN_BY_ENDPOINT, variables: { input: slug } },
-    // ],
+    refetchQueries: [
+      { query: GET_CAMPAIGNS },
+      { query: GET_CAMPAIGN_DETAILS, variables: { input: slug } },
+    ],
   })
   if (error) {
     console.log(JSON.stringify(error, null, 2))

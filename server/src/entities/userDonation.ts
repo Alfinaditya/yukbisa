@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from 'type-graphql'
+import { ObjectType, Field, ID, Int } from 'type-graphql'
 import { mongoose, prop as Property } from '@typegoose/typegoose'
 
 @ObjectType()
@@ -7,7 +7,7 @@ export class UserDonation {
   @Property({ required: true })
   readonly userId!: mongoose.Types.ObjectId
 
-  @Field()
+  @Field(() => Int)
   @Property({ required: true })
   amount!: number
 

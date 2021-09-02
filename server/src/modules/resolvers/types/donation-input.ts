@@ -1,9 +1,17 @@
 import { Field, InputType } from 'type-graphql'
-import { IsLowercase, IsNotEmpty, IsString, MaxLength } from 'class-validator'
+import {
+  IsLowercase,
+  IsNotEmpty,
+  IsString,
+  IsInt,
+  MaxLength,
+  IsMongoId,
+} from 'class-validator'
 
 @InputType()
 export class DonationInput {
-  @Field({ nullable: true })
+  @Field()
+  @IsMongoId()
   userId!: string
 
   @Field({ nullable: true })
@@ -11,6 +19,7 @@ export class DonationInput {
 
   @Field()
   @IsNotEmpty({ message: 'Jumlah tidak boleh kosong' })
+  @IsInt({ message: 'Wajib bertipe integer' })
   amount!: number
 
   @IsString({ message: 'Masukan endpoint dengan benar' })

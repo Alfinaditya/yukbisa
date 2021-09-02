@@ -1,10 +1,5 @@
 import { ObjectType, Field, ID } from 'type-graphql'
-import {
-  prop as Property,
-  getModelForClass,
-  Ref,
-  mongoose,
-} from '@typegoose/typegoose'
+import { prop as Property, Ref, mongoose } from '@typegoose/typegoose'
 import { UserDonation } from './userDonation'
 import { User } from './user'
 
@@ -49,8 +44,10 @@ export class CampaignDetails {
   @Property()
   currentAmount!: number
 
-  // Length of the user Donations
-  @Field(() => [UserDonation], { description: 'Length of the user Donations' })
+  @Field(() => [UserDonation], {
+    nullable: true,
+    description: 'Length of the user Donations',
+  })
   @Property()
   userDonations!: Ref<UserDonation>[]
 
@@ -62,26 +59,38 @@ export class CampaignDetails {
   @Property()
   fundraiserId!: mongoose.Types.ObjectId
 
-  @Field(() => [Users], { description: 'User Donations Details' })
+  @Field(() => [UserDetails], {
+    nullable: true,
+    description: 'User Donations Details',
+  })
   @Property()
-  users!: Ref<Users>[]
+  userDetails!: Ref<UserDetails>[]
+
+  @Field(() => User)
+  @Property({
+    ref: () => User,
+    foreignField: '_id',
+    localField: 'fundraiserId', // compare
+    justOne: true,
+  })
+  fundraiserDetails!: Ref<User>
 }
 
 @ObjectType()
-export class Users {
-  @Field(() => ID)
+export class UserDetails {
+  @Field(() => ID, { nullable: true })
   @Property()
   readonly userId!: mongoose.Types.ObjectId
 
-  @Field()
+  @Field({ nullable: true })
   @Property()
   message?: string
 
-  @Field()
+  @Field({ nullable: true })
   @Property()
   amount!: number
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   @Property({
     ref: () => User,
     foreignField: '_id',

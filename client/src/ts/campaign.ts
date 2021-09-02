@@ -1,3 +1,13 @@
+type fundraiserDetails = {
+  name: string
+  displayImage: string
+}
+
+type User = {
+  name: string
+  displayImage: string
+}
+
 export interface Campaigns {
   _id: string
   image: string
@@ -6,16 +16,22 @@ export interface Campaigns {
   endPoint: string
 }
 
-type campaign = {
+export interface Campaign {
+  _id: string
   image: string
   title: string
+  beneficiaryName: string
   currentAmount: number
   target: number
-  beneficiaryName: string
-  purposeDescription: string
   story: string
+  purposeDescription: String
+  fundraiserDetails: fundraiserDetails
+  userDetails: [UserDetails]
 }
 
-export interface Campaign {
-  campaginByEndPoint: campaign
+export interface UserDetails {
+  userId: string
+  amount: number
+  message: string
+  user: User
 }

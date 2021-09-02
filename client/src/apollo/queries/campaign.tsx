@@ -12,16 +12,30 @@ export const GET_CAMPAIGNS = gql`
   }
 `
 
-export const GET_CAMPAIGN_BY_ENDPOINT = gql`
-  query GetCampaignByEndPoint($input: String!) {
-    campaginByEndPoint(endPoint: $input) {
+export const GET_CAMPAIGN_DETAILS = gql`
+  query GetCampaignDetails($input: String!) {
+    campaign(endPoint: $input) {
+      _id
       image
       title
+      beneficiaryName
       currentAmount
       target
-      beneficiaryName
-      purposeDescription
       story
+      purposeDescription
+      userDetails {
+        userId
+        amount
+        message
+        user {
+          name
+          displayImage
+        }
+      }
+      fundraiserDetails {
+        name
+        displayImage
+      }
     }
   }
 `
