@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Link, useParams, useRouteMatch } from 'react-router-dom'
 import { GET_CAMPAIGN_DETAILS } from '../../apollo/queries/campaign'
-import { Campaign, UserDetails } from '../../ts/campaign'
+import { Campaign } from '../../ts/campaign'
 
 const DetailsCampaign = () => {
   const { slug } = useParams<{ slug?: string }>()
@@ -31,7 +31,7 @@ const DetailsCampaign = () => {
           <p>{campaignDetails.purposeDescription}</p>
           <p>{campaignDetails.story}</p>
           {campaignDetails.userDetails &&
-            campaignDetails.userDetails.map((user: UserDetails) =>
+            campaignDetails.userDetails.map(user =>
               user.amount && user.userId ? (
                 <div>
                   <img src={user.user.displayImage} alt={user.user.name} />

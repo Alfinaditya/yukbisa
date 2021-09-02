@@ -39,7 +39,7 @@ const Navbar = () => {
           <br />
         </>
       )}
-      <Link to='/add-campaign'>Galang Dana</Link>
+      <Link to='/galang-dana'>Galang Dana</Link>
       <br />
       <Link to='/my-donations'>Donasi Saya</Link>
       <br />

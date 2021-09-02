@@ -4,10 +4,11 @@ import Navbar from './components/Navbar'
 import Register from './routes/entry/register'
 import Home from './routes/home'
 import Login from './routes/entry/login'
-import AddCampaign from './routes/addCampaign'
+import AddCampaign from './routes/galangDana/addCampaign'
 import MyDonations from './routes/myDonations'
 import DetailsCampaign from './routes/details/Campaign'
 import Donation from './routes/donation'
+import MyCampaigns from './routes/galangDana/myCampaigns'
 
 const Routes = () => {
   return (
@@ -19,7 +20,8 @@ const Routes = () => {
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route path='/account' component={Account} />
-        <Route path='/add-campaign' component={AddCampaign} />
+        <Route path='/galang-dana/add-campaign' component={AddCampaign} />
+        <Route path='/galang-dana' component={MyCampaigns} />
         <Route path='/my-donations' component={MyDonations} />
         <Route path='/campaign/:slug/donation' component={Donation} />
         <Route path='/campaign/:slug' component={DetailsCampaign} />

@@ -26,7 +26,13 @@ class CampaignResolver {
             from: 'users',
             localField: 'fundraiserId',
             foreignField: '_id',
-            as: 'userDetails',
+            as: 'fundraiserDetails',
+          },
+        },
+        {
+          $unwind: {
+            path: '$fundraiserDetails',
+            preserveNullAndEmptyArrays: true,
           },
         },
       ])

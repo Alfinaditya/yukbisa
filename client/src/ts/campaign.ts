@@ -8,12 +8,24 @@ type User = {
   displayImage: string
 }
 
+type FundraiserDetails = {
+  name: string
+}
+
+type UserDetails = {
+  userId: string
+  amount: number
+  message: string
+  user: User
+}
+
 export interface Campaigns {
   _id: string
   image: string
   title: string
-  currentAmount: number
   endPoint: string
+  currentAmount: number
+  fundraiserDetails: FundraiserDetails
 }
 
 export interface Campaign {
@@ -27,11 +39,4 @@ export interface Campaign {
   purposeDescription: String
   fundraiserDetails: fundraiserDetails
   userDetails: [UserDetails]
-}
-
-export interface UserDetails {
-  userId: string
-  amount: number
-  message: string
-  user: User
 }

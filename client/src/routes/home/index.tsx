@@ -8,18 +8,17 @@ const Home = () => {
   if (loading) {
     return <p>Loading....</p>
   }
-  if (data) {
-    console.log(data)
-  }
+  const campaigns: Campaigns[] = data.campaigns
   return (
     <div>
       {data &&
-        data?.campaigns &&
-        data?.campaigns.map((campaign: Campaigns) => (
+        campaigns &&
+        campaigns.map(campaign => (
           <div key={campaign._id}>
             <Link to={`/campaign/${campaign.endPoint}`}>
               <img src={campaign.image} alt={campaign.title} />
               <h1>{campaign.title}</h1>
+              <p>{campaign.fundraiserDetails.name}</p>
               <p>{campaign.currentAmount}</p>
             </Link>
           </div>

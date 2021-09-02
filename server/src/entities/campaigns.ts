@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as Property, Ref, mongoose } from '@typegoose/typegoose'
 import { User } from './user'
+import { truncate } from 'fs'
 
 @ObjectType()
 export class Campaigns {
@@ -31,11 +32,11 @@ export class Campaigns {
   @Property({ required: true })
   fundraiserId!: mongoose.Types.ObjectId
 
-  @Field(() => [User])
+  @Field(() => User)
   @Property({
     foreignField: '_id',
     localField: 'fundraiserId', // compare
-    justOne: false,
+    justOne: true,
   })
-  userDetails!: Ref<User>[]
+  fundraiserDetails!: Ref<User>
 }

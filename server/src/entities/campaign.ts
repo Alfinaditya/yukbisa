@@ -59,24 +59,6 @@ export class Campaign {
   @Field(() => ID)
   @Property({ required: true })
   fundraiserId!: mongoose.Types.ObjectId
-
-  // @Field(() => [User])
-  // @Property({
-  //   ref: () => User,
-  //   foreignField: '_id',
-  //   localField: 'fundraiserId', // compare
-  //   justOne: false,
-  // })
-  // userDetails!: Ref<User>[]
-
-  // @Field(() => [User])
-  // @Property({
-  //   ref: () => User,
-  //   foreignField: '_id',
-  //   localField: 'userDonations.userId', // compare
-  //   justOne: false,
-  // })
-  // users!: Ref<User>[]
 }
 
 export const CampaignModel = getModelForClass(Campaign, {
