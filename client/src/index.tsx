@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import App from './App'
 import {
   ApolloClient,
@@ -14,6 +13,7 @@ import { onError } from '@apollo/client/link/error'
 import { TokenRefreshLink } from 'apollo-link-token-refresh'
 import { getAccessToken, setAccessToken } from './auth/accessToken'
 import jwtDecode from 'jwt-decode'
+import { GlobalStyle } from './style'
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:3001/graphql',
@@ -109,6 +109,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
+      <GlobalStyle />
       <App />
     </React.StrictMode>
   </ApolloProvider>,

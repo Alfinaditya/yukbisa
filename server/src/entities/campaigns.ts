@@ -20,15 +20,15 @@ export class Campaigns {
   image!: string
 
   @Field()
-  @Property({ required: true, default: 0 })
+  @Property()
   currentAmount!: number
 
   @Field()
-  @Property({ required: true })
+  @Property()
   target!: number
 
   @Field(() => ID)
-  @Property({ required: true })
+  @Property()
   fundraiserId!: mongoose.Types.ObjectId
 
   @Field(() => User)
@@ -38,4 +38,8 @@ export class Campaigns {
     justOne: true,
   })
   fundraiserDetails!: Ref<User>
+
+  @Field()
+  @Property({ default: Date.now() })
+  createdAt!: Date
 }

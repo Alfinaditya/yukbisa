@@ -1,4 +1,3 @@
-import './App.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { setAccessToken } from './auth/accessToken'

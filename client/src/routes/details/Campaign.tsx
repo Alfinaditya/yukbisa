@@ -1,7 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { Link, useParams, useRouteMatch } from 'react-router-dom'
 import { GET_CAMPAIGN_DETAILS } from '../../apollo/queries/campaign'
+import { Container } from '../../components/Container'
+import { DonationImage, Image } from '../../components/Image'
 import { Campaign } from '../../ts/campaign'
+import { Title } from './style'
 
 const DetailsCampaign = () => {
   const { slug } = useParams<{ slug?: string }>()
@@ -16,7 +19,7 @@ const DetailsCampaign = () => {
   const campaignDetails: Campaign = data.campaign[0]
 
   return (
-    <div>
+    <Container>
       <h1>Details Campaign</h1>
       <p>Halooo ganggg</p>
       <Link to={`${url}/donation?slug=${slug}`}>
@@ -24,8 +27,8 @@ const DetailsCampaign = () => {
       </Link>
       {data && campaignDetails && (
         <>
-          <img src={campaignDetails.image} />
-          <h1>{campaignDetails.title}</h1>
+          <Image src={campaignDetails.image} />
+          <Title>{campaignDetails.title}</Title>
           <h1>{campaignDetails.beneficiaryName}</h1>
           <p>{campaignDetails.currentAmount || campaignDetails.target}</p>
           <p>{campaignDetails.purposeDescription}</p>
@@ -34,7 +37,10 @@ const DetailsCampaign = () => {
             campaignDetails.userDetails.map(user =>
               user.amount && user.userId ? (
                 <div>
-                  <img src={user.user.displayImage} alt={user.user.name} />
+                  <DonationImage
+                    src={user.user.displayImage}
+                    alt={user.user.name}
+                  />
                   <p>{user.user.name}</p>
                   <p>{user.amount}</p>
                   <p>{user.message}</p>
@@ -45,7 +51,7 @@ const DetailsCampaign = () => {
             )}
         </>
       )}
-    </div>
+    </Container>
   )
 }
 

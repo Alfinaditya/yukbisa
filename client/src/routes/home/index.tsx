@@ -1,7 +1,10 @@
 import { useQuery } from '@apollo/client'
-import { Link } from 'react-router-dom'
 import { GET_CAMPAIGNS } from '../../apollo/queries/campaign'
+import { convertDate } from '../../helpers/helper'
+import { Container } from '../../components/Container'
 import { Campaigns } from '../../ts/campaign'
+import { Title, Card } from './style'
+import { Image } from '../../components/Image'
 
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
@@ -9,21 +12,27 @@ const Home = () => {
     return <p>Loading....</p>
   }
   const campaigns: Campaigns[] = data.campaigns
+
   return (
-    <div>
+    <Container>
       {data &&
         campaigns &&
-        campaigns.map(campaign => (
-          <div key={campaign._id}>
-            <Link to={`/campaign/${campaign.endPoint}`}>
-              <img src={campaign.image} alt={campaign.title} />
-              <h1>{campaign.title}</h1>
+        campaigns.map(campaign => {
+          const { date, month, years } = convertDate(campaign.createdAt)
+          return (
+            <Card key={campaign._id} to={`/campaign/${campaign.endPoint}`}>
+              <Image src={campaign.image} alt={campaign.title} />
+              <Title>{campaign.title}</Title>
               <p>{campaign.fundraiserDetails.name}</p>
+              <p>
+                {date} {month} {years}
+              </p>
+              <p>Terkumpul</p>
               <p>{campaign.currentAmount}</p>
-            </Link>
-          </div>
-        ))}
-    </div>
+            </Card>
+          )
+        })}
+    </Container>
   )
 }
 

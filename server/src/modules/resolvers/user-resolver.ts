@@ -42,7 +42,8 @@ class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  async logout(@Ctx() { res }: MyContext) {
+  async logout(@Ctx() { res, req }: MyContext) {
+    req.logout()
     sendRefreshToken(res, '')
     return true
   }
@@ -93,7 +94,7 @@ class UserResolver {
       sendRefreshToken(ctx.res, createRefreshToken(newUser))
       return { accessToken: createAccessToken(newUser), user: newUser }
     } catch (err) {
-      console.log(err.errors)
+      console.log(err)
       return null
     }
   }

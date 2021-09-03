@@ -153,7 +153,7 @@ class CampaignResolver {
       await newCampaign.save()
       return newCampaign
     } catch (err) {
-      console.log(err.errors)
+      console.log(err)
       return null
     }
   }

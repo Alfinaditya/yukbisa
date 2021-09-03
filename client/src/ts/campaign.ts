@@ -31,6 +31,7 @@ export interface Donations {
   title: string
   image: string
   currentAmount: number
+  createdAt: Date
 }
 
 export interface Campaigns {
@@ -39,6 +40,7 @@ export interface Campaigns {
   title: string
   endPoint: string
   currentAmount: number
+  createdAt: Date
   fundraiserDetails: FundraiserDetails
 }
 
@@ -52,5 +54,6 @@ export interface Campaign {
   story: string
   purposeDescription: String
   fundraiserDetails: fundraiserDetails
+  createdAt: Date
   userDetails: [UserDetails]
 }

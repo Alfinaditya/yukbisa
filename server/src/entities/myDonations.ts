@@ -51,11 +51,11 @@ export class MyDonations {
   @Property({ required: true })
   fundraiserId!: mongoose.Types.ObjectId
 
-  @Field()
-  @Property({ default: Date.now() })
-  createdAt!: Date
-
   @Field(() => UserDonation)
   @Property()
   userDonations!: Ref<UserDonation>
+
+  @Field()
+  @Property({ default: Date.now() })
+  createdAt!: Date
 }

@@ -14,4 +14,8 @@ export class UserDonation {
   @Field({ nullable: true })
   @Property()
   message?: string
+
+  @Field()
+  @Property({ default: Date.now() })
+  createdAt!: Date
 }
