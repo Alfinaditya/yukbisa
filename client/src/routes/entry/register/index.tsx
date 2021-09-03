@@ -4,8 +4,7 @@ import { CREATE_USER } from '../../../apollo/mutations/user'
 import { RouteComponentProps } from 'react-router-dom'
 import { setAccessToken } from '../../../auth/accessToken'
 import { GET_ME } from '../../../apollo/queries/user'
-// Todo create interface User
-// Todo install react hook form
+
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')

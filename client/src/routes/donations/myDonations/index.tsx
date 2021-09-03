@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client'
 import jwtDecode from 'jwt-decode'
-import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
-import { getAccessToken } from '../../auth/accessToken'
-import { Mydonations } from '../../ts/donations'
-import { Token } from '../../ts/token'
+import { GET_MY_DONATIONS } from '../../../apollo/queries/userDonation'
+import { getAccessToken } from '../../../auth/accessToken'
+import { Mydonations } from '../../../ts/donations'
+import { Token } from '../../../ts/token'
 
 const MyDonations = () => {
   const token: Token = jwtDecode(getAccessToken())

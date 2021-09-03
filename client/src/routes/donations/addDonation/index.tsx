@@ -2,23 +2,26 @@ import { useMutation } from '@apollo/client'
 import { FormEvent, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 import { useLocation } from 'react-router-dom'
-import { ADD_DONATION } from '../../apollo/mutations/userDonation'
-import { getAccessToken } from '../../auth/accessToken'
-import jwtDecode, { JwtPayload } from 'jwt-decode'
+import { ADD_DONATION } from '../../../apollo/mutations/userDonation'
+import { getAccessToken } from '../../../auth/accessToken'
+import jwtDecode from 'jwt-decode'
 import {
   GET_CAMPAIGNS,
   GET_CAMPAIGN_DETAILS,
-} from '../../apollo/queries/campaign'
-import { Token } from '../../ts/token'
-import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
+} from '../../../apollo/queries/campaign'
+import { Token } from '../../../ts/token'
+import { GET_MY_DONATIONS } from '../../../apollo/queries/userDonation'
+import { useHistory } from 'react-router'
 
 const Donation = () => {
+  const history = useHistory()
   const [amount, setAmount] = useState<any>('')
   const [message, setMessage] = useState('')
   const search = useLocation().search
   const token: Token = jwtDecode(getAccessToken())
   const slug = new URLSearchParams(search).get('slug')
-  const [addDonation, { data, loading, error }] = useMutation(ADD_DONATION, {
+
+  const [addDonation, { loading, error }] = useMutation(ADD_DONATION, {
     fetchPolicy: 'network-only',
     refetchQueries: [
       { query: GET_CAMPAIGNS },
@@ -29,11 +32,8 @@ const Donation = () => {
   if (error) {
     console.log(JSON.stringify(error, null, 2))
   }
-  if (data) {
-    console.log(data)
-  }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const body = {
       userId: token.id,
@@ -41,8 +41,8 @@ const Donation = () => {
       message,
       endPoint: slug,
     }
-    console.log(body)
-    addDonation({ variables: { input: body } })
+    await addDonation({ variables: { input: body } })
+    history.push(`/campaign/${slug}`)
   }
   return (
     <div>
