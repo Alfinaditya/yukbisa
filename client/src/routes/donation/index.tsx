@@ -9,10 +9,9 @@ import {
   GET_CAMPAIGNS,
   GET_CAMPAIGN_DETAILS,
 } from '../../apollo/queries/campaign'
-interface Token {
-  id: string
-  name: string
-}
+import { Token } from '../../ts/token'
+import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
+
 const Donation = () => {
   const [amount, setAmount] = useState<any>('')
   const [message, setMessage] = useState('')
@@ -24,6 +23,7 @@ const Donation = () => {
     refetchQueries: [
       { query: GET_CAMPAIGNS },
       { query: GET_CAMPAIGN_DETAILS, variables: { input: slug } },
+      { query: GET_MY_DONATIONS, variables: { input: token.id } },
     ],
   })
   if (error) {

@@ -1,15 +1,23 @@
-import { CampaignModel, Campaign } from '../../entities/campaign'
+import { CampaignModel } from '../../entities/campaign'
 import { Resolver, Query, Mutation, Arg } from 'type-graphql'
 import { DonationInput } from './types/donation-input'
 import { mongoose } from '@typegoose/typegoose'
+import { MyDonations } from '../../entities/myDonations'
 
 @Resolver()
 class DonationResolver {
-  @Query(() => [Campaign])
-  async myDonations(@Arg('input') input: string): Promise<Campaign[] | null> {
+  @Query(() => [MyDonations])
+  async myDonations(@Arg('_id') _id: string): Promise<MyDonations[] | null> {
     try {
-      const myDonations = await CampaignModel.find({ fundraiserId: input })
-      return myDonations
+      const campaigns = await CampaignModel.aggregate([
+        {
+          $unwind: { path: '$userDonations', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $match: { 'userDonations.userId': new mongoose.Types.ObjectId(_id) },
+        },
+      ])
+      return campaigns
     } catch (err) {
       console.log(err)
       return null

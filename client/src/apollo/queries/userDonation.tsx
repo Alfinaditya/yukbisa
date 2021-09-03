@@ -1,12 +1,14 @@
 import { gql } from '@apollo/client'
 
 export const GET_MY_DONATIONS = gql`
-  query Mydonations($input: String!) {
-    myDonations(input: $input) {
-      _id
-      title
+  query MyDonations($input: String!) {
+    myDonations(_id: $input) {
       image
-      currentAmount
+      title
+      createdAt
+      userDonations {
+        amount
+      }
     }
   }
 `

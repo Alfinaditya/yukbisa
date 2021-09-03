@@ -43,6 +43,17 @@ class CampaignResolver {
     }
   }
 
+  @Query(() => [Campaign])
+  async myCampaigns(@Arg('input') input: string): Promise<Campaign[] | null> {
+    try {
+      const myCampaigns = await CampaignModel.find({ fundraiserId: input })
+      return myCampaigns
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }
+
   @Query(() => [CampaignDetails])
   async campaign(
     @Arg('endPoint') endPoint: string
@@ -115,16 +126,6 @@ class CampaignResolver {
       return null
     }
   }
-  // @Query(() => [Campaign])
-  // async campaginsByName(@Arg('name') name: string): Promise<Campaign[] | null> {
-  //   try {
-  //     const campaigns = await CampaignModel.find({ 'fundraiser.name': name })
-  //     return campaigns
-  //   } catch (err) {
-  //     console.log(err)
-  //     return null
-  //   }
-  // }
 
   @UseMiddleware(authMiddleware)
   @Mutation(() => Campaign)
@@ -136,8 +137,6 @@ class CampaignResolver {
       folder: 'Yuk Bisa/campaigns',
       allowed_formats: ['jpg,jpeg,png'],
     })
-    // result.public_id
-    // result.secure_url
     const newCampaign = new CampaignModel({
       beneficiaryName: input.beneficiaryName,
       title: input.title,

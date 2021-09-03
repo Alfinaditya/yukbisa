@@ -1,6 +1,10 @@
-export interface UserDonations {
-  _id: string
-  title: string
+type Donations = {
+  amount: number
+}
+
+export interface Mydonations {
   image: string
-  currentAmount: number
+  title: string
+  createdAt: Date
+  userDonations: Donations
 }

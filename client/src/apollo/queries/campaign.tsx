@@ -42,3 +42,14 @@ export const GET_CAMPAIGN_DETAILS = gql`
     }
   }
 `
+
+export const GET_MY_CAMPAIGNS = gql`
+  query MyCampaigns($input: String!) {
+    myCampaigns(input: $input) {
+      _id
+      title
+      image
+      currentAmount
+    }
+  }
+`

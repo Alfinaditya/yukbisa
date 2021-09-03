@@ -1,7 +1,6 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as Property, Ref, mongoose } from '@typegoose/typegoose'
 import { User } from './user'
-import { truncate } from 'fs'
 
 @ObjectType()
 export class Campaigns {

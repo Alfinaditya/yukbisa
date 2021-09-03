@@ -19,6 +19,20 @@ type UserDetails = {
   user: User
 }
 
+export interface Mycampaigns {
+  _id: string
+  title: string
+  image: string
+  currentAmount: number
+}
+
+export interface Donations {
+  _id: string
+  title: string
+  image: string
+  currentAmount: number
+}
+
 export interface Campaigns {
   _id: string
   image: string

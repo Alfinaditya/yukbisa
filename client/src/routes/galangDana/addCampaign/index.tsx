@@ -6,7 +6,13 @@ import 'react-phone-input-2/lib/style.css'
 import { createEndpoint, encodedImage } from '../../../helpers/helper'
 import { useMutation } from '@apollo/client'
 import { ADD_CAMPAIGN } from '../../../apollo/mutations/campaign'
-import { GET_CAMPAIGNS } from '../../../apollo/queries/campaign'
+import {
+  GET_CAMPAIGNS,
+  GET_MY_CAMPAIGNS,
+} from '../../../apollo/queries/campaign'
+import { Token } from '../../../ts/token'
+import jwtDecode from 'jwt-decode'
+import { getAccessToken } from '../../../auth/accessToken'
 
 type Inputs = {
   beneficiaryName: string
@@ -18,10 +24,14 @@ type Inputs = {
 }
 
 const Campaign = () => {
+  const token: Token = jwtDecode(getAccessToken())
   const [target, setTarget] = useState<string | undefined>('0')
   const [addCampaign, { data, loading, error }] = useMutation(ADD_CAMPAIGN, {
     fetchPolicy: 'network-only',
-    refetchQueries: [{ query: GET_CAMPAIGNS }],
+    refetchQueries: [
+      { query: GET_CAMPAIGNS },
+      { query: GET_MY_CAMPAIGNS, variables: { input: token.id } },
+    ],
   })
   const [phoneNumber, setPhoneNumber] = useState('')
   const {
