@@ -9,6 +9,7 @@ import MyDonations from './routes/myDonations'
 import DetailsCampaign from './routes/details/Campaign'
 import Donation from './routes/donation'
 import MyCampaigns from './routes/galangDana/myCampaigns'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 const Routes = () => {
   return (
@@ -16,14 +17,17 @@ const Routes = () => {
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route path='/my-donations' component={MyDonations} />
+        <ProtectedRoute path='/my-donations' component={MyDonations} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
-        <Route path='/account' component={Account} />
-        <Route path='/galang-dana/add-campaign' component={AddCampaign} />
-        <Route path='/galang-dana' component={MyCampaigns} />
-        <Route path='/my-donations' component={MyDonations} />
-        <Route path='/campaign/:slug/donation' component={Donation} />
+        <ProtectedRoute path='/account' component={Account} />
+        <ProtectedRoute
+          path='/galang-dana/add-campaign'
+          component={AddCampaign}
+        />
+        <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
+        <ProtectedRoute path='/my-donations' component={MyDonations} />
+        <ProtectedRoute path='/campaign/:slug/donation' component={Donation} />
         <Route path='/campaign/:slug' component={DetailsCampaign} />
       </Switch>
     </Router>

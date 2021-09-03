@@ -5,12 +5,14 @@ import { GET_ME } from '../apollo/queries/user'
 import { setAccessToken } from '../auth/accessToken'
 import { Me } from '../ts/user'
 import { ReactComponent as BrandSvg } from '../assets/brand.svg'
+import { useHistory } from 'react-router'
 const LOGOUT = gql`
   mutation Logout {
     logout
   }
 `
 const Navbar = () => {
+  const history = useHistory()
   const [logout, { client }] = useMutation(LOGOUT, {
     fetchPolicy: 'network-only',
   })
@@ -20,6 +22,7 @@ const Navbar = () => {
     await logout()
     setAccessToken('')
     await client.resetStore()
+    history.push('/login')
   }
 
   return (

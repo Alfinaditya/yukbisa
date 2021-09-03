@@ -4,7 +4,7 @@ import CurrencyInput from 'react-currency-input-field'
 import { useLocation } from 'react-router-dom'
 import { ADD_DONATION } from '../../apollo/mutations/userDonation'
 import { getAccessToken } from '../../auth/accessToken'
-import jwtDecode from 'jwt-decode'
+import jwtDecode, { JwtPayload } from 'jwt-decode'
 import {
   GET_CAMPAIGNS,
   GET_CAMPAIGN_DETAILS,
