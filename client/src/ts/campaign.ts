@@ -52,7 +52,8 @@ export interface Campaign {
   currentAmount: number
   target: number
   story: string
-  purposeDescription: String
+  purposeDescription: string
+  userDonations: [{ userId: string }]
   fundraiserDetails: fundraiserDetails
   createdAt: Date
   userDetails: [UserDetails]

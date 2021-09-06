@@ -27,6 +27,9 @@ export const GET_CAMPAIGN_DETAILS = gql`
       target
       story
       purposeDescription
+      userDonations {
+        userId
+      }
       userDetails {
         userId
         amount
