@@ -17,6 +17,14 @@ const Account = () => {
           <p>{data.me.dateOfBirth || '1 September 1970'}</p>
         </div>
       )}
+      <form action=''>
+        <label>Foto</label>
+        <input type='file' />
+        <label>Bio</label>
+        <input type='text' />
+        <label>Date</label>
+        <input type='date' />
+      </form>
     </div>
   )
 }

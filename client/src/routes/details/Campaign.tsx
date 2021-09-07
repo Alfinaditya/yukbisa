@@ -1,6 +1,14 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
+import jwtDecode from 'jwt-decode'
 import { Link, useParams, useRouteMatch } from 'react-router-dom'
-import { GET_CAMPAIGN_DETAILS } from '../../apollo/queries/campaign'
+import { DELETE_CAMPAIGN } from '../../apollo/mutations/campaign'
+import {
+  GET_CAMPAIGNS,
+  GET_CAMPAIGN_DETAILS,
+  GET_MY_CAMPAIGNS,
+} from '../../apollo/queries/campaign'
+import { RouteComponentProps } from 'react-router-dom'
+import { getAccessToken } from '../../auth/accessToken'
 import { Container } from '../../components/Container'
 import { UserImage, Image } from '../../components/Image'
 import { Campaign } from '../../ts/campaign'
@@ -14,19 +22,38 @@ import {
   BeneficiaryTitle,
 } from './style'
 
-const DetailsCampaign = () => {
+const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
   const { slug } = useParams<{ slug?: string }>()
   let { url } = useRouteMatch()
+  let token: any = ''
   const { loading, data } = useQuery(GET_CAMPAIGN_DETAILS, {
     variables: {
       input: slug,
     },
   })
-
+  if (getAccessToken()) {
+    token = jwtDecode(getAccessToken())
+  }
+  const [deleteCampaign, { loading: deleteCampaignLoading }] = useMutation(
+    DELETE_CAMPAIGN,
+    {
+      fetchPolicy: 'network-only',
+      refetchQueries: [
+        { query: GET_CAMPAIGNS },
+        { query: GET_MY_CAMPAIGNS, variables: { fundraiserId: token.id } },
+      ],
+    }
+  )
   if (loading) return <p>Loading...</p>
-  if (data) console.log(data)
-  const campaignDetails: Campaign = data.campaign[0]
+  if (deleteCampaignLoading) return <p>Delete Campaign</p>
 
+  const campaignDetails: Campaign = data.campaign[0]
+  async function handleDelete() {
+    await deleteCampaign({
+      variables: { endPoint: slug, imageId: campaignDetails.imageId },
+    })
+    history.push('/')
+  }
   return (
     <Container>
       <h1>Details Campaign</h1>
@@ -44,9 +71,18 @@ const DetailsCampaign = () => {
             max='100'
           ></Progress>
           <p>{campaignDetails.userDonations.length} Donasi</p>
-          <Link to={`${url}/donation?slug=${slug}`}>
-            <button>Donasi Sekarang</button>
-          </Link>
+
+          {getAccessToken() && token.id === campaignDetails.fundraiserId ? (
+            <div>
+              <button>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
+            </div>
+          ) : (
+            <Link to={`${url}/donation?slug=${slug}`}>
+              <button>Donasi Sekarang</button>
+            </Link>
+          )}
+
           <h1>Informasi Penggalangan Dana</h1>
 
           <FundraiserContainer>
@@ -65,7 +101,6 @@ const DetailsCampaign = () => {
             <h1>Cerita</h1>
             <p>{campaignDetails.story}</p>
           </StoryContainer>
-
           <p>Donasi ({campaignDetails.userDonations.length})</p>
           {campaignDetails.userDetails &&
             campaignDetails.userDetails.map(user =>

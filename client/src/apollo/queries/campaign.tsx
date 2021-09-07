@@ -20,6 +20,7 @@ export const GET_CAMPAIGN_DETAILS = gql`
   query GetCampaignDetails($input: String!) {
     campaign(endPoint: $input) {
       _id
+      imageId
       image
       title
       beneficiaryName
@@ -27,6 +28,7 @@ export const GET_CAMPAIGN_DETAILS = gql`
       target
       story
       purposeDescription
+      fundraiserId
       userDonations {
         userId
       }
@@ -48,11 +50,12 @@ export const GET_CAMPAIGN_DETAILS = gql`
 `
 
 export const GET_MY_CAMPAIGNS = gql`
-  query MyCampaigns($input: String!) {
-    myCampaigns(input: $input) {
+  query MyCampaigns($fundraiserId: String!) {
+    myCampaigns(fundraiserId: $fundraiserId) {
       _id
       title
       image
+      endPoint
       currentAmount
     }
   }

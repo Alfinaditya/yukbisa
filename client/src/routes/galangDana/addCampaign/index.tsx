@@ -30,7 +30,7 @@ const Campaign = () => {
     fetchPolicy: 'network-only',
     refetchQueries: [
       { query: GET_CAMPAIGNS },
-      { query: GET_MY_CAMPAIGNS, variables: { input: token.id } },
+      { query: GET_MY_CAMPAIGNS, variables: { fundraiserId: token.id } },
     ],
   })
   const [phoneNumber, setPhoneNumber] = useState('')

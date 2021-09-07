@@ -7,3 +7,8 @@ export const ADD_CAMPAIGN = gql`
     }
   }
 `
+export const DELETE_CAMPAIGN = gql`
+  mutation DeleteCampaign($imageId: String!, $endPoint: String!) {
+    deleteCampaign(imageId: $imageId, endPoint: $endPoint)
+  }
+`

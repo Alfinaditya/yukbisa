@@ -44,9 +44,14 @@ class CampaignResolver {
   }
 
   @Query(() => [Campaign])
-  async myCampaigns(@Arg('input') input: string): Promise<Campaign[] | null> {
+  async myCampaigns(
+    @Arg('fundraiserId') fundraiserId: string
+  ): Promise<Campaign[] | null> {
     try {
-      const myCampaigns = await CampaignModel.find({ fundraiserId: input })
+      console.log(fundraiserId)
+      const myCampaigns = await CampaignModel.find({
+        fundraiserId: fundraiserId,
+      })
       return myCampaigns
     } catch (err) {
       console.log(err)
@@ -152,6 +157,23 @@ class CampaignResolver {
     try {
       await newCampaign.save()
       return newCampaign
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }
+  @UseMiddleware(authMiddleware)
+  @Mutation(() => String)
+  async deleteCampaign(
+    @Arg('endPoint') endPoint: string,
+    @Arg('imageId') imageId: string
+  ): Promise<string | null> {
+    try {
+      await Cloudinary.uploader.destroy(imageId)
+      await CampaignModel.findOneAndDelete({
+        endPoint: endPoint,
+      })
+      return 'sukses mendelete'
     } catch (err) {
       console.log(err)
       return null

@@ -23,6 +23,7 @@ export interface Mycampaigns {
   _id: string
   title: string
   image: string
+  endPoint: string
   currentAmount: number
 }
 
@@ -46,6 +47,7 @@ export interface Campaigns {
 
 export interface Campaign {
   _id: string
+  imageId: string
   image: string
   title: string
   beneficiaryName: string
@@ -53,6 +55,7 @@ export interface Campaign {
   target: number
   story: string
   purposeDescription: string
+  fundraiserId: string
   userDonations: [{ userId: string }]
   fundraiserDetails: fundraiserDetails
   createdAt: Date
