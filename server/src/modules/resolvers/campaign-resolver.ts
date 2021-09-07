@@ -8,7 +8,7 @@ import {
   Ctx,
 } from 'type-graphql'
 import { Campaign, CampaignModel } from '../../entities/campaign'
-import { CampaignInput } from './types/campaign-input'
+import { CampaignInput, EditCampaignInput } from './types/campaign-input'
 import { MyContext } from '../../types/Mycontext'
 import Cloudinary from '../../config/cloudinary-config'
 import { mongoose } from '@typegoose/typegoose'
@@ -59,8 +59,22 @@ class CampaignResolver {
     }
   }
 
+  @Query(() => Campaign)
+  async campaign(@Arg('endPoint') endPoint: string): Promise<Campaign | null> {
+    try {
+      console.log(endPoint)
+      const myCampaigns = await CampaignModel.findOne({
+        endPoint: endPoint,
+      })
+      return myCampaigns
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }
+
   @Query(() => [CampaignDetails])
-  async campaign(
+  async campaignDetails(
     @Arg('endPoint') endPoint: string
   ): Promise<CampaignDetails[] | null> {
     try {
@@ -162,6 +176,33 @@ class CampaignResolver {
       return null
     }
   }
+
+  @UseMiddleware(authMiddleware)
+  @Mutation(() => String)
+  async editCampaign(
+    @Arg('input') input: EditCampaignInput
+  ): Promise<String | null> {
+    try {
+      await CampaignModel.findOneAndUpdate(
+        {
+          endPoint: input.endPoint,
+        },
+        {
+          beneficiaryName: input.beneficiaryName,
+          title: input.beneficiaryName,
+          target: input.target,
+          phoneNumber: input.phoneNumber,
+          purposeDescription: input.purposeDescription,
+          story: input.story,
+        }
+      )
+      return 'success'
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }
+
   @UseMiddleware(authMiddleware)
   @Mutation(() => String)
   async deleteCampaign(

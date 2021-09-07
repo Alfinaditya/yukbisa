@@ -24,12 +24,13 @@ class DonationResolver {
     }
   }
 
+  // Todo fix this
   @Mutation(() => String)
   async addDonation(
     @Arg('input') input: DonationInput
   ): Promise<string | null> {
     try {
-      await CampaignModel.updateOne(
+      await CampaignModel.findOneAndUpdate(
         {
           endPoint: input.endPoint,
         },

@@ -46,6 +46,17 @@ export interface Campaigns {
 }
 
 export interface Campaign {
+  title: string
+  beneficiaryName: string
+  phoneNumber: string
+  purposeDescription: string
+  story: string
+  target: number
+  image: string
+  imageId: string
+}
+
+export interface CampaignDetails {
   _id: string
   imageId: string
   image: string

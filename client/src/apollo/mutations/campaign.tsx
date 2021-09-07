@@ -12,3 +12,8 @@ export const DELETE_CAMPAIGN = gql`
     deleteCampaign(imageId: $imageId, endPoint: $endPoint)
   }
 `
+export const EDIT_CAMPAIGN = gql`
+  mutation ($input: EditCampaignInput!) {
+    editCampaign(input: $input)
+  }
+`

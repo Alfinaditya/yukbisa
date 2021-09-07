@@ -11,7 +11,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { getAccessToken } from '../../auth/accessToken'
 import { Container } from '../../components/Container'
 import { UserImage, Image } from '../../components/Image'
-import { Campaign } from '../../ts/campaign'
+import { CampaignDetails } from '../../ts/campaign'
 import {
   Title,
   Progress,
@@ -45,9 +45,9 @@ const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
     }
   )
   if (loading) return <p>Loading...</p>
-  if (deleteCampaignLoading) return <p>Delete Campaign</p>
+  if (deleteCampaignLoading) return <p>Delete DetaiCampaignDetails</p>
 
-  const campaignDetails: Campaign = data.campaign[0]
+  const campaignDetails: CampaignDetails = data.campaignDetails[0]
   async function handleDelete() {
     await deleteCampaign({
       variables: { endPoint: slug, imageId: campaignDetails.imageId },
@@ -74,7 +74,9 @@ const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
 
           {getAccessToken() && token.id === campaignDetails.fundraiserId ? (
             <div>
-              <button>Edit</button>
+              <Link to={`${url}/edit-campaign?slug=${slug}`}>
+                <button>Edit</button>
+              </Link>
               <button onClick={handleDelete}>Delete</button>
             </div>
           ) : (

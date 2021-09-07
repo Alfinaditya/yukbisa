@@ -10,6 +10,7 @@ import DetailsCampaign from './routes/details/Campaign'
 import Donation from './routes/donations/addDonation'
 import MyCampaigns from './routes/galangDana/myCampaigns'
 import ProtectedRoute from './routes/ProtectedRoute'
+import EditCampaign from './routes/details/editCampaign'
 
 const Routes = () => {
   return (
@@ -28,6 +29,10 @@ const Routes = () => {
         <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
         <ProtectedRoute path='/my-donations' component={MyDonations} />
         <ProtectedRoute path='/campaign/:slug/donation' component={Donation} />
+        <ProtectedRoute
+          path='/campaign/:slug/edit-campaign'
+          component={EditCampaign}
+        />
         <Route path='/campaign/:slug' component={DetailsCampaign} />
       </Switch>
     </Router>
