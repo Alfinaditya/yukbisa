@@ -1,17 +1,18 @@
 import { useMutation, useQuery } from '@apollo/client'
 import jwtDecode from 'jwt-decode'
-import { Link, useParams, useRouteMatch } from 'react-router-dom'
+import { Link, useParams, useRouteMatch, useHistory } from 'react-router-dom'
 import { DELETE_CAMPAIGN } from '../../apollo/mutations/campaign'
 import {
   GET_CAMPAIGNS,
   GET_CAMPAIGN_DETAILS,
   GET_MY_CAMPAIGNS,
 } from '../../apollo/queries/campaign'
-import { RouteComponentProps } from 'react-router-dom'
+
 import { getAccessToken } from '../../auth/accessToken'
 import { Container } from '../../components/Container'
 import { UserImage, Image } from '../../components/Image'
 import { CampaignDetails } from '../../ts/campaign'
+import { v4 as uuidv4 } from 'uuid'
 import {
   Title,
   Progress,
@@ -21,10 +22,12 @@ import {
   StoryContainer,
   BeneficiaryTitle,
 } from './style'
+import { calcProgress, convertCurrency } from '../../helpers/helper'
 
-const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
+const DetailsCampaign = () => {
+  const history = useHistory()
   const { slug } = useParams<{ slug?: string }>()
-  let { url } = useRouteMatch()
+  const { url } = useRouteMatch()
   let token: any = ''
   const { loading, data } = useQuery(GET_CAMPAIGN_DETAILS, {
     variables: {
@@ -45,6 +48,7 @@ const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
     }
   )
   if (loading) return <p>Loading...</p>
+
   if (deleteCampaignLoading) return <p>Delete DetaiCampaignDetails</p>
 
   const campaignDetails: CampaignDetails = data.campaignDetails[0]
@@ -56,18 +60,20 @@ const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
   }
   return (
     <Container>
-      <h1>Details Campaign</h1>
-      <p>Halooo ganggg</p>
-      {data && campaignDetails && (
+      {campaignDetails && (
         <>
           <Image src={campaignDetails.image} />
           <Title>{campaignDetails.title}</Title>
           <p>
-            Rp {campaignDetails.currentAmount} Terkumpul dari Rp{' '}
-            {campaignDetails.target}
+            {convertCurrency(campaignDetails.currentAmount)} Terkumpul dari Rp
+            {convertCurrency(campaignDetails.target)}
           </p>
+
           <Progress
-            value={campaignDetails.userDonations.length}
+            value={calcProgress(
+              campaignDetails.currentAmount,
+              campaignDetails.target
+            )}
             max='100'
           ></Progress>
           <p>{campaignDetails.userDonations.length} Donasi</p>
@@ -105,23 +111,25 @@ const DetailsCampaign: React.FC<RouteComponentProps> = ({ history }) => {
           </StoryContainer>
           <p>Donasi ({campaignDetails.userDonations.length})</p>
           {campaignDetails.userDetails &&
-            campaignDetails.userDetails.map(user =>
-              user.amount && user.userId ? (
-                <div>
-                  <UserImage
-                    src={user.user.displayImage}
-                    alt={user.user.name}
-                  />
-                  <UserDonationName>{user.user.name}</UserDonationName>
-                  <p>
-                    Berdonasi sebesar <b>Rp {user.amount}</b>
-                  </p>
-                  <p>{user.message}</p>
-                </div>
-              ) : (
-                <p>Belum ada yang menyumbang</p>
-              )
-            )}
+            campaignDetails.userDetails.map(user => (
+              <div key={uuidv4()}>
+                {user.amount && user.userId ? (
+                  <>
+                    <UserImage
+                      src={user.user.displayImage}
+                      alt={user.user.name}
+                    />
+                    <UserDonationName>{user.user.name}</UserDonationName>
+                    <p>
+                      Berdonasi sebesar <b>{convertCurrency(user.amount)}</b>
+                    </p>
+                    <p>{user.message}</p>
+                  </>
+                ) : (
+                  <p>Belum ada yang menyumbang</p>
+                )}
+              </div>
+            ))}
         </>
       )}
     </Container>

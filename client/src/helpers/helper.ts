@@ -45,3 +45,17 @@ export function convertDate(dateValue: Date) {
   }
   return { date, month, years }
 }
+
+export function convertCurrency(currency: number) {
+  return new Intl.NumberFormat('ID', {
+    style: 'currency',
+    currency: 'IDR',
+  }).format(currency)
+}
+
+export function calcProgress(currentAmount: number, target: number) {
+  console.log(currentAmount, target)
+  const progress = Math.ceil((currentAmount / target) * 100)
+  console.log(progress)
+  return progress
+}

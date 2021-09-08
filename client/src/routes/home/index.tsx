@@ -1,10 +1,15 @@
 import { useQuery } from '@apollo/client'
 import { GET_CAMPAIGNS } from '../../apollo/queries/campaign'
-import { convertDate } from '../../helpers/helper'
+import {
+  calcProgress,
+  convertCurrency,
+  convertDate,
+} from '../../helpers/helper'
 import { Container } from '../../components/Container'
 import { Campaigns } from '../../ts/campaign'
 import { Title, Card } from './style'
 import { Image } from '../../components/Image'
+import { Progress } from '../details/style'
 
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
@@ -15,8 +20,7 @@ const Home = () => {
 
   return (
     <Container>
-      {data &&
-        campaigns &&
+      {data && campaigns.length ? (
         campaigns.map(campaign => {
           const { date, month, years } = convertDate(campaign.createdAt)
           return (
@@ -27,11 +31,18 @@ const Home = () => {
               <p>
                 {date} {month} {years}
               </p>
+              <Progress
+                value={calcProgress(campaign.currentAmount, campaign.target)}
+                max='100'
+              ></Progress>
               <p>Terkumpul</p>
-              <p>{campaign.currentAmount}</p>
+              <p>{convertCurrency(campaign.currentAmount)}</p>
             </Card>
           )
-        })}
+        })
+      ) : (
+        <p>Belum ada campaign</p>
+      )}
     </Container>
   )
 }

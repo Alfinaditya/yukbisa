@@ -20,6 +20,7 @@ export const LOGIN_USER = gql`
       accessToken
       user {
         email
+        displayImageId
         displayImage
         name
         dateOfBirth

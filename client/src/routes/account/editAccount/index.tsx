@@ -17,7 +17,7 @@ type Inputs = {
 const EditAccount = () => {
   const history = useHistory()
   const { loading, data } = useQuery(GET_ME)
-  const [editMe] = useMutation(EDIT_ME, {
+  const [editMe, { loading: mutationLoading }] = useMutation(EDIT_ME, {
     fetchPolicy: 'network-only',
     refetchQueries: [{ query: GET_ME }],
   })
@@ -90,7 +90,13 @@ const EditAccount = () => {
           defaultValue={new Date(me.dateOfBirth).toISOString().substr(0, 10)}
           type='date'
         />
-        <button type='submit'>Submit</button>
+        {mutationLoading ? (
+          <button type='submit' disabled>
+            Submit
+          </button>
+        ) : (
+          <button type='submit'>Submit</button>
+        )}
       </form>
     </div>
   )

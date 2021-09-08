@@ -41,6 +41,8 @@ export interface Campaigns {
   title: string
   endPoint: string
   currentAmount: number
+  target: number
+  userDonations: [{ userId: string }]
   createdAt: Date
   fundraiserDetails: FundraiserDetails
 }

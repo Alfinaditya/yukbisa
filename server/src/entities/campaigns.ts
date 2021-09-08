@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as Property, Ref, mongoose } from '@typegoose/typegoose'
 import { User } from './user'
+import { UserDonation } from './userDonation'
 
 @ObjectType()
 export class Campaigns {
@@ -22,6 +23,13 @@ export class Campaigns {
   @Field()
   @Property()
   currentAmount!: number
+
+  @Field(() => [UserDonation], {
+    nullable: true,
+    description: 'Length of the user Donations',
+  })
+  @Property()
+  userDonations!: Ref<UserDonation>[]
 
   @Field()
   @Property()

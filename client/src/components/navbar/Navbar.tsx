@@ -34,7 +34,7 @@ const Navbar = () => {
         <BrandSvg />
       </Link>
       <NavLink to='/'>Home</NavLink>
-      {!loading && me! && (
+      {!loading && !me && (
         <>
           <NavLink to='/login'>Login</NavLink>
           <NavLink to='/register'>Register</NavLink>

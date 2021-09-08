@@ -139,6 +139,7 @@ class CampaignResolver {
         },
         { $unwind: '$fundraiserDetails' },
       ])
+      console.log(campaign)
       return campaign
     } catch (err) {
       console.log(err)

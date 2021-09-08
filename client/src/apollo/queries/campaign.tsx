@@ -8,6 +8,10 @@ export const GET_CAMPAIGNS = gql`
       title
       endPoint
       currentAmount
+      target
+      userDonations {
+        userId
+      }
       createdAt
       fundraiserDetails {
         name
