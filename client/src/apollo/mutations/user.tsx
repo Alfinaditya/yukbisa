@@ -28,3 +28,8 @@ export const LOGIN_USER = gql`
     }
   }
 `
+export const EDIT_ME = gql`
+  mutation EditMe($input: EditMeInput!) {
+    editMe(input: $input)
+  }
+`

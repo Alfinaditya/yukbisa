@@ -41,6 +41,7 @@ passport.use(
           const user = new UserModel({
             email: profile._json.email,
             name: profile._json.name,
+            displayImageId: 'gid',
             displayImage: profile._json.picture,
             provider: profile.provider,
           })

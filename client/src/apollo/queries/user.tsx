@@ -5,6 +5,7 @@ export const GET_ME = gql`
     me {
       email
       displayImage
+      displayImageId
       dateOfBirth
       bio
     }

@@ -18,7 +18,7 @@ const Navbar = () => {
   const [logout, { client }] = useMutation(LOGOUT, {
     fetchPolicy: 'network-only',
   })
-  const { data, loading } = useQuery<Me>(GET_ME)
+  const { data, loading } = useQuery(GET_ME)
   async function handleLogout(e: FormEvent) {
     e.preventDefault()
     await logout()
@@ -26,14 +26,15 @@ const Navbar = () => {
     await client.resetStore()
     history.push('/login')
   }
-
+  if (loading) return <p>Loading</p>
+  const me: Me = data.me
   return (
     <div>
       <Link to='/'>
         <BrandSvg />
       </Link>
       <NavLink to='/'>Home</NavLink>
-      {!loading && data && !data.me && (
+      {!loading && me! && (
         <>
           <NavLink to='/login'>Login</NavLink>
           <NavLink to='/register'>Register</NavLink>
@@ -42,7 +43,7 @@ const Navbar = () => {
       <NavLink to='/galang-dana'>Galang Dana</NavLink>
       <NavLink to='/my-donations'>Donasi Saya</NavLink>
       <NavLink to='/account'>Akun</NavLink>
-      {!loading && data && data.me && <a onClick={handleLogout}>Log out</a>}
+      {!loading && me && <a onClick={handleLogout}>Log out</a>}
     </div>
   )
 }

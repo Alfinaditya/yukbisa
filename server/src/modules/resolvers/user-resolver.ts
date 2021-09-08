@@ -7,13 +7,20 @@ import {
   ObjectType,
   Field,
   Ctx,
+  UseMiddleware,
 } from 'type-graphql'
-import { UserLoginInput, UserRegisterInput } from './types/user-input'
+import {
+  EditMeInput,
+  UserLoginInput,
+  UserRegisterInput,
+} from './types/user-input'
 import { compare } from 'bcrypt'
 import { MyContext } from '../../types/Mycontext'
 import { createAccessToken, createRefreshToken } from '../../auth/createToken'
 import { sendRefreshToken } from '../../auth/sendRefreshToken'
 import { verify } from 'jsonwebtoken'
+import Cloudinary from '../../config/cloudinary-config'
+import { authMiddleware } from '../middlewares/authMiddleware'
 
 @ObjectType()
 class UserResponse {
@@ -46,6 +53,38 @@ class UserResolver {
     req.logout()
     sendRefreshToken(res, '')
     return true
+  }
+
+  @UseMiddleware(authMiddleware)
+  @Mutation(() => String)
+  async editMe(
+    @Arg('input') input: EditMeInput,
+    @Ctx() ctx: MyContext
+  ): Promise<String | null> {
+    if (input.imageId != 'oid' && input.imageId != 'gid') {
+      await Cloudinary.uploader.destroy(input.imageId)
+    }
+    const result = await Cloudinary.uploader.upload(input.image, {
+      folder: 'Yuk Bisa/users',
+      allowed_formats: ['jpg,jpeg,png'],
+    })
+    try {
+      await UserModel.findByIdAndUpdate(
+        {
+          _id: ctx.payload!.id,
+        },
+        {
+          displayImage: result.secure_url,
+          displayImageId: result.public_id,
+          bio: input.bio,
+          dateOfBirth: input.dateOfBirth,
+        }
+      )
+      return 'success'
+    } catch (err) {
+      console.log(err)
+      return null
+    }
   }
 
   @Mutation(() => UserResponse)

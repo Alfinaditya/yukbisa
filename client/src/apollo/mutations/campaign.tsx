@@ -13,7 +13,7 @@ export const DELETE_CAMPAIGN = gql`
   }
 `
 export const EDIT_CAMPAIGN = gql`
-  mutation ($input: EditCampaignInput!) {
+  mutation EditCampaign($input: EditCampaignInput!) {
     editCampaign(input: $input)
   }
 `
