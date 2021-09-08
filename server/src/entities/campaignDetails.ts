@@ -82,7 +82,7 @@ export class CampaignDetails {
 
 @ObjectType()
 export class UserDetails {
-  @Field(() => ID, { nullable: true })
+  @Field(() => ID)
   @Property()
   readonly userId!: mongoose.Types.ObjectId
 

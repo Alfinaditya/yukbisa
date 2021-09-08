@@ -11,6 +11,7 @@ import Donation from './routes/donations/addDonation'
 import MyCampaigns from './routes/galangDana/myCampaigns'
 import ProtectedRoute from './routes/ProtectedRoute'
 import EditCampaign from './routes/details/editCampaign'
+import EditAccount from './routes/account/editAccount'
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
         <ProtectedRoute path='/my-donations' component={MyDonations} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
+        <ProtectedRoute path='/account/edit-account' component={EditAccount} />
         <ProtectedRoute path='/account' component={Account} />
         <ProtectedRoute
           path='/galang-dana/add-campaign'

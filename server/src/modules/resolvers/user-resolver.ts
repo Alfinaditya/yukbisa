@@ -21,6 +21,7 @@ import { sendRefreshToken } from '../../auth/sendRefreshToken'
 import { verify } from 'jsonwebtoken'
 import Cloudinary from '../../config/cloudinary-config'
 import { authMiddleware } from '../middlewares/authMiddleware'
+import { validURL } from '../../helpers/helper'
 
 @ObjectType()
 class UserResponse {
@@ -56,34 +57,58 @@ class UserResolver {
   }
 
   @UseMiddleware(authMiddleware)
-  @Mutation(() => String)
+  @Mutation(() => User)
   async editMe(
     @Arg('input') input: EditMeInput,
     @Ctx() ctx: MyContext
-  ): Promise<String | null> {
-    if (input.imageId != 'oid' && input.imageId != 'gid') {
+  ): Promise<User | null> {
+    if (
+      input.imageId != 'oid' &&
+      input.imageId != 'gid' &&
+      !validURL(input.image)
+    ) {
       await Cloudinary.uploader.destroy(input.imageId)
     }
-    const result = await Cloudinary.uploader.upload(input.image, {
-      folder: 'Yuk Bisa/users',
-      allowed_formats: ['jpg,jpeg,png'],
-    })
-    try {
-      await UserModel.findByIdAndUpdate(
-        {
-          _id: ctx.payload!.id,
-        },
-        {
-          displayImage: result.secure_url,
-          displayImageId: result.public_id,
-          bio: input.bio,
-          dateOfBirth: input.dateOfBirth,
-        }
-      )
-      return 'success'
-    } catch (err) {
-      console.log(err)
-      return null
+    if (!validURL(input.image)) {
+      const result = await Cloudinary.uploader.upload(input.image, {
+        folder: 'Yuk Bisa/users',
+        allowed_formats: ['jpg,jpeg,png'],
+      })
+      try {
+        const user = await UserModel.findByIdAndUpdate(
+          {
+            _id: ctx.payload!.id,
+          },
+          {
+            displayImage: result.secure_url,
+            displayImageId: result.public_id,
+            name: input.name,
+            bio: input.bio,
+            dateOfBirth: input.dateOfBirth,
+          }
+        )
+        return user
+      } catch (err) {
+        console.log(err)
+        return null
+      }
+    } else {
+      try {
+        const user = await UserModel.findByIdAndUpdate(
+          {
+            _id: ctx.payload!.id,
+          },
+          {
+            name: input.name,
+            bio: input.bio,
+            dateOfBirth: input.dateOfBirth,
+          }
+        )
+        return user
+      } catch (err) {
+        console.log(err)
+        return null
+      }
     }
   }
 

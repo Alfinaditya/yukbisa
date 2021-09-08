@@ -48,6 +48,11 @@ export class EditMeInput {
   @Field()
   imageId!: string
 
+  @IsString({ message: 'Masukan nama dengan benar' })
+  @MaxLength(15, { message: 'Nama Terlalu panjang' })
+  @Field()
+  name!: string
+
   @IsString({ message: 'Masukan bio dengan benar' })
   @IsNotEmpty({ message: 'Bio Tidak boleh kosong' })
   @Field()

@@ -11,7 +11,6 @@ function App() {
       credentials: 'include',
     })
       .then(x => {
-        console.log(x)
         return x.json()
       })
       .then(res => {

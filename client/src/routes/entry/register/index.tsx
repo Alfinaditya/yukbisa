@@ -16,7 +16,6 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
   if (error) return <p>Error</p>
   if (data) {
     setAccessToken(data.register.accessToken)
-    console.log(data.register.accessToken)
   }
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()

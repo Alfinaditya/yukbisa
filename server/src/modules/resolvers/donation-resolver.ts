@@ -39,7 +39,7 @@ class DonationResolver {
           $push: {
             userDonations: {
               userId: new mongoose.Types.ObjectId(input.userId),
-              message: input.message,
+              message: input?.message,
               amount: input.amount,
             },
           },
