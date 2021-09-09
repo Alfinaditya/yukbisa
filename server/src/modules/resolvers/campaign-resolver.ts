@@ -48,7 +48,6 @@ class CampaignResolver {
     @Arg('fundraiserId') fundraiserId: string
   ): Promise<Campaign[] | null> {
     try {
-      console.log(fundraiserId)
       const myCampaigns = await CampaignModel.find({
         fundraiserId: fundraiserId,
       })
@@ -62,7 +61,6 @@ class CampaignResolver {
   @Query(() => Campaign)
   async campaign(@Arg('endPoint') endPoint: string): Promise<Campaign | null> {
     try {
-      console.log(endPoint)
       const myCampaigns = await CampaignModel.findOne({
         endPoint: endPoint,
       })
@@ -139,7 +137,6 @@ class CampaignResolver {
         },
         { $unwind: '$fundraiserDetails' },
       ])
-      console.log(campaign)
       return campaign
     } catch (err) {
       console.log(err)

@@ -6,6 +6,7 @@ export const CREATE_USER = gql`
       accessToken
       user {
         email
+        displayImageId
         displayImage
         name
         dateOfBirth

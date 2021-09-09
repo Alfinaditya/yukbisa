@@ -2,8 +2,8 @@ import { ObjectType, Field, ID } from 'type-graphql'
 import {
   prop as Property,
   getModelForClass,
-  Ref,
   mongoose,
+  Ref,
 } from '@typegoose/typegoose'
 import { UserDonation } from './userDonation'
 

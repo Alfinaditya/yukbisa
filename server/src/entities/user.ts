@@ -1,5 +1,10 @@
 import { ObjectType, Field, ID } from 'type-graphql'
-import { prop as Property, getModelForClass, pre } from '@typegoose/typegoose'
+import {
+  prop as Property,
+  getModelForClass,
+  pre,
+  index,
+} from '@typegoose/typegoose'
 import bcrypt from 'bcrypt'
 
 @pre<User>('save', async function () {
@@ -13,20 +18,22 @@ import bcrypt from 'bcrypt'
     }
   }
 })
+@index({ email: 1 }, { unique: true })
+@index({ name: 1 }, { unique: true })
 @ObjectType()
 export class User {
   @Field(() => ID)
   readonly _id!: string
 
   @Field()
-  @Property({ required: true, unique: true })
+  @Property({ required: true })
   email!: string
 
   @Property()
   password?: string
 
   @Field()
-  @Property({ required: true, unique: true })
+  @Property({ required: true })
   name!: string
 
   @Field()

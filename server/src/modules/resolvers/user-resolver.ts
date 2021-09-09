@@ -143,11 +143,12 @@ class UserResolver {
     return true
   }
 
-  @Mutation(() => UserResponse)
+  @Mutation(() => String)
   async register(
     @Arg('input') userInput: UserRegisterInput,
     @Ctx() ctx: MyContext
-  ): Promise<UserResponse | null> {
+  ): Promise<String | null> {
+    UserModel.syncIndexes()
     const newUser = new UserModel({
       name: userInput.name,
       email: userInput.email,
@@ -155,8 +156,7 @@ class UserResolver {
     })
     try {
       await newUser.save()
-      sendRefreshToken(ctx.res, createRefreshToken(newUser))
-      return { accessToken: createAccessToken(newUser), user: newUser }
+      return 'ok'
     } catch (err) {
       console.log(err)
       return null
