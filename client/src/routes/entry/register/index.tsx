@@ -4,6 +4,7 @@ import { setAccessToken } from '../../../auth/accessToken'
 import { GET_ME } from '../../../apollo/queries/user'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
+import { useState } from 'react'
 
 type Inputs = {
   email: string
@@ -13,6 +14,9 @@ type Inputs = {
 
 const Register = () => {
   const history = useHistory()
+  const [nameDuplicateErrorMessage, setNameDuplicateErrorMessage] = useState('')
+  const [emailDuplicateErrorMessage, setEmailDuplicateErrorMessage] =
+    useState('')
   const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
     fetchPolicy: 'network-only',
   })
@@ -26,27 +30,36 @@ const Register = () => {
       await createUser({
         variables: { input: data },
         update: (store, { data }) => {
+          setEmailDuplicateErrorMessage('')
+          setNameDuplicateErrorMessage('')
           if (!data) {
             return null
           }
-          store.writeQuery({
-            query: GET_ME,
-            data: {
-              me: data.register.user,
-            },
-          })
+          if (data.register.error.path === 'email') {
+            setEmailDuplicateErrorMessage(data.register.error.message)
+          }
+          if (data.register.error.path === 'name') {
+            setNameDuplicateErrorMessage(data.register.error.message)
+          }
+          if (data.register.user && data.register.accessToken) {
+            setAccessToken(data.register.accessToken)
+            store.writeQuery({
+              query: GET_ME,
+              data: {
+                me: data.register.user,
+              },
+            })
+            history.push('/')
+          }
         },
       })
-      history.push('/')
     } catch (error) {
       console.log(error)
     }
   }
   if (loading) return <p>Loading....</p>
   if (error) return <p>Error</p>
-  if (data) {
-    setAccessToken(data.register.accessToken)
-  }
+
   // async function handleSubmit(e: FormEvent) {
   //   e.preventDefault()
   //   // const body = { email, name, password }
@@ -85,6 +98,7 @@ const Register = () => {
         />
         {errors.email?.type === 'required' && <p>Wajib memasukan Email</p>}
         {errors.email?.type === 'pattern' && <p>Masukan Email yang valid</p>}
+        {emailDuplicateErrorMessage && <p>{emailDuplicateErrorMessage}</p>}
         <label>Password</label>
         <input
           type='password'
@@ -112,6 +126,7 @@ const Register = () => {
         {errors.name?.type === 'minLength' && (
           <p>Nama teralu pendek (minimal 5 huruf)</p>
         )}
+        {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
         <button type='submit'>Submit</button>
       </form>
     </div>

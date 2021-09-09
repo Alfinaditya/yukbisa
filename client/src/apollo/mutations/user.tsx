@@ -12,6 +12,10 @@ export const CREATE_USER = gql`
         dateOfBirth
         bio
       }
+      error {
+        path
+        message
+      }
     }
   }
 `
@@ -26,6 +30,10 @@ export const LOGIN_USER = gql`
         name
         dateOfBirth
         bio
+      }
+      error {
+        path
+        message
       }
     }
   }

@@ -130,18 +130,34 @@ class UserResolver {
   ): Promise<UserResponse | null> {
     const user = await UserModel.findOne({ email: userInput.email })
     if (!user) {
-      throw new Error('Login gagal')
+      return {
+        accessToken: null,
+        user: null,
+        error: { path: 'login', message: 'Email/Password salah' },
+      }
     }
     if (user.provider === 'google') {
-      throw new Error('Silahkan login menggunakan google')
+      return {
+        accessToken: null,
+        user: null,
+        error: { path: 'login', message: 'Email/Password salah' },
+      }
     }
     const valid = await compare(userInput.password!, user.password!)
-    console.log(valid)
     if (!valid) {
-      throw new Error('Login gagal')
+      return {
+        accessToken: null,
+        user: null,
+        error: { path: 'login', message: 'Email/Password salah' },
+      }
     }
+
     sendRefreshToken(ctx.res, createRefreshToken(user))
-    return { accessToken: createAccessToken(user), user }
+    return {
+      accessToken: createAccessToken(user),
+      user,
+      error: { path: '', message: '' },
+    }
   }
 
   @Mutation(() => Boolean)
@@ -177,11 +193,10 @@ class UserResolver {
     } catch (err: any) {
       if (err.code === 11000) {
         if (err.keyValue.email != null && err.code === 11000) {
-          console.log('Email')
           return {
             accessToken: null,
             user: null,
-            error: { path: 'Email', message: 'Email telah Digunakan' },
+            error: { path: 'email', message: 'Email telah Digunakan' },
           }
         } else if (err.keyValue.name != null && err.code === 11000) {
           console.log('Name')
