@@ -18,22 +18,28 @@ import bcrypt from 'bcrypt'
     }
   }
 })
-@index({ email: 1 }, { unique: true })
-@index({ name: 1 }, { unique: true })
 @ObjectType()
 export class User {
   @Field(() => ID)
   readonly _id!: string
 
   @Field()
-  @Property({ required: true })
+  @Property({
+    required: true,
+    unique: true,
+    index: true,
+  })
   email!: string
 
   @Property()
   password?: string
 
   @Field()
-  @Property({ required: true })
+  @Property({
+    required: true,
+    unique: true,
+    index: true,
+  })
   name!: string
 
   @Field()

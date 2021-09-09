@@ -24,11 +24,22 @@ import { authMiddleware } from '../middlewares/authMiddleware'
 import { validURL } from '../../helpers/helper'
 
 @ObjectType()
+class ErrorResponse {
+  @Field({ nullable: true })
+  path!: string
+  @Field({ nullable: true })
+  message!: string
+}
+
+@ObjectType()
 class UserResponse {
-  @Field()
-  accessToken!: string
-  @Field(() => User)
-  user!: User
+  @Field(() => String, { nullable: true })
+  accessToken!: string | null
+  @Field(() => User, { nullable: true })
+  user!: User | null
+
+  @Field(() => ErrorResponse)
+  error!: ErrorResponse
 }
 
 @Resolver()
@@ -147,21 +158,40 @@ class UserResolver {
   async register(
     @Arg('input') userInput: UserRegisterInput,
     @Ctx() ctx: MyContext
-  ): Promise<UserResponse | null> {
+  ): Promise<UserResponse | undefined | null> {
     UserModel.syncIndexes()
     const newUser = new UserModel({
       name: userInput.name,
       email: userInput.email,
       password: userInput.password,
     })
-    console.log(newUser)
     try {
       await newUser.save()
+      console.log(newUser)
       sendRefreshToken(ctx.res, createRefreshToken(newUser))
-      return { accessToken: createAccessToken(newUser), newUser }
-    } catch (err) {
-      console.log(err)
-      return null
+      return {
+        accessToken: createAccessToken(newUser),
+        user: newUser,
+        error: { path: '', message: '' },
+      }
+    } catch (err: any) {
+      if (err.code === 11000) {
+        if (err.keyValue.email != null && err.code === 11000) {
+          console.log('Email')
+          return {
+            accessToken: null,
+            user: null,
+            error: { path: 'Email', message: 'Email telah Digunakan' },
+          }
+        } else if (err.keyValue.name != null && err.code === 11000) {
+          console.log('Name')
+          return {
+            accessToken: null,
+            user: null,
+            error: { path: 'name', message: 'Nama telah Digunakan' },
+          }
+        }
+      }
     }
   }
 }

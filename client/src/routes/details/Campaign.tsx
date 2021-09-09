@@ -65,7 +65,7 @@ const DetailsCampaign = () => {
           <Image src={campaignDetails.image} />
           <Title>{campaignDetails.title}</Title>
           <p>
-            {convertCurrency(campaignDetails.currentAmount)} Terkumpul dari Rp
+            {convertCurrency(campaignDetails.currentAmount)} Terkumpul dari{' '}
             {convertCurrency(campaignDetails.target)}
           </p>
 

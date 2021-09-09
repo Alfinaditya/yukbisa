@@ -150,6 +150,7 @@ class CampaignResolver {
     @Arg('input') input: CampaignInput,
     @Ctx() ctx: MyContext
   ): Promise<Campaign | null> {
+    CampaignModel.syncIndexes()
     const result = await Cloudinary.uploader.upload(input.image, {
       folder: 'Yuk Bisa/campaigns',
       allowed_formats: ['jpg,jpeg,png'],

@@ -21,7 +21,7 @@ export class Campaign {
   title!: string
 
   @Field()
-  @Property({ required: true, unique: true, lowercase: true })
+  @Property({ required: true, unique: true, index: true, lowercase: true })
   endPoint!: string
 
   @Field()

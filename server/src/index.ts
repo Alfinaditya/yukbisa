@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import './config/passport-config'
 import { ApolloServer } from 'apollo-server-express'
+import { ApolloError } from 'apollo-server-errors'
 import express from 'express'
 import * as dotenv from 'dotenv'
 import UserResolver from './modules/resolvers/user-resolver'
@@ -17,6 +18,7 @@ import socialMediaAuth from './auth/socialMediaAuth'
 import passport from 'passport'
 import CampaignResolver from './modules/resolvers/campaign-resolver'
 import DonationResolver from './modules/resolvers/donation-resolver'
+import { GraphQLError } from 'graphql'
 dotenv.config()
 
 async function startApolloServer() {
@@ -77,6 +79,13 @@ async function startApolloServer() {
   const server = new ApolloServer({
     schema,
     context: ({ req, res }) => ({ req, res }),
+    // formatError: (error: GraphQLError) => {
+    //   if (error.originalError instanceof ApolloError) {
+    //     return error
+    //   }
+    //   console.log(error)
+    //   return new GraphQLError(`internal Error`)
+    // },
   })
   await server.start()
 
