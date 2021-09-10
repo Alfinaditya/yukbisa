@@ -6,6 +6,8 @@ import {
   Arg,
   UseMiddleware,
   Ctx,
+  ObjectType,
+  Field,
 } from 'type-graphql'
 import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput, EditCampaignInput } from './types/campaign-input'
@@ -14,6 +16,16 @@ import Cloudinary from '../../config/cloudinary-config'
 import { mongoose } from '@typegoose/typegoose'
 import { Campaigns } from '../../entities/campaigns'
 import { CampaignDetails } from '../../entities/campaignDetails'
+import { ErrorResponse } from '../shared/errorResponse'
+
+@ObjectType()
+class AddCampaignResponse {
+  @Field(() => Campaign, { nullable: true })
+  campaign!: Campaign | null
+
+  @Field(() => ErrorResponse)
+  error!: ErrorResponse
+}
 
 @Resolver()
 class CampaignResolver {
@@ -145,34 +157,39 @@ class CampaignResolver {
   }
 
   @UseMiddleware(authMiddleware)
-  @Mutation(() => Campaign)
+  @Mutation(() => AddCampaignResponse)
   async addCampaign(
     @Arg('input') input: CampaignInput,
     @Ctx() ctx: MyContext
-  ): Promise<Campaign | null> {
-    CampaignModel.syncIndexes()
-    const result = await Cloudinary.uploader.upload(input.image, {
-      folder: 'Yuk Bisa/campaigns',
-      allowed_formats: ['jpg,jpeg,png'],
-    })
-    const newCampaign = new CampaignModel({
-      beneficiaryName: input.beneficiaryName,
-      title: input.title,
+  ): Promise<AddCampaignResponse | undefined | null> {
+    const isEndPointExist = await CampaignModel.findOne({
       endPoint: input.endPoint,
-      target: input.target,
-      phoneNumber: input.phoneNumber,
-      purposeDescription: input.purposeDescription,
-      imageId: result.public_id,
-      image: result.secure_url,
-      story: input.story,
-      fundraiserId: new mongoose.Types.ObjectId(ctx.payload!.id),
     })
-    try {
-      await newCampaign.save()
-      return newCampaign
-    } catch (err) {
-      console.log(err)
-      return null
+    if (!isEndPointExist) {
+      const result = await Cloudinary.uploader.upload(input.image, {
+        folder: 'Yuk Bisa/campaigns',
+        allowed_formats: ['jpg,jpeg,png'],
+      })
+      const newCampaign = await CampaignModel.create({
+        beneficiaryName: input.beneficiaryName,
+        title: input.title,
+        endPoint: input.endPoint,
+        target: input.target,
+        phoneNumber: input.phoneNumber,
+        purposeDescription: input.purposeDescription,
+        imageId: result.public_id,
+        image: result.secure_url,
+        story: input.story,
+        fundraiserId: new mongoose.Types.ObjectId(ctx.payload!.id),
+      })
+      return {
+        campaign: newCampaign,
+        error: { path: 'success', message: '' },
+      }
+    }
+    return {
+      campaign: null,
+      error: { path: 'endPoint', message: 'Link sudah dipakai' },
     }
   }
 

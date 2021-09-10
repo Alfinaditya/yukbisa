@@ -22,21 +22,24 @@ import { verify } from 'jsonwebtoken'
 import Cloudinary from '../../config/cloudinary-config'
 import { authMiddleware } from '../middlewares/authMiddleware'
 import { validURL } from '../../helpers/helper'
-
-@ObjectType()
-class ErrorResponse {
-  @Field({ nullable: true })
-  path!: string
-  @Field({ nullable: true })
-  message!: string
-}
+import { ErrorResponse } from '../shared/errorResponse'
 
 @ObjectType()
 class UserResponse {
   @Field(() => String, { nullable: true })
   accessToken!: string | null
+
   @Field(() => User, { nullable: true })
   user!: User | null
+
+  @Field(() => ErrorResponse)
+  error!: ErrorResponse
+}
+
+@ObjectType()
+class MeResponse {
+  @Field(() => User, { nullable: true })
+  me!: User | null
 
   @Field(() => ErrorResponse)
   error!: ErrorResponse
@@ -68,11 +71,22 @@ class UserResolver {
   }
 
   @UseMiddleware(authMiddleware)
-  @Mutation(() => User)
+  @Mutation(() => MeResponse)
   async editMe(
     @Arg('input') input: EditMeInput,
     @Ctx() ctx: MyContext
-  ): Promise<User | null> {
+  ): Promise<MeResponse | null> {
+    const me = await UserModel.findOne({
+      name: input.name,
+      _id: { $ne: ctx.payload!.id },
+    })
+    // if name has already taken
+    if (me) {
+      return {
+        me: null,
+        error: { path: 'name', message: 'Nama sudah digunakan' },
+      }
+    }
     if (
       input.imageId != 'oid' &&
       input.imageId != 'gid' &&
@@ -80,46 +94,55 @@ class UserResolver {
     ) {
       await Cloudinary.uploader.destroy(input.imageId)
     }
-    if (!validURL(input.image)) {
+    if (
+      input.imageId === 'oid' ||
+      input.imageId === 'gid' ||
+      !validURL(input.image)
+    ) {
       const result = await Cloudinary.uploader.upload(input.image, {
         folder: 'Yuk Bisa/users',
         allowed_formats: ['jpg,jpeg,png'],
       })
       try {
-        const user = await UserModel.findByIdAndUpdate(
+        const me = await UserModel.findByIdAndUpdate(
           {
             _id: ctx.payload!.id,
           },
           {
+            name: input.name,
+            bio: input.bio,
+            dateOfBirth: input.dateOfBirth,
             displayImage: result.secure_url,
             displayImageId: result.public_id,
-            name: input.name,
-            bio: input.bio,
-            dateOfBirth: input.dateOfBirth,
           }
         )
-        return user
+        return {
+          me,
+          error: { path: 'success', message: '' },
+        }
       } catch (err) {
         console.log(err)
         return null
       }
-    } else {
-      try {
-        const user = await UserModel.findByIdAndUpdate(
-          {
-            _id: ctx.payload!.id,
-          },
-          {
-            name: input.name,
-            bio: input.bio,
-            dateOfBirth: input.dateOfBirth,
-          }
-        )
-        return user
-      } catch (err) {
-        console.log(err)
-        return null
+    }
+    try {
+      const me = await UserModel.findByIdAndUpdate(
+        {
+          _id: ctx.payload!.id,
+        },
+        {
+          name: input.name,
+          bio: input.bio,
+          dateOfBirth: input.dateOfBirth,
+        }
+      )
+      return {
+        me,
+        error: { path: 'success', message: '' },
       }
+    } catch (err) {
+      console.log(err)
+      return null
     }
   }
 
@@ -198,7 +221,8 @@ class UserResolver {
             user: null,
             error: { path: 'email', message: 'Email telah Digunakan' },
           }
-        } else if (err.keyValue.name != null && err.code === 11000) {
+        }
+        if (err.keyValue.name != null && err.code === 11000) {
           console.log('Name')
           return {
             accessToken: null,

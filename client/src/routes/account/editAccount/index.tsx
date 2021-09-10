@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { EDIT_ME } from '../../../apollo/mutations/user'
@@ -16,10 +17,10 @@ type Inputs = {
 
 const EditAccount = () => {
   const history = useHistory()
+  const [nameDuplicateErrorMessage, setNameDuplicateErrorMessage] = useState('')
   const { loading, data } = useQuery(GET_ME)
   const [editMe, { loading: mutationLoading }] = useMutation(EDIT_ME, {
     fetchPolicy: 'network-only',
-    refetchQueries: [{ query: GET_ME }],
   })
 
   const {
@@ -29,6 +30,7 @@ const EditAccount = () => {
   } = useForm<Inputs>()
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
+    console.log(data)
     let body
     try {
       if (data.image.length) {
@@ -50,10 +52,17 @@ const EditAccount = () => {
         }
       }
       try {
-        await editMe({
+        const res = await editMe({
           variables: { input: body },
+          refetchQueries: ({ data }) =>
+            data.editMe.error.path === 'success' ? [{ query: GET_ME }] : [],
         })
-        history.push('/account')
+        if (res.data.editMe.error.path === 'success') {
+          history.push('/account')
+        }
+        if (res.data.editMe.error.path === 'name') {
+          setNameDuplicateErrorMessage(res.data.editMe.error.message)
+        }
       } catch (error) {
         console.log(JSON.stringify(error, null, 2))
       }
@@ -76,12 +85,17 @@ const EditAccount = () => {
           defaultValue={me.name}
           type='text'
         />
+        {errors.name?.type === 'required' && <p>Wajib memasukan nama</p>}
+        {errors.name?.type === 'maxLength' && (
+          <p>Nama terlalu panjang minimal (15 huruf)</p>
+        )}
+        {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
         <label>Bio</label>
-        <input
+        <textarea
           {...register('bio', { required: true })}
           defaultValue={me.bio}
-          type='text'
         />
+        {errors.bio?.type === 'required' && <p>Wajib memasukan Bio</p>}
         <label>Date</label>
         <input
           {...register('dateOfBirth', {
@@ -90,6 +104,10 @@ const EditAccount = () => {
           defaultValue={new Date(me.dateOfBirth).toISOString().substr(0, 10)}
           type='date'
         />
+        {errors.dateOfBirth?.type === 'required' && (
+          <p>Wajib memasukan Tanggal lahir</p>
+        )}
+
         {mutationLoading ? (
           <button type='submit' disabled>
             Submit

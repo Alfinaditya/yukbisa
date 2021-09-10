@@ -41,12 +41,10 @@ export const LOGIN_USER = gql`
 export const EDIT_ME = gql`
   mutation EditMe($input: EditMeInput!) {
     editMe(input: $input) {
-      name
-      email
-      displayImage
-      displayImageId
-      dateOfBirth
-      bio
+      error {
+        path
+        message
+      }
     }
   }
 `
