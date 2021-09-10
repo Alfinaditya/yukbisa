@@ -7,6 +7,10 @@ export class UserDonation {
   @Property()
   readonly userId!: mongoose.Types.ObjectId
 
+  @Field()
+  @Property({ required: true })
+  createdAt!: number
+
   @Field(() => Int)
   @Property({ required: true })
   amount!: number
@@ -14,8 +18,4 @@ export class UserDonation {
   @Field({ nullable: true })
   @Property()
   message?: string
-
-  @Field()
-  @Property({ default: Date.now() })
-  createdAt!: Date
 }

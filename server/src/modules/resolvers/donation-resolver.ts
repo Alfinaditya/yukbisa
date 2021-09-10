@@ -41,6 +41,7 @@ class DonationResolver {
               userId: new mongoose.Types.ObjectId(input.userId),
               message: input?.message,
               amount: input.amount,
+              createdAt: Date.now(),
             },
           },
         }

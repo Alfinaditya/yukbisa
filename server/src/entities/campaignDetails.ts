@@ -76,7 +76,7 @@ export class CampaignDetails {
   fundraiserDetails!: Ref<User>
 
   @Field()
-  @Property({ default: Date.now() })
+  @Property()
   createdAt!: Date
 }
 
@@ -95,8 +95,8 @@ export class UserDetails {
   amount!: number
 
   @Field()
-  @Property({ default: Date.now() })
-  createdAt!: Date
+  @Property()
+  createdAt!: number
 
   @Field(() => User, { nullable: true })
   @Property({

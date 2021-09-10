@@ -7,7 +7,7 @@ import {
 } from '../../helpers/helper'
 import { Container } from '../../components/Container'
 import { Campaigns } from '../../ts/campaign'
-import { Title, Card } from './style'
+import { Title, Card, CardImage } from './style'
 import { Image } from '../../components/Image'
 import { Progress } from '../details/style'
 
@@ -25,7 +25,9 @@ const Home = () => {
           const { date, month, years } = convertDate(campaign.createdAt)
           return (
             <Card key={campaign._id} to={`/campaign/${campaign.endPoint}`}>
-              <Image src={campaign.image} alt={campaign.title} />
+              <CardImage>
+                <Image src={campaign.image} alt={campaign.title} />
+              </CardImage>
               <Title>{campaign.title}</Title>
               <p>{campaign.fundraiserDetails.name}</p>
               <p>
