@@ -6,7 +6,7 @@ import { setAccessToken } from '../../auth/accessToken'
 import { Me } from '../../ts/user'
 import { ReactComponent as BrandSvg } from '../../assets/brand.svg'
 import { useHistory } from 'react-router'
-import { NavLink } from './style'
+import { Nav, NavLink, NavLinkContainer } from './style'
 
 const LOGOUT = gql`
   mutation Logout {
@@ -29,22 +29,24 @@ const Navbar = () => {
   if (loading) return <p>Loading</p>
   const me: Me = data.me
   return (
-    <div>
-      <Link to='/'>
+    <Nav>
+      <NavLink to='/'>
         <BrandSvg />
-      </Link>
-      <NavLink to='/'>Home</NavLink>
-      {!loading && !me && (
+      </NavLink>
+      <NavLinkContainer>
+        <NavLink to='/'>Donasi</NavLink>
+        <NavLink to='/galang-dana'>Galang Dana</NavLink>
+        <NavLink to='/my-donations'>Donasi Saya</NavLink>
+        <NavLink to='/account'>Akun</NavLink>
+      </NavLinkContainer>
+      {/* {!loading && !me && (
         <>
           <NavLink to='/login'>Login</NavLink>
           <NavLink to='/register'>Register</NavLink>
         </>
-      )}
-      <NavLink to='/galang-dana'>Galang Dana</NavLink>
-      <NavLink to='/my-donations'>Donasi Saya</NavLink>
-      <NavLink to='/account'>Akun</NavLink>
-      {!loading && me && <a onClick={handleLogout}>Log out</a>}
-    </div>
+      )} */}
+      {/* {!loading && me && <a onClick={handleLogout}>Log out</a>} */}
+    </Nav>
   )
 }
 
