@@ -4,7 +4,6 @@ import { calcProgress, convertCurrency } from '../../helpers/helper'
 import { Container } from '../../components/Container'
 import { Campaigns } from '../../ts/campaign'
 import {
-  Title,
   Card,
   CardImage,
   Fundraisername,
@@ -13,6 +12,7 @@ import {
   CardDescription,
 } from './style'
 import { Image } from '../../components/Image'
+import { Title } from '../../components/Title'
 import { Progress } from '../../components/Progress'
 
 const Home = () => {

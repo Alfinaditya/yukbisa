@@ -94,7 +94,7 @@ export class UserDetails {
   @Property()
   amount!: number
 
-  @Field()
+  @Field({ nullable: true })
   @Property()
   createdAt!: number
 

@@ -5,9 +5,13 @@ import { GET_MY_CAMPAIGNS } from '../../../apollo/queries/campaign'
 import { getAccessToken } from '../../../auth/accessToken'
 import { Container } from '../../../components/Container'
 import { Image } from '../../../components/Image'
+import { Progress } from '../../../components/Progress'
+import { Title } from '../../../components/Title'
+import { calcProgress, convertCurrency } from '../../../helpers/helper'
 import { Mycampaigns } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
-import { Card } from './style'
+import { CardDescription, CardText, CurrentAmount } from '../../home/style'
+import { CampaignButton, Card } from './style'
 
 const MyCampaigns = () => {
   const token: Token = jwtDecode(getAccessToken())
@@ -26,8 +30,20 @@ const MyCampaigns = () => {
         myCampaigns.map(myCampaign => (
           <Card to={`/campaign/${myCampaign.endPoint}`}>
             <Image src={myCampaign.image} alt={myCampaign.title} />
-            <h1>{myCampaign.title}</h1>
-            <p>{myCampaign.currentAmount}</p>
+            <CardDescription>
+              <Title>{myCampaign.title}</Title>
+              <Progress
+                value={calcProgress(
+                  myCampaign.currentAmount,
+                  myCampaign.target
+                )}
+                max='100'
+              ></Progress>
+              <CardText>Terkumpul</CardText>
+              <CurrentAmount>
+                {convertCurrency(myCampaign.currentAmount)}
+              </CurrentAmount>
+            </CardDescription>
           </Card>
         ))
       ) : (
@@ -36,7 +52,9 @@ const MyCampaigns = () => {
           tombol <b>Galang Dana Sekarang</b>
         </p>
       )}
-      <Link to='/galang-dana/add-campaign'>Galang Dana Sekarang</Link>
+      <CampaignButton to='/galang-dana/add-campaign'>
+        Galang Dana Sekarang
+      </CampaignButton>
     </Container>
   )
 }

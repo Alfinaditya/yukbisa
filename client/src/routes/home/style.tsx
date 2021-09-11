@@ -16,11 +16,6 @@ export const CardDescription = styled.div`
   margin: auto;
   margin-top: 12px;
 `
-export const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--black);
-`
 export const Fundraisername = styled.h1`
   font-weight: 300;
   font-size: 15px;

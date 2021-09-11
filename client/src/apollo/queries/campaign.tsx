@@ -62,6 +62,7 @@ export const GET_MY_CAMPAIGNS = gql`
       image
       endPoint
       currentAmount
+      target
     }
   }
 `

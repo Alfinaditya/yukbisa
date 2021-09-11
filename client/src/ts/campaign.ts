@@ -26,6 +26,7 @@ export interface Mycampaigns {
   image: string
   endPoint: string
   currentAmount: number
+  target: number
 }
 
 export interface Donations {

@@ -23,7 +23,7 @@ import {
   Amount,
   CurrentAmount,
   Target,
-  DonationLink,
+  DonationButton,
   CampaignDonations,
   SumOfUserDonations,
   Header,
@@ -36,7 +36,7 @@ import {
   PurposeDescription,
   BeneficiaryDescription,
   BeneficiaryProfile,
-  EditLink,
+  EditButton,
   DeleteButton,
   StoryTitle,
   CampaignImage,
@@ -59,7 +59,7 @@ const DetailsCampaign = () => {
   const { slug } = useParams<{ slug?: string }>()
   const { url } = useRouteMatch()
   let token: any = ''
-  const { loading, data } = useQuery(GET_CAMPAIGN_DETAILS, {
+  const { loading, data, error } = useQuery(GET_CAMPAIGN_DETAILS, {
     variables: {
       input: slug,
     },
@@ -78,7 +78,8 @@ const DetailsCampaign = () => {
     }
   )
   if (loading) return <p>Loading...</p>
-
+  if (data) console.log(data)
+  if (error) console.log(JSON.stringify(error, null, 2))
   if (deleteCampaignLoading) return <p>Delete DetaiCampaignDetails</p>
 
   const campaignDetails: CampaignDetails = data.campaignDetails[0]
@@ -122,15 +123,15 @@ const DetailsCampaign = () => {
 
               {getAccessToken() && token.id === campaignDetails.fundraiserId ? (
                 <div>
-                  <EditLink to={`${url}/edit-campaign?slug=${slug}`}>
+                  <EditButton to={`${url}/edit-campaign?slug=${slug}`}>
                     Edit
-                  </EditLink>
+                  </EditButton>
                   <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
                 </div>
               ) : (
-                <DonationLink to={`${url}/donation?slug=${slug}`}>
+                <DonationButton to={`${url}/donation?slug=${slug}`}>
                   Donasi Sekarang !
-                </DonationLink>
+                </DonationButton>
               )}
             </Details>
           </Header>

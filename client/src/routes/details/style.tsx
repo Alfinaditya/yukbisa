@@ -1,20 +1,17 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { Title } from '../../components/Title'
 
 export const Container = styled.div`
   width: 93%;
   margin: auto;
 `
-const Title = styled.h1`
-  font-size: 24px;
-  color: var(--black);
-`
 const DetailsContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-top: 20px;
 `
-// Header
 
+// Header
 export const Header = styled.div`
   display: flex;
   align-items: center;
@@ -51,7 +48,7 @@ export const SumOfUserDonations = styled.span`
   font-weight: 500;
   font-size: 18px;
 `
-export const DonationLink = styled(Link)`
+export const DonationButton = styled(Link)`
   text-decoration: none;
   font-size: 24px;
   font-weight: 700;
@@ -61,7 +58,7 @@ export const DonationLink = styled(Link)`
   padding: 15px 15px;
   background: #cb1552;
 `
-export const EditLink = styled(DonationLink)`
+export const EditButton = styled(DonationButton)`
   margin-bottom: 10px;
 `
 export const DeleteButton = styled.button`
