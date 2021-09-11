@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle`
 :root {
   --main: #00AEEF;
   --black: #161616;
+  --shadow:rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
   * {
     box-sizing: border-box;

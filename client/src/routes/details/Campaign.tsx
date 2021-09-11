@@ -123,13 +123,19 @@ const DetailsCampaign = () => {
 
               {getAccessToken() && token.id === campaignDetails.fundraiserId ? (
                 <div>
-                  <EditButton to={`${url}/edit-campaign?slug=${slug}`}>
+                  <EditButton
+                    onClick={() =>
+                      history.push(`${url}/edit-campaign?slug=${slug}`)
+                    }
+                  >
                     Edit
                   </EditButton>
                   <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
                 </div>
               ) : (
-                <DonationButton to={`${url}/donation?slug=${slug}`}>
+                <DonationButton
+                  onClick={() => history.push(`${url}/donation?slug=${slug}`)}
+                >
                   Donasi Sekarang !
                 </DonationButton>
               )}

@@ -1,12 +1,20 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
-import { FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { FormEvent, useState } from 'react'
 import { GET_ME } from '../../apollo/queries/user'
 import { setAccessToken } from '../../auth/accessToken'
 import { Me } from '../../ts/user'
 import { ReactComponent as BrandSvg } from '../../assets/brand.svg'
 import { useHistory } from 'react-router'
-import { Nav, NavLink, NavLinkContainer } from './style'
+import {
+  Dropdown,
+  Menu,
+  Nav,
+  NavLink,
+  MenuLink,
+  NavLinkContainer,
+  DropdownMenu,
+  Logout,
+} from './style'
 
 const LOGOUT = gql`
   mutation Logout {
@@ -15,6 +23,7 @@ const LOGOUT = gql`
 `
 const Navbar = () => {
   const history = useHistory()
+  const [showMenu, setShowMenu] = useState(false)
   const [logout, { client }] = useMutation(LOGOUT, {
     fetchPolicy: 'network-only',
   })
@@ -26,27 +35,41 @@ const Navbar = () => {
     await client.resetStore()
     history.push('/login')
   }
+
   if (loading) return <p>Loading</p>
   const me: Me = data.me
+
   return (
-    <Nav>
-      <NavLink to='/'>
-        <BrandSvg />
-      </NavLink>
-      <NavLinkContainer>
-        <NavLink to='/'>Donasi</NavLink>
-        <NavLink to='/galang-dana'>Galang Dana</NavLink>
-        <NavLink to='/my-donations'>Donasi Saya</NavLink>
-        <NavLink to='/account'>Akun</NavLink>
-      </NavLinkContainer>
-      {/* {!loading && !me && (
+    <>
+      <Nav>
+        <NavLink to='/'>
+          <BrandSvg />
+        </NavLink>
+        <NavLinkContainer>
+          <NavLink to='/'>Donasi</NavLink>
+          <NavLink to='/galang-dana'>Galang Dana</NavLink>
+          <NavLink to='/my-donations'>Donasi Saya</NavLink>
+          {!loading && me && (
+            <>
+              <Dropdown onClick={() => setShowMenu(!showMenu)}>Akun</Dropdown>
+            </>
+          )}
+          {!loading && !me && (
+            <Dropdown onClick={() => history.push('/login')}>Akun</Dropdown>
+          )}
+        </NavLinkContainer>
+      </Nav>
+      {showMenu && (
         <>
-          <NavLink to='/login'>Login</NavLink>
-          <NavLink to='/register'>Register</NavLink>
+          {!loading && me && (
+            <Menu onMouseLeave={() => setShowMenu(!showMenu)}>
+              <MenuLink to='/account'>Lihat Akun</MenuLink>
+              <Logout onClick={handleLogout}>Log out</Logout>
+            </Menu>
+          )}
         </>
-      )} */}
-      {/* {!loading && me && <a onClick={handleLogout}>Log out</a>} */}
-    </Nav>
+      )}
+    </>
   )
 }
 

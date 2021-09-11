@@ -5,11 +5,11 @@ export const Card = styled(Link)`
   text-decoration: none;
   display: block;
   margin: 80px 0;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: var(--shadow);
   padding-bottom: 20px;
 `
 export const CardImage = styled.div`
-  height: 400px;
+  height: 500px;
 `
 export const CardDescription = styled.div`
   width: 95%;
