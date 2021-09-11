@@ -5,9 +5,10 @@ export const GET_MY_DONATIONS = gql`
     myDonations(_id: $input) {
       image
       title
-      createdAt
+      endPoint
       userDonations {
         amount
+        createdAt
       }
     }
   }

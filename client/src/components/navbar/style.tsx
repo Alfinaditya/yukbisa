@@ -7,6 +7,9 @@ export const NavLink = styled(Link)`
   margin-right: 15px;
   color: var(--black);
   font-size: 15px;
+  &:hover {
+    color: var(--main);
+  }
 `
 export const NavLinkContainer = styled.div`
   text-decoration: none;
@@ -27,6 +30,9 @@ export const Dropdown = styled.div`
   margin-right: 15px;
   color: var(--black);
   font-size: 15px;
+  &:hover {
+    color: var(--main);
+  }
 `
 export const DropdownMenu = styled.div`
   width: 90%;

@@ -1,10 +1,11 @@
 type Donations = {
   amount: number
+  createdAt: number
 }
 
 export interface Mydonations {
   image: string
   title: string
-  createdAt: Date
   userDonations: Donations
+  endPoint: string
 }
