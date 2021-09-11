@@ -15,7 +15,6 @@ import { v4 as uuidv4 } from 'uuid'
 import {
   Container,
   CampaignTitle,
-  Progress,
   UserDonationName,
   FundraiserContainer,
   BeneficiaryContainer,
@@ -53,6 +52,7 @@ import {
   convertCurrency,
   convertDate,
 } from '../../helpers/helper'
+import { Progress } from '../../components/Progress'
 
 const DetailsCampaign = () => {
   const history = useHistory()

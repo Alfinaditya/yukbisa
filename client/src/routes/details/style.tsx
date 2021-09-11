@@ -9,7 +9,6 @@ const Title = styled.h1`
   font-size: 24px;
   color: var(--black);
 `
-
 const DetailsContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-top: 20px;
@@ -43,22 +42,6 @@ export const CurrentAmount = styled.span`
 `
 export const Target = styled.span`
   font-size: 13px;
-`
-export const Progress = styled.progress`
-  display: block;
-  width: 100%;
-  height: 15px;
-  -webkit-appearance: none;
-  border: none;
-  ::-webkit-progress-value {
-    border-radius: 45px;
-    background: var(--main);
-  }
-
-  ::-webkit-progress-bar {
-    background: #e5e5e5;
-    border-radius: 25px;
-  }
 `
 export const CampaignDonations = styled.div`
   margin: 30px 0;
