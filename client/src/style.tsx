@@ -7,6 +7,7 @@ export const GlobalStyle = createGlobalStyle`
   --main: #00AEEF;
   --black: #161616;
   --shadow:rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  --error:#b92f2f;
 }
   * {
     box-sizing: border-box;

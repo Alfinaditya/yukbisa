@@ -46,6 +46,8 @@ import {
   UserDonation,
   UserDonationAmount,
   UserDonationDate,
+  UserDonationMessage,
+  UserDonationDetails,
 } from './style'
 import {
   calcProgress,
@@ -89,6 +91,7 @@ const DetailsCampaign = () => {
     })
     history.push('/')
   }
+  // Footer,body,header === nanti diganti dengan nama component
   return (
     <Container>
       {campaignDetails && (
@@ -190,16 +193,21 @@ const DetailsCampaign = () => {
                         src={user.user.displayImage}
                         alt={user.user.name}
                       />
-                      <UserDonationName>{user.user.name}</UserDonationName>
-                      <UserDonationAmount>
-                        Berdonasi sebesar <b>{convertCurrency(user.amount)}</b>
-                      </UserDonationAmount>
-                      <UserDonationDate>
-                        {convertDate(user.createdAt).date}{' '}
-                        {convertDate(user.createdAt).month}{' '}
-                        {convertDate(user.createdAt).years}
-                      </UserDonationDate>
-                      <p>{user.message}</p>
+                      <UserDonationDetails>
+                        <UserDonationName>{user.user.name}</UserDonationName>
+                        <UserDonationAmount>
+                          Berdonasi sebesar{' '}
+                          <b>{convertCurrency(user.amount)}</b>
+                        </UserDonationAmount>
+                        <UserDonationDate>
+                          {convertDate(user.createdAt).date}{' '}
+                          {convertDate(user.createdAt).month}{' '}
+                          {convertDate(user.createdAt).years}
+                        </UserDonationDate>
+                        <UserDonationMessage>
+                          {user.message}
+                        </UserDonationMessage>
+                      </UserDonationDetails>
                     </>
                   ) : (
                     <p style={{ textAlign: 'center' }}>

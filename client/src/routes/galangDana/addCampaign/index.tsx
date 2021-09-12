@@ -1,8 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useState } from 'react'
-import CurrencyInput from 'react-currency-input-field'
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/material.css'
 import { createEndpoint, encodedImage } from '../../../helpers/helper'
 import { useMutation } from '@apollo/client'
 import { ADD_CAMPAIGN } from '../../../apollo/mutations/campaign'
@@ -14,9 +12,17 @@ import { Token } from '../../../ts/token'
 import jwtDecode from 'jwt-decode'
 import { getAccessToken } from '../../../auth/accessToken'
 import { useHistory } from 'react-router'
-import { Link } from 'react-router-dom'
+import {
+  NextButton,
+  PreviousButton,
+  ContainerForm,
+  Form,
+  TextArea,
+} from './style'
+import BeneficiaryForm from './components/BeneficiaryForm'
+import DetailsForm from './components/DetailsForm'
 
-type Inputs = {
+export type Inputs = {
   beneficiaryName: string
   title: string
   endPoint: string
@@ -31,7 +37,7 @@ const Campaign = () => {
   const [target, setTarget] = useState<string | undefined>('0')
   const [page, setPage] = useState(1)
   const [endPoint, setEndPoint] = useState('')
-  const [endPointDuplicateErrorMessage, setendPointDuplicateErrorMessage] =
+  const [endPointDuplicateErrorMessage, setEndPointDuplicateErrorMessage] =
     useState('')
   const [receiver, setReceiver] = useState('me')
   const [addCampaign, { data, loading, error }] = useMutation(ADD_CAMPAIGN, {
@@ -83,7 +89,7 @@ const Campaign = () => {
         }
         if (res.data.addCampaign.error.path === 'endPoint') {
           setPage(2)
-          setendPointDuplicateErrorMessage(res.data.addCampaign.error.message)
+          setEndPointDuplicateErrorMessage(res.data.addCampaign.error.message)
         }
       } catch (error) {
         console.log(error)
@@ -94,111 +100,36 @@ const Campaign = () => {
   }
 
   return (
-    <div>
-      <h1>Galang Dana</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <ContainerForm>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         {page === 1 && (
-          // info
           <>
-            <label>Untuk siapa kamu menggalang dana</label>
-            <select
-              value={receiver}
-              onChange={e => setReceiver(e.target.value)}
-            >
-              <option value='me'>Saya Sendiri</option>
-              <option value='others'>Orang Lain</option>
-            </select>
-            {receiver === 'others' && (
-              <>
-                <label>Nama Penerima</label>
-                <input
-                  type='text'
-                  {...register('beneficiaryName', {
-                    required: true,
-                    maxLength: 20,
-                  })}
-                />
-              </>
-            )}
-
-            {errors.beneficiaryName?.type === 'required' && (
-              <p>Wajib memasukan nama penerima</p>
-            )}
-            {errors.beneficiaryName?.type === 'maxLength' && (
-              <p>Nama terlalu panjang (maximal 20 huruf)</p>
-            )}
-            <button disabled={!isValid} onClick={() => setPage(page + 1)}>
-              Selanjutnya
-            </button>
-            <Link to='/galang-dana'>Batal menggalang dana</Link>
+            <BeneficiaryForm
+              receiver={receiver}
+              setReceiver={setReceiver}
+              register={register}
+              isValid={isValid}
+              errors={errors}
+              page={page}
+              setPage={setPage}
+            />
           </>
         )}
         {page === 2 && (
           // Details
           <>
-            <label>Beri judul untuk penggalangan danamu</label>
-            <input
-              type='text'
-              {...register('title', { required: true, maxLength: 50 })}
+            <DetailsForm
+              register={register}
+              isValid={isValid}
+              errors={errors}
+              page={page}
+              endPointDuplicateErrorMessage={endPointDuplicateErrorMessage}
+              setPage={setPage}
+              target={target}
+              setTarget={setTarget}
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
             />
-            {errors.title?.type === 'required' && <p>Wajib memasukan judul</p>}
-            {errors.title?.type === 'maxLength' && (
-              <p>Judul terlalu panjang (maximal 50 huruf)</p>
-            )}
-            <label>Tentukan link untuk penggalangan danamu</label>
-            <label>gunakan huruf tanpa spasi</label>
-            <input
-              type='text'
-              {...register('endPoint', {
-                required: true,
-                maxLength: 15,
-              })}
-            />
-            {endPointDuplicateErrorMessage && (
-              <p>{endPointDuplicateErrorMessage}</p>
-            )}
-
-            {errors.endPoint?.type === 'required' && (
-              <p>Wajib memasukan Link</p>
-            )}
-            {errors.endPoint?.type === 'maxLength' && (
-              <p>Link terlalu panjang (maximal 15 huruf)</p>
-            )}
-            <label>Untuk apa dana tersebut digunakan?</label>
-            <textarea
-              {...register('purposeDescription', {
-                required: true,
-                maxLength: 480,
-              })}
-            />
-            {errors.purposeDescription?.type === 'required' && (
-              <p>Wajib memasukan Tujuan</p>
-            )}
-            {errors.purposeDescription?.type === 'maxLength' && (
-              <p>Tujuan terlalu panjang (maximal 480 huruf)</p>
-            )}
-            <label>Nomor hp kamu yang dapat dihubungi</label>
-            <PhoneInput
-              country={'id'}
-              value={phoneNumber}
-              disableDropdown={true}
-              countryCodeEditable={false}
-              placeholder='Isi nomor telepon'
-              onChange={phone => setPhoneNumber(phone)}
-            />
-            <label>Berapa biaya yang kamu butuhkan</label>
-            <CurrencyInput
-              placeholder='Masukan angka'
-              prefix={'Rp. '}
-              decimalsLimit={2}
-              value={target}
-              required={true}
-              onValueChange={value => setTarget(value)}
-            />
-            <button disabled={!isValid} onClick={() => setPage(page + 1)}>
-              Selanjutnya
-            </button>
-            <button onClick={() => setPage(page - 1)}>Sebelumnya</button>
           </>
         )}
         {page === 3 && (
@@ -215,13 +146,23 @@ const Campaign = () => {
             {errors.image?.type === 'required' && (
               <p>Wajib mengupload gambar</p>
             )}
-
+            <NextButton onClick={() => setPage(page + 1)} disabled={!isValid}>
+              Selanjutnya
+            </NextButton>
+            <PreviousButton onClick={() => setPage(page - 1)}>
+              Sebelumnya
+            </PreviousButton>
+          </>
+        )}
+        {page === 4 && (
+          // finish
+          <div>
             <label>
               Untuk memudahkanmu,kami membuat informasi yang kamu masukan
               menjadi cerita penggalangan dana. kamu dapat mengubah cerita di
               bawah ini sesuai keinginanmu.
             </label>
-            <textarea
+            <TextArea
               {...register('story', {
                 required: true,
               })}
@@ -232,14 +173,16 @@ const Campaign = () => {
                 Tunggu sebentar.....
               </button>
             ) : (
-              <button type='submit' disabled={!isValid}>
+              <NextButton type='submit' disabled={!isValid}>
                 Submit
-              </button>
+              </NextButton>
             )}
-            <button onClick={() => setPage(page - 1)}>Sebelumnya</button>
-          </>
+            <PreviousButton onClick={() => setPage(page - 1)}>
+              Sebelumnya
+            </PreviousButton>
+          </div>
         )}
-        {page === 4 && (
+        {page === 5 && (
           // finish
           <div>
             <h1>Pembayaran Berhasil</h1>
@@ -248,8 +191,8 @@ const Campaign = () => {
             </button>
           </div>
         )}
-      </form>
-    </div>
+      </Form>
+    </ContainerForm>
   )
 }
 

@@ -139,6 +139,8 @@ export const UserDonation = styled.div`
   margin: 20px 0;
   padding: 15px;
   background: #fafafa;
+  display: flex;
+  align-items: center;
 `
 export const UserDonationName = styled.p`
   font-weight: 700;
@@ -154,4 +156,11 @@ export const UserDonationDate = styled.p`
   font-weight: 500;
   color: #a3a2a2;
   margin-bottom: 15px;
+`
+export const UserDonationMessage = styled.p`
+  font-size: 14px;
+  font-weight: 100;
+`
+export const UserDonationDetails = styled.div`
+  margin-left: 30px;
 `
