@@ -21,6 +21,7 @@ import {
 } from './style'
 import BeneficiaryForm from './components/BeneficiaryForm'
 import DetailsForm from './components/DetailsForm'
+import { AddCampaignContext } from '../../../context/addCampaignContext'
 
 export type Inputs = {
   beneficiaryName: string
