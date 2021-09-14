@@ -17,6 +17,8 @@ import 'react-phone-input-2/lib/material.css'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
 import { useHistory } from 'react-router'
 import { createEndpoint } from '../../../helpers/helper'
+import { IS_ENDPOINT_AVAILABLE } from '../../../apollo/mutations/campaign'
+import { useMutation } from '@apollo/client'
 
 type Inputs = {
   title: string
@@ -27,6 +29,11 @@ type Inputs = {
 const Details = () => {
   const history = useHistory()
   const context = useContext(AddCampaignContext)
+  const [endPointDuplicateErrorMessage, setEndPointDuplicateErrorMessage] =
+    useState('')
+  const [isEndPointAvailable, { error }] = useMutation(IS_ENDPOINT_AVAILABLE, {
+    fetchPolicy: 'network-only',
+  })
   const {
     handleSubmit,
     register,
@@ -34,11 +41,20 @@ const Details = () => {
   } = useForm<Inputs>({
     mode: 'onChange',
   })
+  if (error) console.log(JSON.stringify(error, null, 2))
   const onSubmit: SubmitHandler<Inputs> = async data => {
     context?.setTitle(data.title)
     context?.setEndPoint(createEndpoint(data.endPoint))
     context?.setPurposeDescription(data.purposeDescription)
-    history.push('/galang-dana/add-campaign/photo')
+    const res = await isEndPointAvailable({
+      variables: { input: createEndpoint(data.endPoint) },
+    })
+    if (res.data.isEndPointAvailable.path === 'endPoint') {
+      setEndPointDuplicateErrorMessage(res.data.isEndPointAvailable.message)
+    }
+    if (res.data.isEndPointAvailable.path === 'success') {
+      history.push('/galang-dana/add-campaign/photo')
+    }
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -72,9 +88,7 @@ const Details = () => {
           defaultValue={context?.endPoint}
         />
       </InputEndPoint>
-      {context?.endPointDuplicateErrorMessage && (
-        <p>{context.endPointDuplicateErrorMessage}</p>
-      )}
+      {endPointDuplicateErrorMessage && <p>{endPointDuplicateErrorMessage}</p>}
 
       {errors.endPoint?.type === 'required' && (
         <ErrorText>Wajib memasukan Link</ErrorText>

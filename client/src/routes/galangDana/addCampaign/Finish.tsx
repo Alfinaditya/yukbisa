@@ -5,20 +5,19 @@ import { AddCampaignContext } from '../../../context/addCampaignContext'
 const Finish = () => {
   const history = useHistory()
   const context = useContext(AddCampaignContext)
-  const body = {
-    beneficiary: context?.beneficiaryName,
-    title: context?.title,
-    target: context?.target,
-    endPoint: context?.endPoint,
-    phoneNumber: context?.phoneNumber,
-    image: context?.image,
-    story: context?.story,
-  }
-  console.log(body)
   return (
     <div>
-      Finish
-      <pre>{JSON.stringify(body)}</pre>
+      <p>
+        Selamat halaman galang dana kamu siap digunakan. Yuk ajak teman temanmu
+        untuk bantu menyebarkan
+      </p>
+      <button
+        onClick={() => {
+          history.push(`/campaign/${context?.isSuccessEndPoint}`)
+        }}
+      >
+        Kembali ke halaman donasi
+      </button>
     </div>
   )
 }

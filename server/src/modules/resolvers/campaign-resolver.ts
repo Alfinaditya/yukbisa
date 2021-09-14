@@ -6,8 +6,6 @@ import {
   Arg,
   UseMiddleware,
   Ctx,
-  ObjectType,
-  Field,
 } from 'type-graphql'
 import { Campaign, CampaignModel } from '../../entities/campaign'
 import { CampaignInput, EditCampaignInput } from './types/campaign-input'
@@ -18,14 +16,14 @@ import { Campaigns } from '../../entities/campaigns'
 import { CampaignDetails } from '../../entities/campaignDetails'
 import { ErrorResponse } from '../shared/errorResponse'
 
-@ObjectType()
-class AddCampaignResponse {
-  @Field(() => Campaign, { nullable: true })
-  campaign!: Campaign | null
+// @ObjectType()
+// class AddCampaignResponse {
+//   @Field(() => Campaign, { nullable: true })
+//   campaign!: Campaign | null
 
-  @Field(() => ErrorResponse)
-  error!: ErrorResponse
-}
+//   @Field(() => ErrorResponse)
+//   error!: ErrorResponse
+// }
 
 @Resolver()
 class CampaignResolver {
@@ -81,16 +79,6 @@ class CampaignResolver {
       console.log(err)
       return null
     }
-  }
-  @Query(() => ErrorResponse)
-  async isEndPointAvailable(
-    @Arg('endPoint') endPoint: string
-  ): Promise<ErrorResponse | null> {
-    const isEndPointExist = await CampaignModel.findOne({ endPoint })
-    if (isEndPointExist) {
-      return { path: 'endPoint', message: 'Link sudah dipakai' }
-    }
-    return { path: 'success', message: '' }
   }
 
   @Query(() => [CampaignDetails])
@@ -167,41 +155,55 @@ class CampaignResolver {
   }
 
   @UseMiddleware(authMiddleware)
-  @Mutation(() => AddCampaignResponse)
+  @Mutation(() => Campaign)
   async addCampaign(
     @Arg('input') input: CampaignInput,
     @Ctx() ctx: MyContext
-  ): Promise<AddCampaignResponse | undefined | null> {
-    const isEndPointExist = await CampaignModel.findOne({
-      endPoint: input.endPoint,
+  ): Promise<Campaign | null> {
+    // todo jangan di delete bangsat
+    // const isEndPointExist = await CampaignModel.findOne({
+    //   endPoint: input.endPoint,
+    // })
+    // if (!isEndPointExist) {
+    //   const result = await Cloudinary.uploader.upload(input.image, {
+    //     folder: 'Yuk Bisa/campaigns',
+    //     allowed_formats: ['jpg,jpeg,png'],
+    //   })
+    //   const newCampaign = await CampaignModel.create({
+    //     beneficiaryName: input.beneficiaryName,
+    //     title: input.title,
+    //     endPoint: input.endPoint,
+    //     target: input.target,
+    //     phoneNumber: input.phoneNumber,
+    //     purposeDescription: input.purposeDescription,
+    //     imageId: result.public_id,
+    //     image: result.secure_url,
+    //     story: input.story,
+    //     fundraiserId: new mongoose.Types.ObjectId(ctx.payload!.id),
+    //   })
+    //   return {
+    //     campaign: newCampaign,
+    //     error: { path: 'success', message: '' },
+    //   }
+    // }
+    const result = await Cloudinary.uploader.upload(input.image, {
+      folder: 'Yuk Bisa/campaigns',
+      allowed_formats: ['jpg,jpeg,png'],
+      timeout: 60000,
     })
-    console.log(input)
-    if (!isEndPointExist) {
-      const result = await Cloudinary.uploader.upload(input.image, {
-        folder: 'Yuk Bisa/campaigns',
-        allowed_formats: ['jpg,jpeg,png'],
-      })
-      const newCampaign = await CampaignModel.create({
-        beneficiaryName: input.beneficiaryName,
-        title: input.title,
-        endPoint: input.endPoint,
-        target: input.target,
-        phoneNumber: input.phoneNumber,
-        purposeDescription: input.purposeDescription,
-        imageId: result.public_id,
-        image: result.secure_url,
-        story: input.story,
-        fundraiserId: new mongoose.Types.ObjectId(ctx.payload!.id),
-      })
-      return {
-        campaign: newCampaign,
-        error: { path: 'success', message: '' },
-      }
-    }
-    return {
-      campaign: null,
-      error: { path: 'endPoint', message: 'Link sudah dipakai' },
-    }
+    const newCampaign = await CampaignModel.create({
+      beneficiaryName: input.beneficiaryName,
+      title: input.title,
+      endPoint: input.endPoint,
+      target: input.target,
+      phoneNumber: input.phoneNumber,
+      purposeDescription: input.purposeDescription,
+      imageId: result.public_id,
+      image: result.secure_url,
+      story: input.story,
+      fundraiserId: new mongoose.Types.ObjectId(ctx.payload!.id),
+    })
+    return newCampaign
   }
 
   @UseMiddleware(authMiddleware)
@@ -246,6 +248,17 @@ class CampaignResolver {
       console.log(err)
       return null
     }
+  }
+
+  @Mutation(() => ErrorResponse)
+  async isEndPointAvailable(
+    @Arg('endPoint') endPoint: string
+  ): Promise<ErrorResponse | null> {
+    const isEndPointExist = await CampaignModel.findOne({ endPoint })
+    if (isEndPointExist) {
+      return { path: 'endPoint', message: 'Link sudah dipakai' }
+    }
+    return { path: 'success', message: '' }
   }
 }
 

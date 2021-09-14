@@ -10,7 +10,6 @@ interface ContextProps {
   image: any
   story: string
   isSuccessEndPoint: string
-  endPointDuplicateErrorMessage: string
   showMenu: boolean
   receiver: string
   currentReceiver: string
@@ -26,7 +25,6 @@ interface ContextProps {
   setImage: React.Dispatch<any>
   setStory: React.Dispatch<React.SetStateAction<string>>
   setIsSuccessEndPoint: React.Dispatch<React.SetStateAction<string>>
-  setEndPointDuplicateErrorMessage: React.Dispatch<React.SetStateAction<string>>
 }
 export const AddCampaignContext = createContext<ContextProps | null>(null)
 
@@ -45,8 +43,6 @@ export const AddCampaignProvider: React.FC<React.ReactNode> = ({
   const [phoneNumber, setPhoneNumber] = useState('')
   const [beneficiaryName, setBeneficiaryName] = useState('')
   const [isSuccessEndPoint, setIsSuccessEndPoint] = useState('')
-  const [endPointDuplicateErrorMessage, setEndPointDuplicateErrorMessage] =
-    useState('')
   return (
     <AddCampaignContext.Provider
       value={{
@@ -59,10 +55,8 @@ export const AddCampaignProvider: React.FC<React.ReactNode> = ({
         receiver,
         showMenu,
         isSuccessEndPoint,
-        endPointDuplicateErrorMessage,
         currentReceiver,
         setCurrentReceiver,
-        setEndPointDuplicateErrorMessage,
         setReceiver,
         setShowMenu,
         setIsSuccessEndPoint,

@@ -27,11 +27,21 @@ const Photo = () => {
       <input
         {...register('image', {
           required: true,
+          validate: {
+            lessThan10MB: (files: { size: number }[]) =>
+              files[0].size < 10000000,
+            acceptedFormats: (files: { type: string }[]) =>
+              ['image/jpeg', 'image/png', 'image/jpg'].includes(files[0]?.type),
+          },
         })}
-        accept='.jpg, .jpeg, .png'
         type='file'
+        accept='.jpg, .jpeg, .png'
       />
       {errors.image?.type === 'required' && <p>Wajib mengupload gambar</p>}
+      {errors.image?.type === 'lessThan10MB' && <p>Max 10 MB</p>}
+      {errors.image?.type === 'acceptedFormats' && (
+        <p>Masukan sesuai format (jpg,png,jpeg)</p>
+      )}
       <NextButton disabled={!isValid}>Selanjutnya</NextButton>
       <PreviousButton
         onClick={() => history.push('/galang-dana/add-campaign/details')}

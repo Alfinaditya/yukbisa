@@ -11,14 +11,21 @@ import jwtDecode from 'jwt-decode'
 import { Token } from '../../../ts/token'
 import { getAccessToken } from '../../../auth/accessToken'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
-import { createEndpoint, encodedImage } from '../../../helpers/helper'
+import { encodedImage } from '../../../helpers/helper'
 
 const Result = () => {
   const history = useHistory()
   const token: Token = jwtDecode(getAccessToken())
   const context = useContext(AddCampaignContext)
-  const [addCampaign, { data, loading, error }] = useMutation(ADD_CAMPAIGN, {
+  const [addCampaign, { loading, error }] = useMutation(ADD_CAMPAIGN, {
     fetchPolicy: 'network-only',
+    refetchQueries: [
+      { query: GET_CAMPAIGNS },
+      {
+        query: GET_MY_CAMPAIGNS,
+        variables: { fundraiserId: token.id },
+      },
+    ],
   })
   useEffect(() => {
     handleSubmit()
@@ -46,27 +53,9 @@ const Result = () => {
       try {
         const res = await addCampaign({
           variables: { input: body },
-          refetchQueries: ({ data }) =>
-            data.addCampaign.error.path === 'success'
-              ? [
-                  { query: GET_CAMPAIGNS },
-                  {
-                    query: GET_MY_CAMPAIGNS,
-                    variables: { fundraiserId: token.id },
-                  },
-                ]
-              : [],
         })
-        if (res.data.addCampaign.error.path === 'success') {
-          history.push('/galang-dana/add-campaign/finish')
-          context?.setEndPoint(createEndpoint(data.endPoint))
-        }
-        if (res.data.addCampaign.error.path === 'endPoint') {
-          history.push('/galang-dana/add-campaign/details')
-          context?.setEndPointDuplicateErrorMessage(
-            res.data.addCampaign.error.message
-          )
-        }
+        context?.setIsSuccessEndPoint(res.data.addCampaign.endPoint)
+        history.push('/galang-dana/add-campaign/finish')
       } catch (error) {
         console.log(error)
       }
@@ -74,17 +63,6 @@ const Result = () => {
       console.log(error)
     }
   }
-  const body = {
-    beneficiaryName: context?.beneficiaryName,
-    title: context?.title,
-    endPoint: context?.endPoint,
-    target: parseInt(context?.target as string),
-    phoneNumber: context?.phoneNumber,
-    purposeDescription: context?.purposeDescription,
-    image: context?.image,
-    story: context?.story,
-  }
-  console.log(body)
   return (
     <div>
       <p>You are dead wrong</p>

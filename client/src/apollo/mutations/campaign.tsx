@@ -3,10 +3,7 @@ import { gql } from '@apollo/client'
 export const ADD_CAMPAIGN = gql`
   mutation AddCampaign($input: CampaignInput!) {
     addCampaign(input: $input) {
-      error {
-        message
-        path
-      }
+      endPoint
     }
   }
 `
@@ -18,5 +15,13 @@ export const DELETE_CAMPAIGN = gql`
 export const EDIT_CAMPAIGN = gql`
   mutation EditCampaign($input: EditCampaignInput!) {
     editCampaign(input: $input)
+  }
+`
+export const IS_ENDPOINT_AVAILABLE = gql`
+  mutation ($input: String!) {
+    isEndPointAvailable(endPoint: $input) {
+      path
+      message
+    }
   }
 `
