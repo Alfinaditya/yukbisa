@@ -64,7 +64,9 @@ const MyCampaigns = () => {
           </p>
         )}
       </Cards>
-      <CampaignButton onClick={() => history.push('/galang-dana/add-campaign')}>
+      <CampaignButton
+        onClick={() => history.push('/galang-dana/add-campaign/beneficiary')}
+      >
         Galang Dana Sekarang !
       </CampaignButton>
     </Container>

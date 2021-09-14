@@ -82,6 +82,16 @@ class CampaignResolver {
       return null
     }
   }
+  @Query(() => ErrorResponse)
+  async isEndPointAvailable(
+    @Arg('endPoint') endPoint: string
+  ): Promise<ErrorResponse | null> {
+    const isEndPointExist = await CampaignModel.findOne({ endPoint })
+    if (isEndPointExist) {
+      return { path: 'endPoint', message: 'Link sudah dipakai' }
+    }
+    return { path: 'success', message: '' }
+  }
 
   @Query(() => [CampaignDetails])
   async campaignDetails(
@@ -165,6 +175,7 @@ class CampaignResolver {
     const isEndPointExist = await CampaignModel.findOne({
       endPoint: input.endPoint,
     })
+    console.log(input)
     if (!isEndPointExist) {
       const result = await Cloudinary.uploader.upload(input.image, {
         folder: 'Yuk Bisa/campaigns',

@@ -47,7 +47,7 @@ const Navbar = () => {
         </NavLink>
         <NavLinkContainer>
           <NavLink to='/'>Donasi</NavLink>
-          <NavLink to='/galang-dana'>Galang Dana</NavLink>
+          <NavLink to='/galang-dana/'>Galang Dana</NavLink>
           <NavLink to='/my-donations'>Donasi Saya</NavLink>
           {!loading && me && (
             <>
