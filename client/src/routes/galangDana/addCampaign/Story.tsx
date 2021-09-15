@@ -1,16 +1,11 @@
 import React, { useContext } from 'react'
-import {
-  Checkbox,
-  Form,
-  LabelForm,
-  NextButton,
-  PreviousButton,
-  TextArea,
-  ErrorText,
-} from './style'
+import { Checkbox } from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
 import { Redirect, useHistory } from 'react-router'
+import { Form, Label, TextArea } from '../../../components/Form'
+import { ErrorText } from '../../../components/ErrorText'
+import { NextButton, PreviousButton } from '../../../components/Button'
 type Inputs = {
   story: string
   agreement: boolean
@@ -39,11 +34,11 @@ const Story = () => {
         context.target === '' && (
           <Redirect to='/galang-dana/add-campaign/beneficiary' />
         )}
-      <LabelForm>
+      <Label>
         Untuk memudahkanmu,kami membuat informasi yang kamu masukan menjadi
         cerita penggalangan dana. kamu dapat mengubah cerita di bawah ini sesuai
         keinginanmu. <span>*</span>
-      </LabelForm>
+      </Label>
       <TextArea
         {...register('story', {
           required: true,

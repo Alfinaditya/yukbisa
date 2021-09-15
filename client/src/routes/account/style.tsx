@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Input } from '../galangDana/addCampaign/style'
+import { Input } from '../../components/Form'
 
 export const MeImage = styled.img`
   width: 200px;

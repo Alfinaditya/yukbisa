@@ -4,18 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { EDIT_ME } from '../../../apollo/mutations/user'
 import { GET_ME } from '../../../apollo/queries/user'
+import { CancelLink, NextButton } from '../../../components/Button'
+import { ErrorText } from '../../../components/ErrorText'
+import { Form, Label, TextArea, Input } from '../../../components/Form'
 import { ProfileImage } from '../../../components/Image'
 import { encodedImage } from '../../../helpers/helper'
 import { Me } from '../../../ts/user'
-import {
-  CancelLink,
-  ErrorText,
-  Form,
-  Input,
-  LabelForm,
-  NextButton,
-  TextArea,
-} from '../../galangDana/addCampaign/style'
+
 import { InputImage, InputDate } from '../style'
 
 type Inputs = {
@@ -137,9 +132,9 @@ const EditAccount = () => {
         {errors.image?.type === 'acceptedFormats' && (
           <ErrorText>Masukan sesuai format (png,jpg,jpeg)</ErrorText>
         )}
-        <LabelForm>
+        <Label>
           Nama <span>*</span>
-        </LabelForm>
+        </Label>
         <Input
           {...register('name', { required: true, maxLength: 15 })}
           defaultValue={me.name}
@@ -152,9 +147,9 @@ const EditAccount = () => {
           <ErrorText>Nama terlalu panjang minimal (15 huruf)</ErrorText>
         )}
         {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
-        <LabelForm>
+        <Label>
           Tanggal lahir <span>*</span>
-        </LabelForm>
+        </Label>
         <InputDate
           {...register('dateOfBirth', {
             required: true,
@@ -165,9 +160,9 @@ const EditAccount = () => {
         {errors.dateOfBirth?.type === 'required' && (
           <ErrorText>Wajib memasukan Tanggal lahir</ErrorText>
         )}
-        <LabelForm>
+        <Label>
           Bio singkat <span>*</span>
-        </LabelForm>
+        </Label>
         <TextArea
           {...register('bio', { required: true })}
           defaultValue={me.bio}

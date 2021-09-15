@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import jwtDecode from 'jwt-decode'
 import { useState } from 'react'
-import CurrencyInput from 'react-currency-input-field'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import PhoneInput from 'react-phone-input-2'
 import { useHistory, useParams } from 'react-router'
@@ -13,9 +12,11 @@ import {
   GET_MY_CAMPAIGNS,
 } from '../../../apollo/queries/campaign'
 import { getAccessToken } from '../../../auth/accessToken'
+import { CancelLink, NextButton } from '../../../components/Button'
+import { Form, Input, Label, TextArea } from '../../../components/Form'
 import { Campaign } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
-import { Form, Input, TextArea } from '../../galangDana/addCampaign/style'
+import { Currency, HeaderForm } from '../../galangDana/addCampaign/style'
 
 type Inputs = {
   beneficiaryName: string
@@ -69,37 +70,27 @@ const EditCampaign = () => {
   return (
     <div>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <label>Nama Penerima</label>
+        <HeaderForm>Ubah data di bawah ini untuk galang dana</HeaderForm>
+        <Label>
+          Nama Penerima <span>*</span>
+        </Label>
         <Input
           type='text'
           {...register('beneficiaryName', { required: true, maxLength: 20 })}
           defaultValue={campaign.beneficiaryName}
         />
-        <label>Beri judul untuk penggalangan danamu</label>
+        <Label>
+          Beri judul untuk penggalangan danamu <span>*</span>
+        </Label>
         <Input
           type='text'
           {...register('title', { required: true, maxLength: 50 })}
           defaultValue={campaign.title}
         />
-        <label>Untuk apa dana tersebut digunakan?</label>
-        <TextArea
-          {...register('purposeDescription', {
-            required: true,
-            maxLength: 480,
-          })}
-          defaultValue={campaign.purposeDescription}
-        />
-        <label>Nomor hp kamu yang dapat dihubungi</label>
-        <PhoneInput
-          country={'id'}
-          value={campaign.phoneNumber}
-          disableDropdown={true}
-          countryCodeEditable={false}
-          placeholder='Isi nomor telepon'
-          onChange={phone => setPhoneNumber(phone)}
-        />
-        <label>Berapa biaya yang kamu butuhkan</label>
-        <CurrencyInput
+        <Label>
+          Berapa biaya yang kamu butuhkan <span>*</span>
+        </Label>
+        <Currency
           placeholder='Masukan angka'
           prefix={'Rp. '}
           decimalsLimit={2}
@@ -107,18 +98,46 @@ const EditCampaign = () => {
           required={true}
           onValueChange={value => setTarget(value)}
         />
-        <label>
+        <Label>
+          Untuk apa dana tersebut digunakan? <span>*</span>
+        </Label>
+        <TextArea
+          {...register('purposeDescription', {
+            required: true,
+            maxLength: 480,
+          })}
+          defaultValue={campaign.purposeDescription}
+        />
+        <Label>Nomor hp kamu yang dapat dihubungi</Label>
+        <PhoneInput
+          country={'id'}
+          value={campaign.phoneNumber}
+          disableDropdown={true}
+          countryCodeEditable={false}
+          placeholder='Isi nomor telepon'
+          inputStyle={{
+            width: '100%',
+            height: '59px',
+            outline: 'none',
+          }}
+          inputProps={{
+            required: true,
+          }}
+          onChange={phone => setPhoneNumber(phone)}
+        />
+        <Label>
           Untuk memudahkanmu,kami membuat informasi yang kamu masukan menjadi
           cerita penggalangan dana. kamu dapat mengubah cerita di bawah ini
           sesuai keinginanmu.
-        </label>
+        </Label>
         <TextArea
           {...register('story', {
             required: true,
           })}
           defaultValue={campaign.story}
         />
-        <button type='submit'>Submit</button>
+        <NextButton type='submit'>Submit</NextButton>
+        <CancelLink to={`campaign/${slug}`}>Batal mengedit</CancelLink>
       </Form>
     </div>
   )

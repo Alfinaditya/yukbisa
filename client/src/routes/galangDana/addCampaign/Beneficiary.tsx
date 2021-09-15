@@ -1,16 +1,10 @@
 import { useContext, useState } from 'react'
 import {
   HeaderForm,
-  LabelForm,
   ListBox,
   ListBoxButton,
   ListBoxOptions,
   ListBoxOption,
-  ErrorText,
-  CancelLink,
-  NextButton,
-  Input,
-  Form,
 } from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import jwtDecode from 'jwt-decode'
@@ -18,6 +12,9 @@ import { Token } from '../../../ts/token'
 import { getAccessToken } from '../../../auth/accessToken'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
 import { useHistory } from 'react-router'
+import { Form, Input, Label } from '../../../components/Form'
+import { ErrorText } from '../../../components/ErrorText'
+import { CancelLink, NextButton } from '../../../components/Button'
 
 type Inputs = {
   beneficiaryName: string
@@ -47,9 +44,9 @@ const Beneficiary = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <HeaderForm>Isi data di bawah ini untuk galang dana</HeaderForm>
-      <LabelForm>
+      <Label>
         Untuk siapa kamu menggalang dana <span> *</span>
-      </LabelForm>
+      </Label>
       <ListBox>
         <ListBoxButton
           onClick={() => {
@@ -72,7 +69,7 @@ const Beneficiary = () => {
 
       {context?.receiver === 'others' && (
         <>
-          <LabelForm>Nama Penerima</LabelForm>
+          <Label>Nama Penerima</Label>
           <Input
             type='text'
             {...register('beneficiaryName', {

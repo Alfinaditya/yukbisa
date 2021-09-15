@@ -1,19 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react'
-import {
-  ContainerImage,
-  ErrorText,
-  Form,
-  HeaderForm,
-  InputImage,
-  LabelForm,
-  NextButton,
-  PreviewImage,
-  PreviousButton,
-} from './style'
+import { ContainerImage, HeaderForm, InputImage, PreviewImage } from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Redirect, useHistory } from 'react-router'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
 import { Image } from '../../../components/Image'
+import { Form, Label } from '../../../components/Form'
+import { ErrorText } from '../../../components/ErrorText'
+import { NextButton, PreviousButton } from '../../../components/Button'
 type Inputs = {
   image: any
 }
@@ -46,13 +39,15 @@ const Photo = () => {
     }
   }
   if (watchImageField) {
-    const image = watchImageField[0]
-    if (
-      image.type === 'image/jpeg' ||
-      image.type === 'image/png' ||
-      image.type === 'image/jpg'
-    ) {
-      previewFile(image)
+    if (watchImageField.length) {
+      const image = watchImageField[0]
+      if (
+        image.type === 'image/jpeg' ||
+        image.type === 'image/png' ||
+        image.type === 'image/jpg'
+      ) {
+        previewFile(image)
+      }
     }
   }
 
@@ -66,10 +61,10 @@ const Photo = () => {
           <Redirect to='/galang-dana/add-campaign/beneficiary' />
         )}
       <HeaderForm>Tunjukan perjuanganmu pada donatur</HeaderForm>
-      <LabelForm image>
+      <Label image>
         Pilih salah satu foto utama untuk penggalan danamu <span> *</span>
-      </LabelForm>
-      <LabelForm sub>Format foto harus PNG/JPG/JPEG</LabelForm>
+      </Label>
+      <Label sub>Format foto harus PNG/JPG/JPEG</Label>
       {previewSource && (
         <PreviewImage>
           <Image

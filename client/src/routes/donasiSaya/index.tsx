@@ -1,13 +1,11 @@
 import { useQuery } from '@apollo/client'
 import jwtDecode from 'jwt-decode'
-import { GET_MY_DONATIONS } from '../../../apollo/queries/userDonation'
-import { getAccessToken } from '../../../auth/accessToken'
-import { Container } from '../../../components/Container'
-import { Image } from '../../../components/Image'
-import { Title } from '../../../components/Title'
-import { convertCurrency, convertDate } from '../../../helpers/helper'
-import { Mydonations } from '../../../ts/donations'
-import { Token } from '../../../ts/token'
+import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
+import { getAccessToken } from '../../auth/accessToken'
+import { Container } from '../../components/Container'
+import { convertCurrency, convertDate } from '../../helpers/helper'
+import { Mydonations } from '../../ts/donations'
+import { Token } from '../../ts/token'
 import {
   Card,
   CardDate,

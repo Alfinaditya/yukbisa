@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Account from './routes/account'
-import Navbar from './components/navbar/Navbar'
+import Navbar from './parts/navbar/Navbar'
 import Register from './routes/entry/register'
 import Home from './routes/home'
 import Login from './routes/entry/login'
-import MyDonations from './routes/donations/myDonations'
-import DetailsCampaign from './routes/details/Campaign'
-import Donation from './routes/donations/addDonation'
 import MyCampaigns from './routes/galangDana/myCampaigns'
 import ProtectedRoute from './routes/ProtectedRoute'
-import EditCampaign from './routes/details/editCampaign'
 import EditAccount from './routes/account/editAccount'
 import AddCampaign from './routes/galangDana/addCampaign'
+import EditCampaign from './routes/campaign[slug]/editCampaign'
+import Donation from './routes/addDonation'
+import MyDonations from './routes/donasiSaya'
+import DetailsCampaign from './routes/campaign[slug]/Campaign'
 
 const Routes = () => {
   return (

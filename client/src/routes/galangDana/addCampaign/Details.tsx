@@ -1,16 +1,5 @@
-import React, { useState, useContext } from 'react'
-import {
-  Currency,
-  ErrorText,
-  Form,
-  HeaderForm,
-  Input,
-  InputEndPoint,
-  LabelForm,
-  NextButton,
-  PreviousButton,
-  TextArea,
-} from './style'
+import { useState, useContext } from 'react'
+import { Currency, HeaderForm, InputEndPoint } from './style'
 import PhoneInput from 'react-phone-input-2'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import 'react-phone-input-2/lib/material.css'
@@ -19,6 +8,9 @@ import { Redirect, useHistory } from 'react-router'
 import { createEndpoint } from '../../../helpers/helper'
 import { IS_ENDPOINT_AVAILABLE } from '../../../apollo/mutations/campaign'
 import { useMutation } from '@apollo/client'
+import { Form, Input, Label, TextArea } from '../../../components/Form'
+import { ErrorText } from '../../../components/ErrorText'
+import { NextButton, PreviousButton } from '../../../components/Button'
 
 type Inputs = {
   title: string
@@ -62,9 +54,9 @@ const Details = () => {
         <Redirect to='/galang-dana/add-campaign/beneficiary' />
       )}
       <HeaderForm>Detail penggalan dana & perkiraan biaya</HeaderForm>
-      <LabelForm title>
+      <Label title>
         Beri judul untuk penggalangan danamu <span> * </span>
-      </LabelForm>
+      </Label>
       <Input
         type='text'
         {...register('title', { required: true, maxLength: 50 })}
@@ -76,10 +68,10 @@ const Details = () => {
       {errors.title?.type === 'maxLength' && (
         <ErrorText>Judul terlalu panjang (maximal 50 huruf)</ErrorText>
       )}
-      <LabelForm endPoint>
+      <Label endPoint>
         Tentukan link untuk penggalangan danamu <span> * </span>
-      </LabelForm>
-      <LabelForm sub>gunakan huruf tanpa spasi</LabelForm>
+      </Label>
+      <Label sub>gunakan huruf tanpa spasi</Label>
       <InputEndPoint>
         <div>YukBisa/campaign/</div>
         <Input
@@ -99,9 +91,9 @@ const Details = () => {
       {errors.endPoint?.type === 'maxLength' && (
         <ErrorText>Link terlalu panjang (maximal 15 huruf)</ErrorText>
       )}
-      <LabelForm currency>
+      <Label currency>
         Berapa biaya yang kamu butuhkan <span> * </span>
-      </LabelForm>
+      </Label>
 
       <Currency
         placeholder='Masukan angka'
@@ -111,9 +103,9 @@ const Details = () => {
         required={true}
         onValueChange={value => context?.setTarget(value as string)}
       />
-      <LabelForm textArea>
+      <Label textArea>
         Untuk apa dana tersebut digunakan? <span> * </span>
-      </LabelForm>
+      </Label>
       <TextArea
         placeholder={
           'Contoh: Untuk berlangganan netflix dan mukbang slime,sisa uang akan didonasikan ke perut saya sendiri'
@@ -134,9 +126,9 @@ const Details = () => {
       {errors.purposeDescription?.type === 'maxLength' && (
         <ErrorText>Tujuan terlalu panjang (maximal 480 huruf)</ErrorText>
       )}
-      <LabelForm phone>
+      <Label phone>
         Nomor hp kamu yang dapat dihubungi <span> * </span>
-      </LabelForm>
+      </Label>
       <PhoneInput
         country={'id'}
         value={context?.phoneNumber}

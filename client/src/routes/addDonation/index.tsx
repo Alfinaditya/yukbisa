@@ -2,16 +2,16 @@ import { useMutation } from '@apollo/client'
 import { FormEvent, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 import { useLocation } from 'react-router-dom'
-import { ADD_DONATION } from '../../../apollo/mutations/userDonation'
-import { getAccessToken } from '../../../auth/accessToken'
 import jwtDecode from 'jwt-decode'
+import { useHistory } from 'react-router'
+import { getAccessToken } from '../../auth/accessToken'
+import { Token } from '../../ts/token'
+import { ADD_DONATION } from '../../apollo/mutations/userDonation'
 import {
   GET_CAMPAIGNS,
   GET_CAMPAIGN_DETAILS,
-} from '../../../apollo/queries/campaign'
-import { Token } from '../../../ts/token'
-import { GET_MY_DONATIONS } from '../../../apollo/queries/userDonation'
-import { useHistory } from 'react-router'
+} from '../../apollo/queries/campaign'
+import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
 
 const Donation = () => {
   const history = useHistory()

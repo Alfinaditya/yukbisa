@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Image } from '../../../components/Image'
+import { Image } from '../../components/Image'
 
 export const Card = styled(Link)`
   margin: 20px 0;
