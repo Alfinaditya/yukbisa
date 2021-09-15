@@ -7,6 +7,7 @@ export const Image = styled.img`
 `
 export const UserImage = styled.img`
   width: 65px;
+  height: 65px;
   border-radius: 50%;
 `
 export const ProfileImage = styled.img`

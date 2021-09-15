@@ -42,6 +42,7 @@ class DonationResolver {
               message: input?.message,
               amount: input.amount,
               createdAt: Date.now(),
+              isAnonymous: input.anonymous,
             },
           },
         }

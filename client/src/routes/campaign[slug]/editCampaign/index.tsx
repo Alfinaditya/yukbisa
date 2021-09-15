@@ -13,6 +13,7 @@ import {
 } from '../../../apollo/queries/campaign'
 import { getAccessToken } from '../../../auth/accessToken'
 import { CancelLink, NextButton } from '../../../components/Button'
+import { ErrorText } from '../../../components/ErrorText'
 import { Form, Input, Label, TextArea } from '../../../components/Form'
 import { Campaign } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
@@ -43,7 +44,9 @@ const EditCampaign = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>({
+    mode: 'onChange',
+  })
   if (loading) return <p>Loading.....</p>
   if (editData) console.log(editData)
   const onSubmit: SubmitHandler<Inputs> = async data => {
@@ -79,6 +82,14 @@ const EditCampaign = () => {
           {...register('beneficiaryName', { required: true, maxLength: 20 })}
           defaultValue={campaign.beneficiaryName}
         />
+        {errors.beneficiaryName?.type === 'maxLength' && (
+          <ErrorText>
+            Nama penerima terlalu panjang (maximal 20 huruf)
+          </ErrorText>
+        )}
+        {errors.beneficiaryName?.type === 'required' && (
+          <ErrorText>Wajib memasukan nama penerima</ErrorText>
+        )}
         <Label>
           Beri judul untuk penggalangan danamu <span>*</span>
         </Label>
@@ -87,6 +98,12 @@ const EditCampaign = () => {
           {...register('title', { required: true, maxLength: 50 })}
           defaultValue={campaign.title}
         />
+        {errors.title?.type === 'required' && (
+          <ErrorText>Wajib memasukan judul</ErrorText>
+        )}
+        {errors.title?.type === 'maxLength' && (
+          <ErrorText>Judul terlalu panjang (maximal 50 huruf)</ErrorText>
+        )}
         <Label>
           Berapa biaya yang kamu butuhkan <span>*</span>
         </Label>
@@ -105,9 +122,19 @@ const EditCampaign = () => {
           {...register('purposeDescription', {
             required: true,
             maxLength: 480,
+            minLength: 30,
           })}
           defaultValue={campaign.purposeDescription}
         />
+        {errors.purposeDescription?.type === 'minLength' && (
+          <ErrorText>Tujuan terlalu pendek (minimal 40 huruf)</ErrorText>
+        )}
+        {errors.purposeDescription?.type === 'required' && (
+          <ErrorText>Wajib memasukan Tujuan</ErrorText>
+        )}
+        {errors.purposeDescription?.type === 'maxLength' && (
+          <ErrorText>Tujuan terlalu panjang (maximal 480 huruf)</ErrorText>
+        )}
         <Label>Nomor hp kamu yang dapat dihubungi</Label>
         <PhoneInput
           country={'id'}
@@ -136,6 +163,9 @@ const EditCampaign = () => {
           })}
           defaultValue={campaign.story}
         />
+        {errors.story?.type === 'required' && (
+          <ErrorText>Wajib mengisi cerita</ErrorText>
+        )}
         <NextButton type='submit'>Submit</NextButton>
         <CancelLink to={`campaign/${slug}`}>Batal mengedit</CancelLink>
       </Form>

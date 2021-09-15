@@ -18,4 +18,8 @@ export class UserDonation {
   @Field({ nullable: true })
   @Property()
   message?: string
+
+  @Field({ nullable: true })
+  @Property()
+  isAnonymous?: boolean
 }

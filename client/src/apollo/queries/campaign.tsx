@@ -40,6 +40,7 @@ export const GET_CAMPAIGN_DETAILS = gql`
         userId
         amount
         message
+        isAnonymous
         createdAt
         user {
           name

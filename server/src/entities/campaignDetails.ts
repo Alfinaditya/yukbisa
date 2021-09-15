@@ -98,6 +98,10 @@ export class UserDetails {
   @Property()
   createdAt!: number
 
+  @Field({ nullable: true })
+  @Property()
+  isAnonymous!: boolean
+
   @Field(() => User, { nullable: true })
   @Property({
     ref: () => User,

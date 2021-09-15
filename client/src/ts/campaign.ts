@@ -16,6 +16,7 @@ type UserDetails = {
   userId: string
   amount: number
   message: string
+  isAnonymous: boolean
   createdAt: any
   user: User
 }

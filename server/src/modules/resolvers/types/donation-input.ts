@@ -6,6 +6,7 @@ import {
   IsInt,
   MaxLength,
   IsMongoId,
+  IsBoolean,
 } from 'class-validator'
 
 @InputType()
@@ -28,4 +29,9 @@ export class DonationInput {
   @IsLowercase({ message: 'Wajib huruf kecil' })
   @Field()
   endPoint!: string
+
+  @Field()
+  @IsNotEmpty({ message: 'Jumlah tidak boleh kosong' })
+  @IsBoolean({ message: 'Wajib bertipe true / false' })
+  anonymous!: boolean
 }

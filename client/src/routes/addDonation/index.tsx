@@ -12,11 +12,15 @@ import {
   GET_CAMPAIGN_DETAILS,
 } from '../../apollo/queries/campaign'
 import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
+import { Form, Label, TextArea } from '../../components/Form'
+import { CancelLink, NextButton } from '../../components/Button'
+import { Currency } from '../galangDana/addCampaign/style'
 
 const Donation = () => {
   const history = useHistory()
   const [amount, setAmount] = useState<any>('')
   const [message, setMessage] = useState('')
+  const [anonymous, setAnonymous] = useState(false)
   const search = useLocation().search
   const token: Token = jwtDecode(getAccessToken())
   const slug = new URLSearchParams(search).get('slug')
@@ -40,17 +44,19 @@ const Donation = () => {
       amount: parseInt(amount),
       message,
       endPoint: slug,
+      anonymous: anonymous,
     }
+    console.log(body)
     await addDonation({ variables: { input: body } })
     history.push(`/campaign/${slug}`)
   }
   return (
     <div>
-      <h1>Halloo gang kuontol</h1>
-      <p>Halo</p>
-      <form onSubmit={handleSubmit}>
-        <label>Isi nominal donasi</label>
-        <CurrencyInput
+      <Form onSubmit={handleSubmit}>
+        <Label>
+          Isi nominal donasi <span>*</span>
+        </Label>
+        <Currency
           placeholder='Masukan angka'
           prefix={'Rp. '}
           decimalsLimit={2}
@@ -58,20 +64,28 @@ const Donation = () => {
           required={true}
           onValueChange={value => setAmount(value)}
         />
-        <label>Beri semangat (opsional)</label>
-        <textarea
+        <Label>Sembunyikan nama saya (donasi anonim)</Label>
+        <input
+          defaultChecked={anonymous}
+          onChange={() => setAnonymous(!anonymous)}
+          type='checkbox'
+        />
+        <Label>Beri semangat (opsional)</Label>
+        <TextArea
           value={message}
           onChange={e => setMessage(e.target.value)}
           name='message'
         />
         {!loading ? (
-          <button type='submit'>Submit</button>
+          <NextButton type='submit'>Donasi sekarang !</NextButton>
         ) : (
-          <button type='submit' disabled>
+          <NextButton type='submit' disabled>
             Loading...
-          </button>
+          </NextButton>
         )}
-      </form>
+        {/* <NextButton type='submit'>Donasi sekarang !</NextButton> */}
+        <CancelLink to={`campaign/${slug}`}>Batal donasi</CancelLink>
+      </Form>
     </div>
   )
 }

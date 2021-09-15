@@ -190,11 +190,17 @@ const DetailsCampaign = () => {
                   {user.amount && user.userId ? (
                     <>
                       <UserImage
-                        src={user.user.displayImage}
-                        alt={user.user.name}
+                        src={
+                          user.isAnonymous
+                            ? '/profile.png'
+                            : user.user.displayImage
+                        }
+                        alt={user.isAnonymous ? 'Anonymous' : user.user.name}
                       />
                       <UserDonationDetails>
-                        <UserDonationName>{user.user.name}</UserDonationName>
+                        <UserDonationName>
+                          {user.isAnonymous ? 'Anonymous' : user.user.name}
+                        </UserDonationName>
                         <UserDonationAmount>
                           Berdonasi sebesar{' '}
                           <b>{convertCurrency(user.amount)}</b>
