@@ -14,7 +14,6 @@ import { TokenRefreshLink } from 'apollo-link-token-refresh'
 import { getAccessToken, setAccessToken } from './auth/accessToken'
 import jwtDecode from 'jwt-decode'
 import { GlobalStyle } from './style'
-import { AddCampaignProvider } from './context/addCampaignContext'
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:3001/graphql',
@@ -109,12 +108,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <AddCampaignProvider>
-      <React.StrictMode>
-        <GlobalStyle />
-        <App />
-      </React.StrictMode>
-    </AddCampaignProvider>
+    <React.StrictMode>
+      <GlobalStyle />
+      <App />
+    </React.StrictMode>
   </ApolloProvider>,
   document.getElementById('root')
 )

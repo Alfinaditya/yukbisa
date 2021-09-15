@@ -16,29 +16,36 @@ import AddCampaign from './routes/galangDana/addCampaign'
 const Routes = () => {
   return (
     <Router>
-      <Navbar />
       <Switch>
-        <Route exact path='/' component={Home} />
-        <Route path='/register' component={Register} />
-        <Route path='/login' component={Login} />
-
-        <ProtectedRoute path='/account/edit-account' component={EditAccount} />
-        <ProtectedRoute path='/account' component={Account} />
-
         <ProtectedRoute
           path='/galang-dana/add-campaign/'
           component={AddCampaign}
         />
+        <>
+          <Navbar />
+          <Route exact path='/' component={Home} />
+          <Route path='/register' component={Register} />
+          <Route path='/login' component={Login} />
 
-        <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
-        <ProtectedRoute path='/my-donations' component={MyDonations} />
+          <ProtectedRoute
+            path='/account/edit-account'
+            component={EditAccount}
+          />
+          <ProtectedRoute path='/account' component={Account} />
 
-        <ProtectedRoute path='/campaign/:slug/donation' component={Donation} />
-        <ProtectedRoute
-          path='/campaign/:slug/edit-campaign'
-          component={EditCampaign}
-        />
-        <Route path='/campaign/:slug' component={DetailsCampaign} />
+          <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
+          <ProtectedRoute path='/my-donations' component={MyDonations} />
+
+          <ProtectedRoute
+            path='/campaign/:slug/donation'
+            component={Donation}
+          />
+          <ProtectedRoute
+            path='/campaign/:slug/edit-campaign'
+            component={EditCampaign}
+          />
+          <Route path='/campaign/:slug' component={DetailsCampaign} />
+        </>
       </Switch>
     </Router>
   )

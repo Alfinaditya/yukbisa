@@ -1,26 +1,26 @@
 import { useState, createContext } from 'react'
 
 interface ContextProps {
-  title: string
+  currentReceiver: string
+  showMenu: boolean
+  receiver: string
   beneficiaryName: string
+  title: string
+  endPoint: string
   purposeDescription: string
   target: string
-  endPoint: string
   phoneNumber: string
   image: any
   story: string
   isSuccessEndPoint: string
-  showMenu: boolean
-  receiver: string
-  currentReceiver: string
   setCurrentReceiver: React.Dispatch<React.SetStateAction<string>>
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
   setReceiver: React.Dispatch<React.SetStateAction<string>>
   setBeneficiaryName: React.Dispatch<React.SetStateAction<string>>
-  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
+  setTitle: React.Dispatch<React.SetStateAction<string>>
   setEndPoint: React.Dispatch<React.SetStateAction<string>>
   setTarget: React.Dispatch<React.SetStateAction<string>>
   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>
-  setTitle: React.Dispatch<React.SetStateAction<string>>
   setPurposeDescription: React.Dispatch<React.SetStateAction<string>>
   setImage: React.Dispatch<any>
   setStory: React.Dispatch<React.SetStateAction<string>>
@@ -31,17 +31,19 @@ export const AddCampaignContext = createContext<ContextProps | null>(null)
 export const AddCampaignProvider: React.FC<React.ReactNode> = ({
   children,
 }) => {
-  const [endPoint, setEndPoint] = useState('')
-  const [receiver, setReceiver] = useState('me')
+  // Dropdown Menu
   const [currentReceiver, setCurrentReceiver] = useState('Saya Sendiri')
+  const [showMenu, setShowMenu] = useState(false)
+  const [receiver, setReceiver] = useState('me')
+
+  const [beneficiaryName, setBeneficiaryName] = useState('')
+  const [title, setTitle] = useState('')
+  const [endPoint, setEndPoint] = useState('')
   const [purposeDescription, setPurposeDescription] = useState('')
   const [target, setTarget] = useState('')
-  const [title, setTitle] = useState('')
   const [image, setImage] = useState<any>('')
   const [story, setStory] = useState('')
-  const [showMenu, setShowMenu] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [beneficiaryName, setBeneficiaryName] = useState('')
   const [isSuccessEndPoint, setIsSuccessEndPoint] = useState('')
   return (
     <AddCampaignContext.Provider

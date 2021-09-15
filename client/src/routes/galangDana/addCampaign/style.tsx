@@ -29,6 +29,10 @@ export const TextArea = styled.textarea`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 20px;
 `
 export const Input = styled.input`
   height: 59px;
@@ -64,7 +68,7 @@ export const InputEndPoint = styled.div`
 
 export const HeaderForm = styled.h1`
   font-size: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `
 
 export const LabelForm = styled.label<any | undefined>`
@@ -91,6 +95,12 @@ export const LabelForm = styled.label<any | undefined>`
     css`
       margin-bottom: 25px;
     `}
+    ${props =>
+    props.image &&
+    css`
+      margin-top: 25px;
+      margin-bottom: 20px;
+    `}
   ${props =>
     props.textArea &&
     css`
@@ -116,6 +126,7 @@ export const PreviousButton = styled(ButtonForm)`
   background: #cdcfd3;
   color: #3e3e3e;
   margin-top: 20px;
+  margin-bottom: 30px;
 `
 export const CancelLink = styled(Link)`
   text-decoration: none;
@@ -157,4 +168,50 @@ export const Currency = styled(CurrencyInput)`
   outline: none;
   border-radius: 5px;
   font-size: 16px;
+`
+export const ContainerImage = styled.div`
+  border: 1px solid #cdcfd3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 247px;
+  border-radius: 6px;
+  label:nth-child(1) {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+`
+export const PreviewImage = styled.div`
+  width: 100%;
+  height: 500px;
+`
+export const InputImage = styled.div`
+  border: 1px solid white;
+  background: var(--main);
+  color: white;
+  margin-top: 10px;
+  padding: 10px;
+  outline: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  width: 422px;
+  text-align: center;
+  position: relative;
+  transition: 0.5s;
+  &:hover {
+    border: 1px solid var(--main);
+    background: white;
+    color: var(--main);
+  }
+  input {
+    opacity: 0;
+    width: 100%;
+    left: 0;
+    cursor: pointer;
+    position: absolute;
+  }
 `
