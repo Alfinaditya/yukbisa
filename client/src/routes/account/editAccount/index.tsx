@@ -4,9 +4,19 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { EDIT_ME } from '../../../apollo/mutations/user'
 import { GET_ME } from '../../../apollo/queries/user'
-import { UserImage } from '../../../components/Image'
+import { ProfileImage } from '../../../components/Image'
 import { encodedImage } from '../../../helpers/helper'
 import { Me } from '../../../ts/user'
+import {
+  CancelLink,
+  ErrorText,
+  Form,
+  Input,
+  LabelForm,
+  NextButton,
+  TextArea,
+} from '../../galangDana/addCampaign/style'
+import { InputImage, InputDate } from '../style'
 
 type Inputs = {
   image: any
@@ -18,6 +28,8 @@ type Inputs = {
 const EditAccount = () => {
   const history = useHistory()
   const [nameDuplicateErrorMessage, setNameDuplicateErrorMessage] = useState('')
+  const [previewSource, setPreviewSource] = useState('')
+
   const { loading, data } = useQuery(GET_ME)
   const [editMe, { loading: mutationLoading }] = useMutation(EDIT_ME, {
     fetchPolicy: 'network-only',
@@ -26,11 +38,12 @@ const EditAccount = () => {
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors },
-  } = useForm<Inputs>()
-
+  } = useForm<Inputs>({ mode: 'onChange' })
+  const watchImageField = watch('image')
+  const watchNameField = watch('name')
   const onSubmit: SubmitHandler<Inputs> = async data => {
-    console.log(data)
     let body
     try {
       if (data.image.length) {
@@ -70,34 +83,79 @@ const EditAccount = () => {
       console.log(error)
     }
   }
+  const previewFile = (file: Blob) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setPreviewSource(reader.result as any)
+    }
+  }
+  if (watchImageField) {
+    if (watchImageField.length) {
+      const image = watchImageField[0]
+      if (
+        image.type === 'image/jpeg' ||
+        image.type === 'image/png' ||
+        image.type === 'image/jpg'
+      ) {
+        previewFile(image)
+      }
+    }
+  }
   if (loading) return <p>Loading...</p>
   const me: Me = data.me
   return (
     <div>
-      <h1>Edit Account</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Foto</label>
-        <UserImage src={me.displayImage} />
-        <input {...register('image')} accept='.jpg, .jpeg, .png' type='file' />
-
-        <input
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <InputImage>
+          <div>
+            <ProfileImage src={previewSource || me.displayImage} />
+          </div>
+          <p>{watchNameField || me.name}</p>
+          <input
+            {...register('image', {
+              required: true,
+              validate: {
+                lessThan10MB: (files: { size: number }[]) =>
+                  files[0].size < 10000000,
+                acceptedFormats: (files: { type: string }[]) =>
+                  ['image/jpeg', 'image/png', 'image/jpg'].includes(
+                    files[0]?.type
+                  ),
+              },
+            })}
+            type='file'
+            accept='.jpg, .jpeg, .png'
+          />
+        </InputImage>
+        {errors.image?.type === 'required' && (
+          <ErrorText>Wajib mengupload gambar</ErrorText>
+        )}
+        {errors.image?.type === 'lessThan10MB' && (
+          <ErrorText>Max 10 MB</ErrorText>
+        )}
+        {errors.image?.type === 'acceptedFormats' && (
+          <ErrorText>Masukan sesuai format (png,jpg,jpeg)</ErrorText>
+        )}
+        <LabelForm>
+          Nama <span>*</span>
+        </LabelForm>
+        <Input
           {...register('name', { required: true, maxLength: 15 })}
           defaultValue={me.name}
           type='text'
         />
-        {errors.name?.type === 'required' && <p>Wajib memasukan nama</p>}
+        {errors.name?.type === 'required' && (
+          <ErrorText>Wajib memasukan nama</ErrorText>
+        )}
         {errors.name?.type === 'maxLength' && (
-          <p>Nama terlalu panjang minimal (15 huruf)</p>
+          <ErrorText>Nama terlalu panjang minimal (15 huruf)</ErrorText>
         )}
         {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
-        <label>Bio</label>
-        <textarea
-          {...register('bio', { required: true })}
-          defaultValue={me.bio}
-        />
-        {errors.bio?.type === 'required' && <p>Wajib memasukan Bio</p>}
-        <label>Date</label>
-        <input
+        <LabelForm>
+          Tanggal lahir <span>*</span>
+        </LabelForm>
+        <InputDate
           {...register('dateOfBirth', {
             required: true,
           })}
@@ -105,17 +163,27 @@ const EditAccount = () => {
           type='date'
         />
         {errors.dateOfBirth?.type === 'required' && (
-          <p>Wajib memasukan Tanggal lahir</p>
+          <ErrorText>Wajib memasukan Tanggal lahir</ErrorText>
         )}
-
+        <LabelForm>
+          Bio singkat <span>*</span>
+        </LabelForm>
+        <TextArea
+          {...register('bio', { required: true })}
+          defaultValue={me.bio}
+        />
+        {errors.bio?.type === 'required' && <p>Wajib memasukan Bio</p>}
         {mutationLoading ? (
-          <button type='submit' disabled>
+          <NextButton type='submit' disabled>
             Submit
-          </button>
+          </NextButton>
         ) : (
-          <button type='submit'>Submit</button>
+          <>
+            <NextButton type='submit'>Simpan perubahan</NextButton>
+            <CancelLink to='/account'>Batal mengedit profile</CancelLink>
+          </>
         )}
-      </form>
+      </Form>
     </div>
   )
 }

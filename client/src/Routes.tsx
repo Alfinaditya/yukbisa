@@ -17,33 +17,24 @@ const Routes = () => {
   return (
     <Router>
       <Switch>
+        <Route path='/register' component={Register} />
+        <Route path='/login' component={Login} />
         <ProtectedRoute
           path='/galang-dana/add-campaign/'
           component={AddCampaign}
         />
+        <ProtectedRoute
+          path='/campaign/:slug/edit-campaign'
+          component={EditCampaign}
+        />
+        <ProtectedRoute path='/campaign/:slug/donation' component={Donation} />
+        <ProtectedRoute path='/account/edit-account' component={EditAccount} />
         <>
           <Navbar />
           <Route exact path='/' component={Home} />
-          <Route path='/register' component={Register} />
-          <Route path='/login' component={Login} />
-
-          <ProtectedRoute
-            path='/account/edit-account'
-            component={EditAccount}
-          />
           <ProtectedRoute path='/account' component={Account} />
-
           <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
           <ProtectedRoute path='/my-donations' component={MyDonations} />
-
-          <ProtectedRoute
-            path='/campaign/:slug/donation'
-            component={Donation}
-          />
-          <ProtectedRoute
-            path='/campaign/:slug/edit-campaign'
-            component={EditCampaign}
-          />
           <Route path='/campaign/:slug' component={DetailsCampaign} />
         </>
       </Switch>

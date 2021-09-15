@@ -15,6 +15,7 @@ import {
 import { getAccessToken } from '../../../auth/accessToken'
 import { Campaign } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
+import { Form, Input, TextArea } from '../../galangDana/addCampaign/style'
 
 type Inputs = {
   beneficiaryName: string
@@ -67,22 +68,21 @@ const EditCampaign = () => {
   const campaign: Campaign = data.campaign
   return (
     <div>
-      <h1>Galang Dana</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <label>Nama Penerima</label>
-        <input
+        <Input
           type='text'
           {...register('beneficiaryName', { required: true, maxLength: 20 })}
           defaultValue={campaign.beneficiaryName}
         />
         <label>Beri judul untuk penggalangan danamu</label>
-        <input
+        <Input
           type='text'
           {...register('title', { required: true, maxLength: 50 })}
           defaultValue={campaign.title}
         />
         <label>Untuk apa dana tersebut digunakan?</label>
-        <textarea
+        <TextArea
           {...register('purposeDescription', {
             required: true,
             maxLength: 480,
@@ -112,14 +112,14 @@ const EditCampaign = () => {
           cerita penggalangan dana. kamu dapat mengubah cerita di bawah ini
           sesuai keinginanmu.
         </label>
-        <textarea
+        <TextArea
           {...register('story', {
             required: true,
           })}
           defaultValue={campaign.story}
         />
         <button type='submit'>Submit</button>
-      </form>
+      </Form>
     </div>
   )
 }

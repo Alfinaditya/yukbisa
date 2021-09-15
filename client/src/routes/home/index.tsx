@@ -14,7 +14,6 @@ import {
 import { Image } from '../../components/Image'
 import { Title } from '../../components/Title'
 import { Progress } from '../../components/Progress'
-
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
   if (loading) {
