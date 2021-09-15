@@ -1,8 +1,22 @@
 import styled from 'styled-components'
-import { Input } from '../../components/Form'
+import { Input, Label } from '../../components/Form'
 
+export const MeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+`
 export const MeImage = styled.img`
-  width: 200px;
+  width: 424px;
+  height: 441px;
+`
+export const MeDetails = styled.div`
+  margin-left: 20px;
+`
+export const MeLabel = styled(Label)`
+  color: #a3a2a2;
+  display: block;
+  margin-top: 20px;
 `
 export const InputImage = styled.label`
   display: flex;

@@ -11,7 +11,7 @@ import AddCampaign from './routes/galangDana/addCampaign'
 import EditCampaign from './routes/campaign[slug]/editCampaign'
 import Donation from './routes/addDonation'
 import MyDonations from './routes/donasiSaya'
-import DetailsCampaign from './routes/campaign[slug]/Campaign'
+import DetailsCampaign from './routes/campaign[slug]'
 
 const Routes = () => {
   return (
