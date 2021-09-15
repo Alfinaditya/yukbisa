@@ -15,7 +15,7 @@ import PhoneInput from 'react-phone-input-2'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import 'react-phone-input-2/lib/material.css'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { createEndpoint } from '../../../helpers/helper'
 import { IS_ENDPOINT_AVAILABLE } from '../../../apollo/mutations/campaign'
 import { useMutation } from '@apollo/client'
@@ -58,6 +58,9 @@ const Details = () => {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      {context?.beneficiaryName === '' && (
+        <Redirect to='/galang-dana/add-campaign/beneficiary' />
+      )}
       <HeaderForm>Detail penggalan dana & perkiraan biaya</HeaderForm>
       <LabelForm title>
         Beri judul untuk penggalangan danamu <span> * </span>

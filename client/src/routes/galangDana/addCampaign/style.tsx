@@ -6,7 +6,6 @@ import CurrencyInput from 'react-currency-input-field'
 
 // todo refactor this code,use params for color
 export const ContainerForm = styled(Container)`
-  /* background: green; */
   margin-top: 80px;
 `
 export const ErrorText = styled.p`
@@ -100,11 +99,6 @@ export const LabelForm = styled.label<any | undefined>`
     css`
       margin-top: 25px;
       margin-bottom: 20px;
-    `}
-  ${props =>
-    props.textArea &&
-    css`
-      /* margin-top: 40px; */
     `}
 `
 
@@ -214,4 +208,34 @@ export const InputImage = styled.div`
     cursor: pointer;
     position: absolute;
   }
+`
+export const Checkbox = styled.div`
+  display: flex;
+  background: #f8f8f8;
+  padding: 20px;
+  align-items: center;
+  margin-top: 20px;
+  input {
+    cursor: pointer;
+  }
+  p {
+    margin-left: 20px;
+  }
+`
+export const FinishContainer = styled.div`
+  font-size: 14px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  p {
+    width: 324px;
+  }
+`
+export const FinishButton = styled(Button)`
+  background: var(--main);
+  font-size: 14px;
+  margin-top: 20px;
+  width: 324px;
 `

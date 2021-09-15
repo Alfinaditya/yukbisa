@@ -11,7 +11,7 @@ import {
   PreviousButton,
 } from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
 import { Image } from '../../../components/Image'
 type Inputs = {
@@ -58,6 +58,13 @@ const Photo = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      {context?.beneficiaryName === '' &&
+        context.title === '' &&
+        context.endPoint === '' &&
+        context.purposeDescription === '' &&
+        context.target === '' && (
+          <Redirect to='/galang-dana/add-campaign/beneficiary' />
+        )}
       <HeaderForm>Tunjukan perjuanganmu pada donatur</HeaderForm>
       <LabelForm image>
         Pilih salah satu foto utama untuk penggalan danamu <span> *</span>

@@ -54,8 +54,6 @@ export function convertCurrency(currency: number) {
 }
 
 export function calcProgress(currentAmount: number, target: number) {
-  console.log(currentAmount, target)
   const progress = Math.ceil((currentAmount / target) * 100)
-  console.log(progress)
   return progress
 }

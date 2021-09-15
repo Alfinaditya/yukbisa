@@ -1,10 +1,19 @@
 import React, { useContext } from 'react'
-import { Form, NextButton, PreviousButton, TextArea } from './style'
+import {
+  Checkbox,
+  Form,
+  LabelForm,
+  NextButton,
+  PreviousButton,
+  TextArea,
+  ErrorText,
+} from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 type Inputs = {
   story: string
+  agreement: boolean
 }
 const Story = () => {
   const history = useHistory()
@@ -22,26 +31,41 @@ const Story = () => {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <label>
+      {context?.beneficiaryName === '' &&
+        context.title === '' &&
+        context.endPoint === '' &&
+        context.purposeDescription === '' &&
+        context.image === '' &&
+        context.target === '' && (
+          <Redirect to='/galang-dana/add-campaign/beneficiary' />
+        )}
+      <LabelForm>
         Untuk memudahkanmu,kami membuat informasi yang kamu masukan menjadi
         cerita penggalangan dana. kamu dapat mengubah cerita di bawah ini sesuai
-        keinginanmu.
-      </label>
+        keinginanmu. <span>*</span>
+      </LabelForm>
       <TextArea
         {...register('story', {
           required: true,
         })}
       />
-      {errors.story?.type === 'required' && <p>Wajib diisi</p>}
-      {/* {loading ? (
-        <button type='submit' disabled>
-          Tunggu sebentar.....
-        </button>
-      ) : (
-        <NextButton type='submit' disabled={!isValid}>
-          Submit
-        </NextButton>
-      )} */}
+      {errors.story?.type === 'required' && <ErrorText>Wajib diisi</ErrorText>}
+      <Checkbox>
+        <input
+          type='checkbox'
+          {...register('agreement', {
+            required: true,
+          })}
+        />
+        <p>
+          saya setuju dengan Syarat & ketentuan Donasi di Yukbisa,termasuk biaya
+          administrasi platform sebesar 69% dari total donasi online yang
+          terkumpul.
+        </p>
+      </Checkbox>
+      {errors.agreement?.type === 'required' && (
+        <ErrorText>Wajib mencentang persetujuan</ErrorText>
+      )}
       <NextButton type='submit' disabled={!isValid}>
         Submit
       </NextButton>

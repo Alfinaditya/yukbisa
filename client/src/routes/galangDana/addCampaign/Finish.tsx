@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
+import { FinishButton, FinishContainer } from './style'
 
 const Finish = () => {
   const history = useHistory()
@@ -22,19 +23,28 @@ const Finish = () => {
     context?.setPhoneNumber('')
   }
   return (
-    <div>
+    <FinishContainer>
+      {context?.beneficiaryName === '' &&
+        context.title === '' &&
+        context?.endPoint === '' &&
+        context.target === '' &&
+        context.phoneNumber === '' &&
+        context.purposeDescription === '' &&
+        context.image === '' && (
+          <Redirect to='/galang-dana/add-campaign/beneficiary' />
+        )}
       <p>
         Selamat halaman galang dana kamu siap digunakan. Yuk ajak teman temanmu
         untuk bantu menyebarkan
       </p>
-      <button
+      <FinishButton
         onClick={() => {
           history.push(`/campaign/${context?.isSuccessEndPoint}`)
         }}
       >
         Kembali ke halaman donasi
-      </button>
-    </div>
+      </FinishButton>
+    </FinishContainer>
   )
 }
 

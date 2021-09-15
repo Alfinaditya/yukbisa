@@ -65,7 +65,15 @@ const Result = () => {
   }
   return (
     <div>
-      <p>You are dead wrong</p>
+      {context?.beneficiaryName === '' &&
+        context.title === '' &&
+        context?.endPoint === '' &&
+        context.target === '' &&
+        context.phoneNumber === '' &&
+        context.purposeDescription === '' &&
+        context.image === '' && (
+          <Redirect to='/galang-dana/add-campaign/beneficiary' />
+        )}
     </div>
   )
 }

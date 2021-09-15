@@ -160,6 +160,7 @@ class CampaignResolver {
     @Arg('input') input: CampaignInput,
     @Ctx() ctx: MyContext
   ): Promise<Campaign | null> {
+    console.log(input)
     // todo jangan di delete bangsat
     // const isEndPointExist = await CampaignModel.findOne({
     //   endPoint: input.endPoint,
@@ -189,7 +190,7 @@ class CampaignResolver {
     const result = await Cloudinary.uploader.upload(input.image, {
       folder: 'Yuk Bisa/campaigns',
       allowed_formats: ['jpg,jpeg,png'],
-      timeout: 60000,
+      timeout: 120000,
     })
     const newCampaign = await CampaignModel.create({
       beneficiaryName: input.beneficiaryName,
