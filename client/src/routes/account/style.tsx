@@ -46,7 +46,7 @@ export const InputImage = styled.label`
     background: black;
     padding: 7px;
     cursor: pointer;
-    background-image: url('https://res.cloudinary.com/alfin-software/image/upload/v1631686016/camera_kgtwma.svg');
+    background-image: url('https://res.cloudinary.com/alfin-software/image/upload/v1631765818/assets/camera_nz17u4.svg');
     background-repeat: no-repeat;
     background-position: center;
   }

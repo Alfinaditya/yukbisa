@@ -5,6 +5,21 @@ import { GET_ME } from '../../../apollo/queries/user'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { useState } from 'react'
+import {
+  EntryInputContainer,
+  Entry,
+  EntryLabel,
+  FormEntry,
+  HeaderEntry,
+  SubmitEntryButton,
+  StayAtHome,
+  EntryImageContainer,
+  EntryInput,
+  EntryLink,
+} from '../style'
+import { ErrorText } from '../../../components/ErrorText'
+import { ReactComponent as EntryImage } from '../../../assets/entryImage.svg'
+import { Link } from 'react-router-dom'
 
 type Inputs = {
   email: string
@@ -59,77 +74,67 @@ const Register = () => {
   }
   if (loading) return <p>Loading....</p>
   if (error) return <p>Error</p>
-
-  // async function handleSubmit(e: FormEvent) {
-  //   e.preventDefault()
-  //   // const body = { email, name, password }
-  //   try {
-  //     await createUser({
-  //       variables: { input: body },
-  //       update: (store, { data }) => {
-  //         if (!data) {
-  //           return null
-  //         }
-  //         store.writeQuery({
-  //           query: GET_ME,
-  //           data: {
-  //             me: data.register.user,
-  //           },
-  //         })
-  //       },
-  //     })
-  //     history.push('/')
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Email</label>
-        <input
-          type='email'
-          {...register('email', {
-            required: true,
-            pattern:
-              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-          })}
-        />
-        {errors.email?.type === 'required' && <p>Wajib memasukan Email</p>}
-        {errors.email?.type === 'pattern' && <p>Masukan Email yang valid</p>}
-        {emailDuplicateErrorMessage && <p>{emailDuplicateErrorMessage}</p>}
-        <label>Password</label>
-        <input
-          type='password'
-          {...register('password', {
-            required: true,
-            minLength: 7,
-          })}
-        />
-        {errors.password?.type === 'required' && (
-          <p>Wajib memasukan password</p>
-        )}
-        {errors.password?.type === 'minLength' && (
-          <p>Password terlalu lemah (minimal 7 huruf)</p>
-        )}
-        <label>Name</label>
-        <input
-          type='text'
-          {...register('name', {
-            required: true,
-            minLength: 5,
-            maxLength: 20,
-          })}
-        />
-        {errors.name?.type === 'required' && <p>Wajib memasukan nama</p>}
-        {errors.name?.type === 'minLength' && (
-          <p>Nama teralu pendek (minimal 5 huruf)</p>
-        )}
-        {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
-        <button type='submit'>Submit</button>
-      </form>
-    </div>
+    <Entry>
+      <FormEntry onSubmit={handleSubmit(onSubmit)}>
+        <EntryInputContainer>
+          <HeaderEntry>Selamat datang di YukBisa</HeaderEntry>
+          <EntryLabel>Email</EntryLabel>
+          <EntryInput
+            type='email'
+            placeholder='Email'
+            {...register('email', {
+              required: true,
+              pattern:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            })}
+          />
+          {errors.email?.type === 'required' && <p>Wajib memasukan Email</p>}
+          {errors.email?.type === 'pattern' && <p>Masukan Email yang valid</p>}
+          {emailDuplicateErrorMessage && <p>{emailDuplicateErrorMessage}</p>}
+          <EntryLabel>Password</EntryLabel>
+          <EntryInput
+            type='password'
+            placeholder='Password'
+            {...register('password', {
+              required: true,
+              minLength: 7,
+            })}
+          />
+          {errors.password?.type === 'required' && (
+            <ErrorText>Wajib memasukan password</ErrorText>
+          )}
+          {errors.password?.type === 'minLength' && (
+            <ErrorText>Password terlalu lemah (minimal 7 huruf)</ErrorText>
+          )}
+          <EntryLabel>Nama kamu</EntryLabel>
+          <EntryInput
+            type='text'
+            placeholder='Nama kamu'
+            {...register('name', {
+              required: true,
+              minLength: 5,
+              maxLength: 20,
+            })}
+          />
+          {errors.name?.type === 'required' && <p>Wajib memasukan nama</p>}
+          {errors.name?.type === 'minLength' && (
+            <ErrorText>Nama teralu pendek (minimal 5 huruf)</ErrorText>
+          )}
+          {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
+
+          <EntryLink>
+            Sudah punya akun ? <Link to={'/login'}>Login disini </Link>
+          </EntryLink>
+          <SubmitEntryButton type='submit'>Daftar sekarang</SubmitEntryButton>
+        </EntryInputContainer>
+
+        <EntryImageContainer>
+          <StayAtHome>#StayAtHome</StayAtHome>
+          <EntryImage />
+        </EntryImageContainer>
+      </FormEntry>
+    </Entry>
   )
 }
 
