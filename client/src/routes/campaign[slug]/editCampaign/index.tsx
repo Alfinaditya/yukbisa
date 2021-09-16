@@ -37,7 +37,7 @@ const EditCampaign = () => {
   const { loading, data } = useQuery(GET_CAMPAIGN, {
     variables: { endPoint: slug },
   })
-  const [editCampaign, { data: editData }] = useMutation(EDIT_CAMPAIGN, {
+  const [editCampaign] = useMutation(EDIT_CAMPAIGN, {
     fetchPolicy: 'network-only',
   })
   const {
@@ -48,7 +48,7 @@ const EditCampaign = () => {
     mode: 'onChange',
   })
   if (loading) return <p>Loading.....</p>
-  if (editData) console.log(editData)
+
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const body = {
       beneficiaryName: data.beneficiaryName,
@@ -63,6 +63,7 @@ const EditCampaign = () => {
       variables: { input: body },
       refetchQueries: [
         { query: GET_CAMPAIGNS },
+        { query: GET_CAMPAIGN, variables: { endPoint: slug } },
         { query: GET_CAMPAIGN_DETAILS, variables: { input: slug } },
         { query: GET_MY_CAMPAIGNS, variables: { fundraiserId: token.id } },
       ],

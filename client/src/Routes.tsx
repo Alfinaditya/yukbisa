@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Account from './routes/account'
-import Navbar from './parts/navbar/Navbar'
+import Navbar from './parts/navbar'
 import Register from './routes/entry/register'
 import Home from './routes/home'
 import Login from './routes/entry/login'
@@ -12,6 +12,7 @@ import EditCampaign from './routes/campaign[slug]/editCampaign'
 import Donation from './routes/addDonation'
 import MyDonations from './routes/donasiSaya'
 import DetailsCampaign from './routes/campaign[slug]'
+import Footer from './parts/footer'
 
 const Routes = () => {
   return (
@@ -36,6 +37,7 @@ const Routes = () => {
           <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
           <ProtectedRoute path='/my-donations' component={MyDonations} />
           <Route path='/campaign/:slug' component={DetailsCampaign} />
+          <Footer />
         </>
       </Switch>
     </Router>
