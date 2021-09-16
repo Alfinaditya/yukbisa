@@ -11,6 +11,7 @@ interface ContextProps {
   target: string
   phoneNumber: string
   image: any
+  previewSource: string
   story: string
   isSuccessEndPoint: string
   setCurrentReceiver: React.Dispatch<React.SetStateAction<string>>
@@ -23,6 +24,7 @@ interface ContextProps {
   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>
   setPurposeDescription: React.Dispatch<React.SetStateAction<string>>
   setImage: React.Dispatch<any>
+  setPreviewSource: React.Dispatch<React.SetStateAction<string>>
   setStory: React.Dispatch<React.SetStateAction<string>>
   setIsSuccessEndPoint: React.Dispatch<React.SetStateAction<string>>
 }
@@ -45,6 +47,7 @@ export const AddCampaignProvider: React.FC<React.ReactNode> = ({
   const [story, setStory] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [isSuccessEndPoint, setIsSuccessEndPoint] = useState('')
+  const [previewSource, setPreviewSource] = useState('')
   return (
     <AddCampaignContext.Provider
       value={{
@@ -58,6 +61,8 @@ export const AddCampaignProvider: React.FC<React.ReactNode> = ({
         showMenu,
         isSuccessEndPoint,
         currentReceiver,
+        image,
+        previewSource,
         setCurrentReceiver,
         setReceiver,
         setShowMenu,
@@ -69,7 +74,7 @@ export const AddCampaignProvider: React.FC<React.ReactNode> = ({
         setPhoneNumber,
         setTarget,
         setImage,
-        image,
+        setPreviewSource,
         story,
         setStory,
       }}

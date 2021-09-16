@@ -5,32 +5,32 @@ import { FinishButton, FinishContainer } from './style'
 
 const Finish = () => {
   const history = useHistory()
-  const context = useContext(AddCampaignContext)
+  const ctx = useContext(AddCampaignContext)
   useEffect(() => {
     resetState()
   }, [])
   function resetState() {
-    context?.setCurrentReceiver('Saya Sendiri')
-    context?.setShowMenu(false)
-    context?.setReceiver('me')
-    context?.setBeneficiaryName('')
-    context?.setEndPoint('')
-    context?.setTitle('')
-    context?.setEndPoint('')
-    context?.setPurposeDescription('')
-    context?.setTarget('')
-    context?.setStory('')
-    context?.setPhoneNumber('')
+    ctx?.setCurrentReceiver('Saya Sendiri')
+    ctx?.setShowMenu(false)
+    ctx?.setReceiver('me')
+    ctx?.setBeneficiaryName('')
+    ctx?.setEndPoint('')
+    ctx?.setTitle('')
+    ctx?.setEndPoint('')
+    ctx?.setPurposeDescription('')
+    ctx?.setTarget('')
+    ctx?.setStory('')
+    ctx?.setPhoneNumber('')
   }
   return (
     <FinishContainer>
-      {context?.beneficiaryName === '' &&
-        context.title === '' &&
-        context?.endPoint === '' &&
-        context.target === '' &&
-        context.phoneNumber === '' &&
-        context.purposeDescription === '' &&
-        context.image === '' && (
+      {ctx?.beneficiaryName === '' &&
+        ctx.title === '' &&
+        ctx?.endPoint === '' &&
+        ctx.target === '' &&
+        ctx.phoneNumber === '' &&
+        ctx.purposeDescription === '' &&
+        ctx.image === '' && (
           <Redirect to='/galang-dana/add-campaign/beneficiary' />
         )}
       <p>
@@ -39,7 +39,7 @@ const Finish = () => {
       </p>
       <FinishButton
         onClick={() => {
-          history.push(`/campaign/${context?.isSuccessEndPoint}`)
+          history.push(`/campaign/${ctx?.isSuccessEndPoint}`)
         }}
       >
         Kembali ke halaman donasi

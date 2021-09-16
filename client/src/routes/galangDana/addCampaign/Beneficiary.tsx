@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import {
   HeaderForm,
   ListBox,
@@ -21,12 +21,12 @@ type Inputs = {
 }
 const Beneficiary = () => {
   const history = useHistory()
-  const context = useContext(AddCampaignContext)
+  const ctx = useContext(AddCampaignContext)
   const token: Token = jwtDecode(getAccessToken())
   function handleReceiver(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    context?.setReceiver(e.currentTarget.id)
-    context?.setCurrentReceiver(e.currentTarget.innerHTML)
-    context?.setShowMenu(false)
+    ctx?.setReceiver(e.currentTarget.id)
+    ctx?.setCurrentReceiver(e.currentTarget.innerHTML)
+    ctx?.setShowMenu(false)
   }
   const {
     handleSubmit,
@@ -34,10 +34,10 @@ const Beneficiary = () => {
     formState: { errors, isValid },
   } = useForm<Inputs>({
     mode: 'onChange',
-    defaultValues: { beneficiaryName: context?.beneficiaryName || token.name },
+    defaultValues: { beneficiaryName: ctx?.beneficiaryName || token.name },
   })
   const onSubmit: SubmitHandler<Inputs> = async data => {
-    context?.setBeneficiaryName(data.beneficiaryName)
+    ctx?.setBeneficiaryName(data.beneficiaryName)
     history.push('/galang-dana/add-campaign/details')
   }
 
@@ -50,12 +50,12 @@ const Beneficiary = () => {
       <ListBox>
         <ListBoxButton
           onClick={() => {
-            context?.setShowMenu(!context.showMenu)
+            ctx?.setShowMenu(!ctx.showMenu)
           }}
         >
-          {context?.currentReceiver}
+          {ctx?.currentReceiver}
         </ListBoxButton>
-        {context?.showMenu && (
+        {ctx?.showMenu && (
           <ListBoxOptions>
             <ListBoxOption id={'me'} onClick={e => handleReceiver(e)}>
               Saya Sendiri
@@ -67,7 +67,7 @@ const Beneficiary = () => {
         )}
       </ListBox>
 
-      {context?.receiver === 'others' && (
+      {ctx?.receiver === 'others' && (
         <>
           <Label>Nama Penerima</Label>
           <Input

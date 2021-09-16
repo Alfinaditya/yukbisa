@@ -12,7 +12,7 @@ type Inputs = {
 }
 const Story = () => {
   const history = useHistory()
-  const context = useContext(AddCampaignContext)
+  const ctx = useContext(AddCampaignContext)
   const {
     handleSubmit,
     register,
@@ -21,17 +21,17 @@ const Story = () => {
     mode: 'onChange',
   })
   const onSubmit: SubmitHandler<Inputs> = async data => {
-    context?.setStory(data.story)
+    ctx?.setStory(data.story)
     history.push('/galang-dana/add-campaign/result')
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {context?.beneficiaryName === '' &&
-        context.title === '' &&
-        context.endPoint === '' &&
-        context.purposeDescription === '' &&
-        context.image === '' &&
-        context.target === '' && (
+      {ctx?.beneficiaryName === '' &&
+        ctx.title === '' &&
+        ctx.endPoint === '' &&
+        ctx.purposeDescription === '' &&
+        ctx.image === '' &&
+        ctx.target === '' && (
           <Redirect to='/galang-dana/add-campaign/beneficiary' />
         )}
       <Label>

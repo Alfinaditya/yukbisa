@@ -13,8 +13,7 @@ type Inputs = {
 
 const Photo = () => {
   const history = useHistory()
-  const [previewSource, setPreviewSource] = useState('')
-  const context = useContext(AddCampaignContext)
+  const ctx = useContext(AddCampaignContext)
 
   const {
     handleSubmit,
@@ -27,7 +26,7 @@ const Photo = () => {
   const watchImageField = watch('image')
   const onSubmit: SubmitHandler<Inputs> = async data => {
     console.log(data)
-    context?.setImage(data.image[0])
+    ctx?.setImage(data.image[0])
     history.push('/galang-dana/add-campaign/story')
   }
 
@@ -35,7 +34,7 @@ const Photo = () => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {
-      setPreviewSource(reader.result as any)
+      ctx?.setPreviewSource(reader.result as any)
     }
   }
   if (watchImageField) {
@@ -53,11 +52,11 @@ const Photo = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {context?.beneficiaryName === '' &&
-        context.title === '' &&
-        context.endPoint === '' &&
-        context.purposeDescription === '' &&
-        context.target === '' && (
+      {ctx?.beneficiaryName === '' &&
+        ctx.title === '' &&
+        ctx.endPoint === '' &&
+        ctx.purposeDescription === '' &&
+        ctx.target === '' && (
           <Redirect to='/galang-dana/add-campaign/beneficiary' />
         )}
       <HeaderForm>Tunjukan perjuanganmu pada donatur</HeaderForm>
@@ -65,10 +64,10 @@ const Photo = () => {
         Pilih salah satu foto utama untuk penggalan danamu <span> *</span>
       </Label>
       <Label sub>Format foto harus PNG/JPG/JPEG</Label>
-      {previewSource && (
+      {ctx?.previewSource && (
         <PreviewImage>
           <Image
-            src={previewSource}
+            src={ctx?.previewSource}
             style={{ height: '500px' }}
             alt='preview-image'
           />

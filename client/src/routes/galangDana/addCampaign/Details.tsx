@@ -20,7 +20,7 @@ type Inputs = {
 
 const Details = () => {
   const history = useHistory()
-  const context = useContext(AddCampaignContext)
+  const ctx = useContext(AddCampaignContext)
   const [endPointDuplicateErrorMessage, setEndPointDuplicateErrorMessage] =
     useState('')
   const [isEndPointAvailable, { error }] = useMutation(IS_ENDPOINT_AVAILABLE, {
@@ -35,9 +35,9 @@ const Details = () => {
   })
   if (error) console.log(JSON.stringify(error, null, 2))
   const onSubmit: SubmitHandler<Inputs> = async data => {
-    context?.setTitle(data.title)
-    context?.setEndPoint(createEndpoint(data.endPoint))
-    context?.setPurposeDescription(data.purposeDescription)
+    ctx?.setTitle(data.title)
+    ctx?.setEndPoint(createEndpoint(data.endPoint))
+    ctx?.setPurposeDescription(data.purposeDescription)
     const res = await isEndPointAvailable({
       variables: { input: createEndpoint(data.endPoint) },
     })
@@ -50,7 +50,7 @@ const Details = () => {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {context?.beneficiaryName === '' && (
+      {ctx?.beneficiaryName === '' && (
         <Redirect to='/galang-dana/add-campaign/beneficiary' />
       )}
       <HeaderForm>Detail penggalan dana & perkiraan biaya</HeaderForm>
@@ -60,7 +60,7 @@ const Details = () => {
       <Input
         type='text'
         {...register('title', { required: true, maxLength: 50 })}
-        defaultValue={context?.title}
+        defaultValue={ctx?.title}
       />
       {errors.title?.type === 'required' && (
         <ErrorText>Wajib memasukan judul</ErrorText>
@@ -80,7 +80,7 @@ const Details = () => {
             required: true,
             maxLength: 15,
           })}
-          defaultValue={context?.endPoint}
+          defaultValue={ctx?.endPoint}
         />
       </InputEndPoint>
       {endPointDuplicateErrorMessage && <p>{endPointDuplicateErrorMessage}</p>}
@@ -99,9 +99,9 @@ const Details = () => {
         placeholder='Masukan angka'
         prefix={'Rp. '}
         decimalsLimit={2}
-        value={context?.target}
+        value={ctx?.target}
         required={true}
-        onValueChange={value => context?.setTarget(value as string)}
+        onValueChange={value => ctx?.setTarget(value as string)}
       />
       <Label textArea>
         Untuk apa dana tersebut digunakan? <span> * </span>
@@ -110,7 +110,7 @@ const Details = () => {
         placeholder={
           'Contoh: Untuk berlangganan netflix dan mukbang slime,sisa uang akan didonasikan ke perut saya sendiri'
         }
-        defaultValue={context?.purposeDescription}
+        defaultValue={ctx?.purposeDescription}
         {...register('purposeDescription', {
           required: true,
           maxLength: 480,
@@ -131,7 +131,7 @@ const Details = () => {
       </Label>
       <PhoneInput
         country={'id'}
-        value={context?.phoneNumber}
+        value={ctx?.phoneNumber}
         disableDropdown={true}
         countryCodeEditable={false}
         inputStyle={{
@@ -142,7 +142,7 @@ const Details = () => {
         inputProps={{
           required: true,
         }}
-        onChange={phone => context?.setPhoneNumber(phone)}
+        onChange={phone => ctx?.setPhoneNumber(phone)}
       />
       <NextButton disabled={!isValid}>Selanjutnya</NextButton>
       <PreviousButton

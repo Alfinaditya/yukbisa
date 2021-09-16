@@ -17,7 +17,7 @@ import Loading from '../../../components/Loading'
 const Result = () => {
   const history = useHistory()
   const token: Token = jwtDecode(getAccessToken())
-  const context = useContext(AddCampaignContext)
+  const ctx = useContext(AddCampaignContext)
   const [addCampaign, { loading, error }] = useMutation(ADD_CAMPAIGN, {
     fetchPolicy: 'network-only',
     refetchQueries: [
@@ -32,7 +32,7 @@ const Result = () => {
     handleSubmit()
   }, [])
   if (loading) {
-    return <Loading />
+    return <Loading message={'Tunggu sebentar'} />
   }
   if (error) {
     console.log(JSON.stringify(error, null, 2))
@@ -40,22 +40,22 @@ const Result = () => {
 
   async function handleSubmit() {
     try {
-      const encodedImageResult = await encodedImage(context?.image)
+      const encodedImageResult = await encodedImage(ctx?.image)
       const body = {
-        beneficiaryName: context?.beneficiaryName,
-        title: context?.title,
-        endPoint: context?.endPoint,
-        target: parseInt(context?.target as string),
-        phoneNumber: context?.phoneNumber,
-        purposeDescription: context?.purposeDescription,
+        beneficiaryName: ctx?.beneficiaryName,
+        title: ctx?.title,
+        endPoint: ctx?.endPoint,
+        target: parseInt(ctx?.target as string),
+        phoneNumber: ctx?.phoneNumber,
+        purposeDescription: ctx?.purposeDescription,
         image: encodedImageResult,
-        story: context?.story,
+        story: ctx?.story,
       }
       try {
         const res = await addCampaign({
           variables: { input: body },
         })
-        context?.setIsSuccessEndPoint(res.data.addCampaign.endPoint)
+        ctx?.setIsSuccessEndPoint(res.data.addCampaign.endPoint)
         history.push('/galang-dana/add-campaign/finish')
       } catch (error) {
         console.log(error)
@@ -66,13 +66,13 @@ const Result = () => {
   }
   return (
     <div>
-      {context?.beneficiaryName === '' &&
-        context.title === '' &&
-        context?.endPoint === '' &&
-        context.target === '' &&
-        context.phoneNumber === '' &&
-        context.purposeDescription === '' &&
-        context.image === '' && (
+      {ctx?.beneficiaryName === '' &&
+        ctx.title === '' &&
+        ctx?.endPoint === '' &&
+        ctx.target === '' &&
+        ctx.phoneNumber === '' &&
+        ctx.purposeDescription === '' &&
+        ctx.image === '' && (
           <Redirect to='/galang-dana/add-campaign/beneficiary' />
         )}
     </div>

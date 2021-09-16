@@ -31,18 +31,9 @@ const CampaignCard = () => {
   const { url } = useRouteMatch()
   const ctx = useContext(CampaignDetailsContext)
   const history = useHistory()
-  const [deleteCampaign, { loading }] = useMutation(DELETE_CAMPAIGN, {
-    fetchPolicy: 'network-only',
-    refetchQueries: [
-      { query: GET_CAMPAIGNS },
-      {
-        query: GET_MY_CAMPAIGNS,
-        variables: { fundraiserId: ctx?.token.id },
-      },
-    ],
-  })
+
   async function handleDelete() {
-    await deleteCampaign({
+    await ctx?.deleteCampaign({
       variables: {
         endPoint: ctx?.slug,
         imageId: ctx?.campaignDetails.imageId,
@@ -50,7 +41,6 @@ const CampaignCard = () => {
     })
     history.push('/')
   }
-  if (loading) return <Loading />
   return (
     <Campaign>
       <CampaignImage>

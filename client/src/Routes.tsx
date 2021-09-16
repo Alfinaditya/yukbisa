@@ -38,7 +38,7 @@ const Routes = () => {
           <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
           <ProtectedRoute path='/my-donations' component={MyDonations} />
           <Route path='/campaign/:slug' component={DetailsCampaign} />
-          <Route path='*' component={NoMatch} />
+          {/* <Route path='*' component={NoMatch} /> */}
           <Footer />
         </>
       </Switch>
