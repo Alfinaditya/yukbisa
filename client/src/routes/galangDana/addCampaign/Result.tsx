@@ -12,6 +12,7 @@ import { Token } from '../../../ts/token'
 import { getAccessToken } from '../../../auth/accessToken'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
 import { encodedImage } from '../../../helpers/helper'
+import Loading from '../../../components/Loading'
 
 const Result = () => {
   const history = useHistory()
@@ -31,7 +32,7 @@ const Result = () => {
     handleSubmit()
   }, [])
   if (loading) {
-    return <p>Loading......</p>
+    return <Loading />
   }
   if (error) {
     console.log(JSON.stringify(error, null, 2))

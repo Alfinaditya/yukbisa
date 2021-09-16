@@ -14,10 +14,11 @@ import {
 import { Image } from '../../components/Image'
 import { Title } from '../../components/Title'
 import { Progress } from '../../components/Progress'
+import Loading from '../../components/Loading'
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
   if (loading) {
-    return <p>Loading....</p>
+    return <Loading />
   }
   const campaigns: Campaigns[] = data.campaigns
 

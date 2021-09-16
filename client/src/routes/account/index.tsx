@@ -1,14 +1,14 @@
 import { useQuery } from '@apollo/client'
-import { Link } from 'react-router-dom'
 import { GET_ME } from '../../apollo/queries/user'
 import { Container } from '../../components/Container'
+import Loading from '../../components/Loading'
 import { convertDate } from '../../helpers/helper'
 import { Me } from '../../ts/user'
 import { MeImage, MeContainer, MeDetails, MeLabel, EditLink } from './style'
 
 const Account = () => {
   const { loading, data } = useQuery(GET_ME)
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Loading />
   const me: Me = data.me
   return (
     <Container me>

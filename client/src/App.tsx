@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { setAccessToken } from './auth/accessToken'
+import Loading from './components/Loading'
 import Routes from './Routes'
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
         setLoading(false)
       })
   }, [])
-  if (loading) return <p>Loading....</p>
+  if (loading) return <Loading />
   return (
     <div className='App'>
       <Routes />

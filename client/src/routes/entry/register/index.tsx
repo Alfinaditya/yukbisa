@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client'
 import { CREATE_USER } from '../../../apollo/mutations/user'
-import { setAccessToken } from '../../../auth/accessToken'
+import { getAccessToken, setAccessToken } from '../../../auth/accessToken'
 import { GET_ME } from '../../../apollo/queries/user'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useHistory } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { useState } from 'react'
 import {
   EntryInputContainer,
@@ -20,6 +20,7 @@ import {
 import { ErrorText } from '../../../components/ErrorText'
 import { ReactComponent as EntryImage } from '../../../assets/entryImage.svg'
 import { Link } from 'react-router-dom'
+import Loading from '../../../components/Loading'
 
 type Inputs = {
   email: string
@@ -72,10 +73,11 @@ const Register = () => {
       console.log(error)
     }
   }
-  if (loading) return <p>Loading....</p>
+  if (loading) return <Loading />
   if (error) return <p>Error</p>
   return (
     <Entry>
+      {getAccessToken() && <Redirect to={'/'} />}
       <FormEntry onSubmit={handleSubmit(onSubmit)}>
         <EntryInputContainer>
           <HeaderEntry>Selamat datang di YukBisa</HeaderEntry>

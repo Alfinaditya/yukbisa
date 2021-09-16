@@ -15,6 +15,7 @@ import { getAccessToken } from '../../../auth/accessToken'
 import { CancelLink, NextButton } from '../../../components/Button'
 import { ErrorText } from '../../../components/ErrorText'
 import { Form, Input, Label, TextArea } from '../../../components/Form'
+import Loading from '../../../components/Loading'
 import { Campaign } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
 import { Currency, HeaderForm } from '../../galangDana/addCampaign/style'
@@ -47,7 +48,7 @@ const EditCampaign = () => {
   } = useForm<Inputs>({
     mode: 'onChange',
   })
-  if (loading) return <p>Loading.....</p>
+  if (loading) return <Loading />
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const body = {

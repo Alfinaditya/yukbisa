@@ -4,6 +4,7 @@ import { useState, createContext } from 'react'
 import { useParams } from 'react-router'
 import { GET_CAMPAIGN_DETAILS } from '../apollo/queries/campaign'
 import { getAccessToken } from '../auth/accessToken'
+import Loading from '../components/Loading'
 import { CampaignDetails } from '../ts/campaign'
 import { Token } from '../ts/token'
 interface ContextProps {
@@ -26,8 +27,8 @@ export const CampaignDetailsProvider: React.FC<React.ReactNode> = ({
       input: slug,
     },
   })
-  if (loading) return <p>Loading...</p>
-  if (error) console.log(JSON.stringify(error, null, 2))
+  if (loading) return <Loading />
+  if (error) return <p>ngabs goblok</p>
   const campaignDetails: CampaignDetails = data.campaignDetails[0]
 
   return (

@@ -12,7 +12,6 @@ import {
   NavLink,
   MenuLink,
   NavLinkContainer,
-  DropdownMenu,
   Logout,
 } from './style'
 
@@ -36,7 +35,7 @@ const Navbar = () => {
     history.push('/login')
   }
 
-  if (loading) return <p>Loading</p>
+  if (loading) return <></>
   const me: Me = data.me
 
   return (

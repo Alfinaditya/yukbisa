@@ -8,6 +8,7 @@ import {
 } from '../../../apollo/queries/campaign'
 import { getAccessToken } from '../../../auth/accessToken'
 import { Image } from '../../../components/Image'
+import Loading from '../../../components/Loading'
 import { Progress } from '../../../components/Progress'
 import { CampaignDetailsContext } from '../../../context/campaignDetailsContext'
 import { convertCurrency, calcProgress } from '../../../helpers/helper'
@@ -49,7 +50,7 @@ const CampaignCard = () => {
     })
     history.push('/')
   }
-  if (loading) return <p>Deleting........</p>
+  if (loading) return <Loading />
   return (
     <Campaign>
       <CampaignImage>

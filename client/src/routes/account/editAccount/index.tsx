@@ -8,6 +8,7 @@ import { CancelLink, NextButton } from '../../../components/Button'
 import { ErrorText } from '../../../components/ErrorText'
 import { Form, Label, TextArea, Input } from '../../../components/Form'
 import { ProfileImage } from '../../../components/Image'
+import Loading from '../../../components/Loading'
 import { encodedImage } from '../../../helpers/helper'
 import { Me } from '../../../ts/user'
 
@@ -97,7 +98,7 @@ const EditAccount = () => {
       }
     }
   }
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Loading />
   const me: Me = data.me
   return (
     <div>

@@ -13,6 +13,7 @@ import Donation from './routes/addDonation'
 import MyDonations from './routes/donasiSaya'
 import DetailsCampaign from './routes/campaign[slug]'
 import Footer from './parts/footer'
+import NoMatch from './routes/404'
 
 const Routes = () => {
   return (
@@ -37,6 +38,7 @@ const Routes = () => {
           <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
           <ProtectedRoute path='/my-donations' component={MyDonations} />
           <Route path='/campaign/:slug' component={DetailsCampaign} />
+          <Route path='*' component={NoMatch} />
           <Footer />
         </>
       </Switch>

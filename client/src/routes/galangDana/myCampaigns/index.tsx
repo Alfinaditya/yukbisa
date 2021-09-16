@@ -12,6 +12,7 @@ import { Token } from '../../../ts/token'
 import { CardDescription, CardText, CurrentAmount } from '../../home/style'
 import { CampaignButton, Card, Cards, CardTitle, CardImage } from './style'
 import { v4 as uuidv4 } from 'uuid'
+import Loading from '../../../components/Loading'
 
 const MyCampaigns = () => {
   const history = useHistory()
@@ -20,7 +21,7 @@ const MyCampaigns = () => {
     variables: { fundraiserId: token.id },
   })
   if (loading) {
-    return <p>Loading</p>
+    return <Loading />
   }
 
   const myCampaigns: Mycampaigns[] = data.myCampaigns

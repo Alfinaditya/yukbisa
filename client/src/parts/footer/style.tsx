@@ -11,6 +11,7 @@ export const FooterContainer = styled.footer`
 `
 export const FooterSection = styled.footer`
   background: var(--main);
+  margin-top: 200px;
 `
 export const FooterDescription = styled.p`
   font-size: 13px;

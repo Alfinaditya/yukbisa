@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode'
 import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
 import { getAccessToken } from '../../auth/accessToken'
 import { Container } from '../../components/Container'
+import Loading from '../../components/Loading'
 import { convertCurrency, convertDate } from '../../helpers/helper'
 import { Mydonations } from '../../ts/donations'
 import { Token } from '../../ts/token'
@@ -22,7 +23,7 @@ const MyDonations = () => {
   const { loading, data, error } = useQuery(GET_MY_DONATIONS, {
     variables: { input: token.id },
   })
-  if (loading) return <p>Loading....</p>
+  if (loading) return <Loading />
   if (data) console.log(data.myDonations)
   const myDonations: Mydonations[] = data.myDonations
   return (
