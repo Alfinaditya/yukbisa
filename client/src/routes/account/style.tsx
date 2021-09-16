@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Input, Label } from '../../components/Form'
 
@@ -9,6 +10,11 @@ export const MeContainer = styled.div`
 export const MeImage = styled.img`
   width: 424px;
   height: 441px;
+`
+export const EditLink = styled(Link)`
+  margin-top: 20px;
+  color: var(--main);
+  display: block;
 `
 export const MeDetails = styled.div`
   margin-left: 20px;

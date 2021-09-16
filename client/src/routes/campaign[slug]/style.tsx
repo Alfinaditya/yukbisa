@@ -13,7 +13,7 @@ const DetailsContainer = styled.div`
 `
 
 // Header
-export const Header = styled.div`
+export const Campaign = styled.div`
   display: flex;
   align-items: center;
   padding: 60px;
@@ -61,7 +61,7 @@ export const DeleteButton = styled(Button)`
 `
 
 // Body
-export const Body = styled.div`
+export const Fundraiser = styled.div`
   margin-top: 70px;
 `
 export const FundraiserContainer = styled(DetailsContainer)`
@@ -125,7 +125,7 @@ export const StoryTitle = styled.h1`
 `
 
 // Footer
-export const Footer = styled.div`
+export const UserDonations = styled.div`
   margin-top: 50px;
   margin-bottom: 70px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

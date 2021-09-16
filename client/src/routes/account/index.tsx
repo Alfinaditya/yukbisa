@@ -4,7 +4,7 @@ import { GET_ME } from '../../apollo/queries/user'
 import { Container } from '../../components/Container'
 import { convertDate } from '../../helpers/helper'
 import { Me } from '../../ts/user'
-import { MeImage, MeContainer, MeDetails, MeLabel } from './style'
+import { MeImage, MeContainer, MeDetails, MeLabel, EditLink } from './style'
 
 const Account = () => {
   const { loading, data } = useQuery(GET_ME)
@@ -38,7 +38,7 @@ const Account = () => {
         </MeContainer>
       )}
 
-      <Link to='/account/edit-account'>Edit</Link>
+      <EditLink to='/account/edit-account'>Edit Profile</EditLink>
     </Container>
   )
 }

@@ -1,7 +1,8 @@
 import { useMutation } from '@apollo/client'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { LOGIN_USER } from '../../../apollo/mutations/user'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { GET_ME } from '../../../apollo/queries/user'
 import { setAccessToken } from '../../../auth/accessToken'
 import { ReactComponent as EntryImage } from '../../../assets/entryImage.svg'
@@ -19,19 +20,26 @@ import {
   EntryLabel,
   EntryInput,
 } from '../style'
+import { ErrorText } from '../../../components/ErrorText'
+type Inputs = {
+  email: string
+  password: string
+}
 const Login = () => {
   const history = useHistory()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loginErrorMessage, setLoginErrorMessage] = useState('')
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     fetchPolicy: 'network-only',
   })
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isValid },
+  } = useForm<Inputs>()
   if (loading) return <p>Loading....</p>
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    const body = { email, password }
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    const body = { email: data.email, password: data.password }
     await loginUser({
       variables: { input: body },
       update: (store, { data }) => {
@@ -52,32 +60,44 @@ const Login = () => {
       },
     })
   }
+
   function handleLoginGoogle() {
     window.location.replace('http://localhost:3001/auth/google')
   }
   return (
     <Entry>
-      <FormEntry onSubmit={handleSubmit}>
+      <FormEntry onSubmit={handleSubmit(onSubmit)}>
         <EntryInputContainer>
           <HeaderEntry>Selamat datang di YukBisa</HeaderEntry>
           <EntryLabel>Email</EntryLabel>
           <EntryInput
             type='email'
-            name='email'
-            value={email}
             placeholder='Email'
-            onChange={e => setEmail(e.target.value)}
+            {...register('email', {
+              required: true,
+              pattern:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            })}
           />
-          {loginErrorMessage && <p>{loginErrorMessage}</p>}
+          {errors.email?.type === 'required' && (
+            <ErrorText>Wajib memasukan Email</ErrorText>
+          )}
+          {errors.email?.type === 'pattern' && (
+            <ErrorText>Masukan Email yang valid</ErrorText>
+          )}
+          {loginErrorMessage && <ErrorText>{loginErrorMessage}</ErrorText>}
 
           <EntryLabel>Password</EntryLabel>
           <EntryInput
             type='password'
-            name='password'
             placeholder='Password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            {...register('password', {
+              required: true,
+            })}
           />
+          {errors.password?.type === 'required' && (
+            <ErrorText>Wajib memasukan password</ErrorText>
+          )}
           <EntryLink>
             Belum punya akun ? <Link to={'/register'}>Daftar disini </Link>
           </EntryLink>
