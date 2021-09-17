@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { Title } from '../../components/Title'
 import { Button } from '../../components/Button'
 
@@ -12,21 +11,38 @@ const DetailsContainer = styled.div`
   margin-top: 20px;
 `
 
-// Header
+// Campaign
 export const Campaign = styled.div`
   display: flex;
   align-items: center;
   padding: 60px;
   margin-top: 30px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  @media only screen and (max-width: 1232px) {
+    flex-direction: column;
+    padding: 50px;
+  }
+  @media only screen and (max-width: 537px) {
+    padding: 0px;
+  }
 `
 export const CampaignImage = styled.div`
   height: 373px;
   width: 60%;
+  @media only screen and (max-width: 1232px) {
+    width: 100%;
+  }
 `
 export const Details = styled.div`
-  width: 40%;
   margin-left: 40px;
+  @media only screen and (max-width: 1232px) {
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 0;
+  }
+  /* @media only screen and (max-width: 537px) {
+    padding: 0 10px;
+  } */
 `
 export const CampaignTitle = styled(Title)`
   font-weight: 700;

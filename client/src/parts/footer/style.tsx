@@ -11,8 +11,6 @@ export const FooterContainer = styled.footer`
 `
 export const FooterSection = styled.footer`
   background: var(--main);
-  /* grid-row-start: 2;
-  grid-row-end: 3; */
 `
 export const FooterDescription = styled.p`
   font-size: 13px;

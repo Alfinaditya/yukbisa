@@ -19,8 +19,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
   }
 `
-
-export const MainApp = styled.div``
 export const Wrapper = styled.div`
   min-height: 100vh;
   margin-bottom: 20px;

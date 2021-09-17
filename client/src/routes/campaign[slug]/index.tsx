@@ -9,7 +9,7 @@ import UserDonationsCard from './components/UserDonationsCard'
 const DetailsCampaign = () => {
   return (
     <CampaignDetailsProvider>
-      <Container>
+      <Container me={true}>
         <CampaignCard />
         <FundraiserCard />
         <BeneficiaryCard />

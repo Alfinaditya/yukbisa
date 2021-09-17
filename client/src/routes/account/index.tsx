@@ -11,7 +11,7 @@ const Account = () => {
   if (loading) return <Loading />
   const me: Me = data.me
   return (
-    <Container me>
+    <Container me={true}>
       {me && (
         <MeContainer>
           {loading && <p>Loading....</p>}
