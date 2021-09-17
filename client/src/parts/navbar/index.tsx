@@ -9,10 +9,10 @@ import {
   Dropdown,
   Menu,
   Nav,
-  NavLink,
   MenuLink,
   NavLinkContainer,
   Logout,
+  StyledNavLink,
 } from './style'
 
 const LOGOUT = gql`
@@ -41,13 +41,29 @@ const Navbar = () => {
   return (
     <>
       <Nav>
-        <NavLink to='/'>
+        <StyledNavLink to='/'>
           <BrandSvg />
-        </NavLink>
+        </StyledNavLink>
         <NavLinkContainer>
-          <NavLink to='/'>Donasi</NavLink>
-          <NavLink to='/galang-dana/'>Galang Dana</NavLink>
-          <NavLink to='/my-donations'>Donasi Saya</NavLink>
+          <StyledNavLink
+            exact
+            to='/'
+            activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
+          >
+            Donasi
+          </StyledNavLink>
+          <StyledNavLink
+            to='/galang-dana/'
+            activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
+          >
+            Galang Dana
+          </StyledNavLink>
+          <StyledNavLink
+            to='/my-donations'
+            activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
+          >
+            Donasi Saya
+          </StyledNavLink>
           {!loading && me && (
             <>
               <Dropdown onClick={() => setShowMenu(!showMenu)}>Akun</Dropdown>
@@ -62,7 +78,12 @@ const Navbar = () => {
         <>
           {!loading && me && (
             <Menu onMouseLeave={() => setShowMenu(!showMenu)}>
-              <MenuLink to='/account'>Lihat Akun</MenuLink>
+              <MenuLink
+                to='/account'
+                activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
+              >
+                Lihat Akun
+              </MenuLink>
               <Logout onClick={handleLogout}>Log out</Logout>
             </Menu>
           )}

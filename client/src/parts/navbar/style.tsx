@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const NavLink = styled(Link)`
+export const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   margin-top: 25px;
   margin-right: 15px;
@@ -51,7 +51,7 @@ export const Menu = styled.div`
   box-shadow: var(--shadow);
   font-size: 14px;
 `
-export const MenuLink = styled(Link)`
+export const MenuLink = styled(NavLink)`
   text-decoration: none;
   color: var(--black);
   margin-bottom: 20px;

@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { setAccessToken } from './auth/accessToken'
 import Loading from './components/Loading'
 import Routes from './Routes'
-
+import { MainApp } from './style'
 function App() {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -22,9 +22,9 @@ function App() {
   }, [])
   if (loading) return <Loading />
   return (
-    <div className='App'>
+    <MainApp>
       <Routes />
-    </div>
+    </MainApp>
   )
 }
 

@@ -12,6 +12,10 @@ export const FooterContainer = styled.footer`
 export const FooterSection = styled.footer`
   background: var(--main);
   margin-top: 200px;
+  /* position: absolute; */
+  /* width: 100%; */
+  /* bottom: 0; */
+  /* position: 0; */
 `
 export const FooterDescription = styled.p`
   font-size: 13px;
