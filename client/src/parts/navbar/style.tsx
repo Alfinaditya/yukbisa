@@ -22,7 +22,6 @@ export const Nav = styled.div`
   width: 90%;
   margin: auto;
   align-items: center;
-  /* position: relative; */
 `
 export const Dropdown = styled.div`
   margin-top: 25px;

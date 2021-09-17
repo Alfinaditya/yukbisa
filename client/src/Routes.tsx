@@ -14,6 +14,7 @@ import MyDonations from './routes/donasiSaya'
 import DetailsCampaign from './routes/campaign[slug]'
 import Footer from './parts/footer'
 import NoMatch from './routes/404'
+import { Wrapper } from './style'
 
 const Routes = () => {
   return (
@@ -32,13 +33,15 @@ const Routes = () => {
         <ProtectedRoute path='/campaign/:slug/donation' component={Donation} />
         <ProtectedRoute path='/account/edit-account' component={EditAccount} />
         <>
-          <Navbar />
-          <Route exact path='/' component={Home} />
-          <ProtectedRoute path='/account' component={Account} />
-          <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
-          <ProtectedRoute path='/my-donations' component={MyDonations} />
-          <Route path='/campaign/:slug' component={DetailsCampaign} />
-          {/* <Route path='*' component={NoMatch} /> */}
+          <Wrapper>
+            <Navbar />
+            <Route exact path='/' component={Home} />
+            <ProtectedRoute path='/account' component={Account} />
+            <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
+            <ProtectedRoute path='/my-donations' component={MyDonations} />
+            <Route path='/campaign/:slug' component={DetailsCampaign} />
+            {/* <Route exact path='*' component={NoMatch} /> */}
+          </Wrapper>
           <Footer />
         </>
       </Switch>

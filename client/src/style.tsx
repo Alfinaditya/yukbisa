@@ -20,9 +20,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-export const MainApp = styled.div`
+export const MainApp = styled.div``
+export const Wrapper = styled.div`
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  margin-bottom: 20px;
 `
