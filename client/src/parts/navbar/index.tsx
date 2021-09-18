@@ -1,67 +1,56 @@
-import { gql, useMutation, useQuery } from '@apollo/client'
-import { FormEvent, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { useState, useEffect } from 'react'
 import { GET_ME } from '../../apollo/queries/user'
-import { setAccessToken } from '../../auth/accessToken'
 import { Me } from '../../ts/user'
 import { ReactComponent as BrandSvg } from '../../assets/brand.svg'
 import { useHistory } from 'react-router'
+import DropdownMenu from './components/DropdownMenu'
 import {
   Dropdown,
-  Menu,
   Nav,
-  MenuLink,
   NavLinkContainer,
-  Logout,
   StyledNavLink,
+  SearchInput,
+  StyledBrandLink,
 } from './style'
+import BottomNavbar from './components/BottomNavbar'
 
-const LOGOUT = gql`
-  mutation Logout {
-    logout
-  }
-`
+const ACTIVE_STYLE = {
+  fontWeight: 700,
+  color: '#00AEEF',
+}
 const Navbar = () => {
   const history = useHistory()
   const [showMenu, setShowMenu] = useState(false)
-  const [logout, { client }] = useMutation(LOGOUT, {
-    fetchPolicy: 'network-only',
+  const [size, setSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
   })
+  const updateSize = () =>
+    setSize({
+      x: window.innerWidth,
+      y: window.innerHeight,
+    })
+  useEffect(() => (window.onresize = updateSize), [])
   const { data, loading } = useQuery(GET_ME)
-  async function handleLogout(e: FormEvent) {
-    e.preventDefault()
-    await logout()
-    setAccessToken('')
-    await client.resetStore()
-    history.push('/login')
-  }
-
   if (loading) return <></>
   const me: Me = data.me
-
   return (
     <>
       <Nav>
-        <StyledNavLink to='/'>
-          <BrandSvg />
-        </StyledNavLink>
+        <StyledBrandLink to='/'>
+          <BrandSvg /> <span>YukBisa</span>
+        </StyledBrandLink>
+
+        <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />
         <NavLinkContainer>
-          <StyledNavLink
-            exact
-            to='/'
-            activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
-          >
+          <StyledNavLink exact to='/' activeStyle={ACTIVE_STYLE}>
             Donasi
           </StyledNavLink>
-          <StyledNavLink
-            to='/galang-dana/'
-            activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
-          >
+          <StyledNavLink to='/galang-dana' activeStyle={ACTIVE_STYLE}>
             Galang Dana
           </StyledNavLink>
-          <StyledNavLink
-            to='/my-donations'
-            activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
-          >
+          <StyledNavLink to='/my-donations' activeStyle={ACTIVE_STYLE}>
             Donasi Saya
           </StyledNavLink>
           {!loading && me && (
@@ -74,21 +63,15 @@ const Navbar = () => {
           )}
         </NavLinkContainer>
       </Nav>
+
       {showMenu && (
         <>
           {!loading && me && (
-            <Menu onMouseLeave={() => setShowMenu(!showMenu)}>
-              <MenuLink
-                to='/account'
-                activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
-              >
-                Lihat Akun
-              </MenuLink>
-              <Logout onClick={handleLogout}>Log out</Logout>
-            </Menu>
+            <DropdownMenu setShowMenu={setShowMenu} showMenu={showMenu} />
           )}
         </>
       )}
+      {size.x <= 1330 && <BottomNavbar />}
     </>
   )
 }

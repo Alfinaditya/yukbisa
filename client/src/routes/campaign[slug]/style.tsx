@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Title } from '../../components/Title'
 import { Button } from '../../components/Button'
+import { UserReceived } from '@styled-icons/remix-fill/UserReceived'
 
 export const Container = styled.div`
   width: 93%;
@@ -25,6 +26,9 @@ export const Campaign = styled.div`
   @media only screen and (max-width: 537px) {
     padding: 0px;
   }
+  @media only screen and (max-width: 370px) {
+    background: red;
+  }
 `
 export const CampaignImage = styled.div`
   height: 373px;
@@ -33,16 +37,21 @@ export const CampaignImage = styled.div`
     width: 100%;
   }
 `
+export const UserReceivedSvg = styled(UserReceived)`
+  width: 23px;
+  color: var(--main);
+`
 export const Details = styled.div`
+  width: 40%;
   margin-left: 40px;
   @media only screen and (max-width: 1232px) {
     width: 100%;
     margin-top: 30px;
     margin-left: 0;
   }
-  /* @media only screen and (max-width: 537px) {
-    padding: 0 10px;
-  } */
+  @media only screen and (max-width: 370px) {
+    background: purple;
+  }
 `
 export const CampaignTitle = styled(Title)`
   font-weight: 700;

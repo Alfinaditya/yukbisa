@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Button } from '../../../components/Button'
 import { Container } from '../../../components/Container'
 import CurrencyInput from 'react-currency-input-field'
 import { Label } from '../../../components/Form'
-
+import { Upload } from '@styled-icons/entypo/Upload'
 // todo refactor this code,use params for color
 export const ContainerForm = styled(Container)`
   margin-top: 80px;
@@ -28,6 +27,7 @@ export const InputEndPoint = styled.div`
     border-top-left-radius: 0px;
   }
 `
+
 export const HeaderForm = styled.h1`
   font-size: 25px;
   margin-bottom: 16px;
@@ -80,6 +80,11 @@ export const PreviewImage = styled.div`
   width: 100%;
   height: 500px;
 `
+export const UploadSvg = styled(Upload)`
+  color: white;
+  width: 26px;
+  margin-right: 15px;
+`
 export const InputImage = styled.div`
   border: 1px solid white;
   background: var(--main);
@@ -95,10 +100,16 @@ export const InputImage = styled.div`
   width: 422px;
   text-align: center;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: 0.5s;
   &:hover {
     border: 1px solid var(--main);
     background: white;
+    color: var(--main);
+  }
+  &:hover ${UploadSvg} {
     color: var(--main);
   }
   input {
@@ -109,6 +120,7 @@ export const InputImage = styled.div`
     position: absolute;
   }
 `
+
 export const Checkbox = styled.div`
   display: flex;
   background: #f8f8f8;

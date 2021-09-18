@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Input, Label } from '../../components/Form'
-
+import { Exit } from '@styled-icons/ionicons-outline/Exit'
 export const MeContainer = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: center; */
 `
 export const MeImage = styled.img`
   width: 424px;
@@ -66,4 +65,7 @@ export const InputDate = styled(Input)`
   &::-webkit-calendar-picker-indicator {
     cursor: pointer;
   }
+`
+export const ExitSvg = styled(Exit)`
+  width: 20px;
 `

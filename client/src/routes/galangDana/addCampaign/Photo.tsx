@@ -1,5 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { ContainerImage, HeaderForm, InputImage, PreviewImage } from './style'
+import {
+  ContainerImage,
+  HeaderForm,
+  InputImage,
+  PreviewImage,
+  UploadSvg,
+} from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Redirect, useHistory } from 'react-router'
 import { AddCampaignContext } from '../../../context/addCampaignContext'
@@ -74,7 +80,8 @@ const Photo = () => {
         </PreviewImage>
       )}
       <InputImage>
-        Upload Foto
+        <UploadSvg />
+        <p>Upload Foto</p>
         <input
           {...register('image', {
             required: true,

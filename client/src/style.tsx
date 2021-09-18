@@ -8,6 +8,8 @@ export const GlobalStyle = createGlobalStyle`
   --black: #161616;
   --shadow:rgba(0, 0, 0, 0.16) 0px 1px 4px;
   --error:#b92f2f;
+  --icon--size--lg:34px;
+  --icon--color:#B8B8B8;
 }
   * {
     box-sizing: border-box;

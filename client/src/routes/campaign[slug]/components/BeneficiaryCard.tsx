@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { ReactComponent as UserSvg } from '../../../assets/user.svg'
+import { useContext } from 'react'
+
 import { CampaignDetailsContext } from '../../../context/campaignDetailsContext'
 import {
   BeneficiaryContainer,
@@ -8,6 +8,7 @@ import {
   BeneficiaryName,
   BeneficiaryDescription,
   PurposeDescription,
+  UserReceivedSvg,
 } from '../style'
 
 const BeneficiaryCard = () => {
@@ -17,7 +18,7 @@ const BeneficiaryCard = () => {
       <BeneficiaryContainer>
         <BeneficiaryTitle>Penerima Dana</BeneficiaryTitle>
         <BeneficiaryProfile>
-          <UserSvg />
+          <UserReceivedSvg />
           <BeneficiaryName>
             {ctx?.campaignDetails.beneficiaryName}
           </BeneficiaryName>

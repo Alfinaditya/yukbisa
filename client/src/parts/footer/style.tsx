@@ -11,6 +11,9 @@ export const FooterContainer = styled.footer`
 `
 export const FooterSection = styled.footer`
   background: var(--main);
+  @media only screen and (max-width: 1330px) {
+    margin-bottom: 80px;
+  }
 `
 export const FooterDescription = styled.p`
   font-size: 13px;

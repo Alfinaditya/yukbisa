@@ -4,7 +4,14 @@ import { Container } from '../../components/Container'
 import Loading from '../../components/Loading'
 import { convertDate } from '../../helpers/helper'
 import { Me } from '../../ts/user'
-import { MeImage, MeContainer, MeDetails, MeLabel, EditLink } from './style'
+import {
+  MeImage,
+  MeContainer,
+  MeDetails,
+  MeLabel,
+  EditLink,
+  ExitSvg,
+} from './style'
 
 const Account = () => {
   const { loading, data } = useQuery(GET_ME)
@@ -39,6 +46,9 @@ const Account = () => {
       )}
 
       <EditLink to='/account/edit-account'>Edit Profile</EditLink>
+      <span>
+        <ExitSvg /> Log out
+      </span>
     </Container>
   )
 }
