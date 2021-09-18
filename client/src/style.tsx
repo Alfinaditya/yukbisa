@@ -9,6 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   --shadow:rgba(0, 0, 0, 0.16) 0px 1px 4px;
   --error:#b92f2f;
   --icon--size--lg:34px;
+  --icon--size--sm:25px;
   --icon--color:#B8B8B8;
 }
   * {

@@ -39,7 +39,7 @@ const Navbar = () => {
     <>
       <Nav>
         <StyledBrandLink to='/'>
-          <BrandSvg /> <span>YukBisa</span>
+          <BrandSvg /> {size.x > 425 && <span>YukBisa</span>}
         </StyledBrandLink>
 
         <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />

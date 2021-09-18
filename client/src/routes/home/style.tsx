@@ -10,6 +10,15 @@ export const Card = styled(Link)`
 `
 export const CardImage = styled.div`
   height: 500px;
+  @media only screen and (max-width: 1024px) {
+    height: 306.17px;
+  }
+  @media only screen and (max-width: 768px) {
+    height: 206.17px;
+  }
+  @media only screen and (max-width: 425px) {
+    height: 108px;
+  }
 `
 export const CardDescription = styled.div`
   width: 95%;

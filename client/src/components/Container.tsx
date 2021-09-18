@@ -13,9 +13,5 @@ export const Container = styled.div<any | undefined>`
       @media only screen and (max-width: 537px) {
         padding: 0px;
       }
-      @media only screen and (max-width: 370px) {
-        background: yellow;
-        width: 100%;
-      }
     `}
 `

@@ -36,6 +36,12 @@ export const CampaignImage = styled.div`
   @media only screen and (max-width: 1232px) {
     width: 100%;
   }
+  @media only screen and (max-width: 1024px) {
+    height: 306.17px;
+  }
+  @media only screen and (max-width: 768px) {
+    height: 206.17px;
+  }
 `
 export const UserReceivedSvg = styled(UserReceived)`
   width: 23px;
@@ -49,12 +55,16 @@ export const Details = styled.div`
     margin-top: 30px;
     margin-left: 0;
   }
-  @media only screen and (max-width: 370px) {
-    background: purple;
+  @media only screen and (max-width: 425px) {
+    margin-top: 20px;
+    padding: 10px;
   }
 `
 export const CampaignTitle = styled(Title)`
   font-weight: 700;
+  @media only screen and (max-width: 425px) {
+    font-size: 18px;
+  }
 `
 export const Amount = styled.div`
   margin: 20px 0;
@@ -137,6 +147,9 @@ export const PurposeDescription = styled.p`
 `
 export const FundraiserHeader = styled(Title)`
   font-weight: 400;
+  @media only screen and (max-width: 341px) {
+    font-size: 22px;
+  }
 `
 export const StoryContainer = styled(DetailsContainer)`
   padding: 10px;

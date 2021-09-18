@@ -12,6 +12,9 @@ export const Nav = styled.div`
   margin: auto;
   align-items: center;
   margin-top: 20px;
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
 `
 export const BottomNav = styled.nav`
   position: fixed;
@@ -25,8 +28,12 @@ export const ContainerBottomNav = styled.div`
   display: fixed;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
   margin: auto;
+  width: 80%;
+  @media only screen and (max-width: 425px) {
+    width: 98%;
+  }
+  /* background: purple; */
 `
 export const StyledNavLink = styled(NavLink)`
   text-decoration: none;
@@ -43,7 +50,6 @@ export const StyledBottomNavLink = styled(NavLink)`
   font-size: 12px;
   display: block;
   padding: 10px;
-  margin-left: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,6 +69,9 @@ export const StyledBrandLink = styled(Link)`
     font-size: 24px;
     font-weight: bold;
     color: var(--main);
+  }
+  @media only screen and (max-width: 768px) {
+    margin-left: 15px;
   }
 `
 export const NavLinkContainer = styled.div`
@@ -97,6 +106,9 @@ export const SearchInput = styled(Input)`
   }
   &::placeholder {
     color: #bdbdbd;
+  }
+  @media only screen and (max-width: 768px) {
+    margin-left: 15px;
   }
 `
 export const DropdownMenu = styled.div`
@@ -137,21 +149,34 @@ export const Logout = styled.div`
 export const CampaignSvg = styled(HandHoldingHeart)`
   width: var(--icon--size--lg);
   height: var(--icon--size--lg);
+  @media only screen and (max-width: 425px) {
+    width: var(--icon--size--sm);
+    height: var(--icon--size--sm);
+  }
   /* margin-bottom: 10px; */
   /* text-align: center; */
 `
 export const MyDonationsSvg = styled(ClipboardHeart)`
   width: var(--icon--size--lg);
   height: var(--icon--size--lg);
-  /* margin-bottom: 10px; */
+  @media only screen and (max-width: 425px) {
+    width: var(--icon--size--sm);
+    height: var(--icon--size--sm);
+  }
 `
 export const DonationSvg = styled(HeartCircle)`
   width: var(--icon--size--lg);
   height: var(--icon--size--lg);
-  /* margin-bottom: 10px; */
+  @media only screen and (max-width: 425px) {
+    width: var(--icon--size--sm);
+    height: var(--icon--size--sm);
+  }
 `
 export const UserSvg = styled(User)`
   width: var(--icon--size--lg);
   height: var(--icon--size--lg);
-  /* margin-bottom: 10px; */
+  @media only screen and (max-width: 425px) {
+    width: var(--icon--size--sm);
+    height: var(--icon--size--sm);
+  }
 `
