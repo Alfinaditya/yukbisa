@@ -23,11 +23,8 @@ export const Campaign = styled.div`
     flex-direction: column;
     padding: 50px;
   }
-  @media only screen and (max-width: 537px) {
+  @media only screen and (max-width: 682px) {
     padding: 0px;
-  }
-  @media only screen and (max-width: 370px) {
-    background: red;
   }
 `
 export const CampaignImage = styled.div`
@@ -55,7 +52,7 @@ export const Details = styled.div`
     margin-top: 30px;
     margin-left: 0;
   }
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 682px) {
     margin-top: 20px;
     padding: 10px;
   }
@@ -72,6 +69,10 @@ export const Amount = styled.div`
 export const CurrentAmount = styled.span`
   font-size: 18px;
   color: var(--main);
+  @media only screen and (max-width: 368px) {
+    font-size: 16px;
+    /* margin-bottom:2 */
+  }
 `
 export const Target = styled.span`
   font-size: 13px;

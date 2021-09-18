@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 export const Container = styled.div<any | undefined>`
   width: 80%;
   margin: auto;
+
   @media only screen and (max-width: 537px) {
     width: 95%;
   }

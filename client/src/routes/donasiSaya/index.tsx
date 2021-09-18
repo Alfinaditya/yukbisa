@@ -2,8 +2,8 @@ import { useQuery } from '@apollo/client'
 import jwtDecode from 'jwt-decode'
 import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
 import { getAccessToken } from '../../auth/accessToken'
-import { Container } from '../../components/Container'
 import Loading from '../../components/Loading'
+
 import { convertCurrency, convertDate } from '../../helpers/helper'
 import { Mydonations } from '../../ts/donations'
 import { Token } from '../../ts/token'
@@ -16,6 +16,7 @@ import {
   MyDonationstitle,
   MyDonationsImage,
   CardDescription,
+  MyDonationsContainer,
 } from './style'
 
 const MyDonations = () => {
@@ -27,7 +28,7 @@ const MyDonations = () => {
   if (data) console.log(data.myDonations)
   const myDonations: Mydonations[] = data.myDonations
   return (
-    <Container>
+    <MyDonationsContainer>
       <MyDonationstitle>Riwayat Donasi</MyDonationstitle>
       {myDonations && myDonations.length ? (
         myDonations.map(myDonation => {
@@ -57,7 +58,7 @@ const MyDonations = () => {
       ) : (
         <p>Belum pernah berdonasi</p>
       )}
-    </Container>
+    </MyDonationsContainer>
   )
 }
 
