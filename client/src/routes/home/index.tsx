@@ -10,6 +10,7 @@ import {
   CurrentAmount,
   CardText,
   CardDescription,
+  CardTitle,
 } from './style'
 import { Image } from '../../components/Image'
 import { Title } from '../../components/Title'
@@ -32,7 +33,7 @@ const Home = () => {
                 <Image src={campaign.image} alt={campaign.title} />
               </CardImage>
               <CardDescription>
-                <Title>{campaign.title}</Title>
+                <CardTitle>{campaign.title}</CardTitle>
                 <Fundraisername>
                   {campaign.fundraiserDetails.name}
                 </Fundraisername>

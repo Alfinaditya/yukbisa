@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { Title } from '../../components/Title'
 
 export const Card = styled(Link)`
   text-decoration: none;
@@ -18,6 +19,15 @@ export const CardImage = styled.div`
   }
   @media only screen and (max-width: 425px) {
     height: 108px;
+  }
+`
+export const CardTitle = styled(Title)`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media only screen and (max-width: 425px) {
+    font-size: 23px;
   }
 `
 export const CardDescription = styled.div`

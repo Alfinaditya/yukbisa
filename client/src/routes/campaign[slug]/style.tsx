@@ -60,7 +60,7 @@ export const Details = styled.div`
 export const CampaignTitle = styled(Title)`
   font-weight: 700;
   @media only screen and (max-width: 425px) {
-    font-size: 18px;
+    font-size: 23px;
   }
 `
 export const Amount = styled.div`

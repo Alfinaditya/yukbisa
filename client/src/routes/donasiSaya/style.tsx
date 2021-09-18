@@ -35,10 +35,15 @@ export const CardImage = styled.div`
 `
 export const CardDescription = styled.div`
   margin-left: 15px;
+  width: 60%;
 `
 export const CardTitle = styled.h1`
   font-size: 12px;
   font-weight: 700;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 20px 0;
 `
 export const CurrentAmount = styled.h1`
