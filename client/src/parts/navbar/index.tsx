@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react'
 import { GET_ME } from '../../apollo/queries/user'
 import { Me } from '../../ts/user'
 import { ReactComponent as BrandSvg } from '../../assets/brand.svg'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import DropdownMenu from './components/DropdownMenu'
 import {
-  Dropdown,
+  TriggerDropdown,
   Nav,
   NavLinkContainer,
   StyledNavLink,
-  SearchInput,
+  ContainerDropdownMenu,
   StyledBrandLink,
 } from './style'
 import BottomNavbar from './components/BottomNavbar'
@@ -33,17 +33,16 @@ const Navbar = () => {
     })
   useEffect(() => (window.onresize = updateSize), [])
   const { data, loading } = useQuery(GET_ME)
+  const { pathname } = useLocation()
   if (loading) return <></>
   const me: Me = data.me
   return (
     <>
       <Nav>
         <StyledBrandLink to='/'>
-          <BrandSvg /> {size.x > 425 && <span>YukBisa</span>}
+          <BrandSvg /> <span>YukBisa</span>
         </StyledBrandLink>
-
-        <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />
-        <NavLinkContainer>
+        <NavLinkContainer otherRoutes={pathname != '/' ? true : false}>
           <StyledNavLink exact to='/' activeStyle={ACTIVE_STYLE}>
             Donasi
           </StyledNavLink>
@@ -54,23 +53,30 @@ const Navbar = () => {
             Donasi Saya
           </StyledNavLink>
           {!loading && me && (
-            <>
-              <Dropdown onClick={() => setShowMenu(!showMenu)}>Akun</Dropdown>
-            </>
+            <ContainerDropdownMenu>
+              <TriggerDropdown onClick={() => setShowMenu(!showMenu)}>
+                Akun
+              </TriggerDropdown>
+              {showMenu && (
+                <>
+                  {!loading && me && (
+                    <DropdownMenu
+                      setShowMenu={setShowMenu}
+                      showMenu={showMenu}
+                    />
+                  )}
+                </>
+              )}
+            </ContainerDropdownMenu>
           )}
           {!loading && !me && (
-            <Dropdown onClick={() => history.push('/login')}>Akun</Dropdown>
+            <TriggerDropdown onClick={() => history.push('/login')}>
+              Akun
+            </TriggerDropdown>
           )}
         </NavLinkContainer>
       </Nav>
 
-      {showMenu && (
-        <>
-          {!loading && me && (
-            <DropdownMenu setShowMenu={setShowMenu} showMenu={showMenu} />
-          )}
-        </>
-      )}
       {size.x <= 1330 && <BottomNavbar />}
     </>
   )

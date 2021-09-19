@@ -1,6 +1,27 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { Input } from '../../components/Form'
 import { Title } from '../../components/Title'
+import { Container } from '../../components/Container'
+
+export const HomeContainer = styled(Container)`
+  margin-top: 80px;
+`
+
+export const SearchInput = styled(Input)`
+  width: 100%;
+  border-radius: 20px;
+  height: 47px;
+  background: #fafafa;
+  font-size: 12px;
+  padding: 15px;
+  &:focus {
+    border: 1px solid #bdbdbd;
+  }
+  &::placeholder {
+    color: #bdbdbd;
+  }
+`
 
 export const Card = styled(Link)`
   text-decoration: none;

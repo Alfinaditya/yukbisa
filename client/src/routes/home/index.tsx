@@ -11,9 +11,10 @@ import {
   CardText,
   CardDescription,
   CardTitle,
+  SearchInput,
+  HomeContainer,
 } from './style'
 import { Image } from '../../components/Image'
-import { Title } from '../../components/Title'
 import { Progress } from '../../components/Progress'
 import Loading from '../../components/Loading'
 const Home = () => {
@@ -24,7 +25,8 @@ const Home = () => {
   const campaigns: Campaigns[] = data.campaigns
 
   return (
-    <Container>
+    <HomeContainer>
+      <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />
       {data && campaigns.length ? (
         campaigns.map(campaign => {
           return (
@@ -52,7 +54,7 @@ const Home = () => {
       ) : (
         <p>Belum ada campaign</p>
       )}
-    </Container>
+    </HomeContainer>
   )
 }
 

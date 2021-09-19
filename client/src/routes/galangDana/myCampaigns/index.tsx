@@ -10,7 +10,14 @@ import { calcProgress, convertCurrency } from '../../../helpers/helper'
 import { Mycampaigns } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
 import { CardDescription, CardText, CurrentAmount } from '../../home/style'
-import { CampaignButton, Card, Cards, CardTitle, CardImage } from './style'
+import {
+  CampaignButton,
+  Card,
+  Cards,
+  CardTitle,
+  CardImage,
+  MyCampaignsContainer,
+} from './style'
 import { v4 as uuidv4 } from 'uuid'
 import Loading from '../../../components/Loading'
 
@@ -27,7 +34,7 @@ const MyCampaigns = () => {
   const myCampaigns: Mycampaigns[] = data.myCampaigns
 
   return (
-    <Container>
+    <MyCampaignsContainer>
       <Cards>
         {myCampaigns && myCampaigns.length ? (
           myCampaigns.map(myCampaign => (
@@ -70,7 +77,7 @@ const MyCampaigns = () => {
       >
         Galang Dana Sekarang !
       </CampaignButton>
-    </Container>
+    </MyCampaignsContainer>
   )
 }
 

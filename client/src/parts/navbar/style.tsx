@@ -1,5 +1,5 @@
 import { NavLink, Link } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Input } from '../../components/Form'
 import { HandHoldingHeart } from '@styled-icons/fa-solid/HandHoldingHeart'
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle'
@@ -33,7 +33,6 @@ export const ContainerBottomNav = styled.div`
   @media only screen and (max-width: 425px) {
     width: 98%;
   }
-  /* background: purple; */
 `
 export const StyledNavLink = styled(NavLink)`
   text-decoration: none;
@@ -74,16 +73,23 @@ export const StyledBrandLink = styled(Link)`
     margin-left: 15px;
   }
 `
-export const NavLinkContainer = styled.div`
+export const NavLinkContainer = styled.div<any | undefined>`
   text-decoration: none;
-  width: 60%;
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: flex-end;
+  /* width: 60%;
+  justify-content: flex-end; */
+
   @media only screen and (max-width: 1330px) {
     display: none;
   }
 `
-export const Dropdown = styled.div`
+export const ContainerDropdownMenu = styled.div`
+  background: aqua;
+  position: relative;
+`
+export const TriggerDropdown = styled.div`
   cursor: pointer;
   margin-right: 15px;
   color: var(--black);
@@ -92,29 +98,6 @@ export const Dropdown = styled.div`
     color: var(--main);
   }
 `
-export const SearchInput = styled(Input)`
-  width: 100%;
-  border-radius: 20px;
-  height: 47px;
-  margin-left: 50px;
-  margin-right: 20px;
-  background: #fafafa;
-  font-size: 12px;
-  padding: 15px;
-  &:hover {
-    border: 1px solid #bdbdbd;
-  }
-  &::placeholder {
-    color: #bdbdbd;
-  }
-  @media only screen and (max-width: 768px) {
-    margin-left: 15px;
-  }
-`
-export const DropdownMenu = styled.div`
-  width: 90%;
-  margin: auto;
-`
 export const Menu = styled.div`
   width: 132px;
   height: 81px;
@@ -122,13 +105,14 @@ export const Menu = styled.div`
   right: 0px;
   border-radius: 7px;
   position: absolute;
-  top: 60px;
+  top: 20px;
   z-index: 10;
-  transform: translateX(-20%);
+  /* transform: translateX(-20%); */
   box-shadow: var(--shadow);
   font-size: 14px;
   background: green;
 `
+
 export const MenuLink = styled(NavLink)`
   text-decoration: none;
   color: var(--black);
