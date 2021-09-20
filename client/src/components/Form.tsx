@@ -7,6 +7,9 @@ export const Form = styled.form`
   margin: auto;
   margin-top: 40px;
   margin-bottom: 50px;
+  @media only screen and (max-width: 471px) {
+    width: 90%;
+  }
 `
 export const Input = styled.input`
   height: 59px;

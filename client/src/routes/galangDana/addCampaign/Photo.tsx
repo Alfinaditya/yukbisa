@@ -72,11 +72,7 @@ const Photo = () => {
       <Label sub>Format foto harus PNG/JPG/JPEG</Label>
       {ctx?.previewSource && (
         <PreviewImage>
-          <Image
-            src={ctx?.previewSource}
-            style={{ height: '500px' }}
-            alt='preview-image'
-          />
+          <Image src={ctx?.previewSource} alt='preview-image' />
         </PreviewImage>
       )}
       <InputImage>

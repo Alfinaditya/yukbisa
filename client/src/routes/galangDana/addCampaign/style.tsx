@@ -79,6 +79,9 @@ export const ContainerImage = styled.div`
 export const PreviewImage = styled.div`
   width: 100%;
   height: 500px;
+  @media only screen and (max-width: 471px) {
+    height: 300px;
+  }
 `
 export const UploadSvg = styled(Upload)`
   color: white;
@@ -104,6 +107,9 @@ export const InputImage = styled.div`
   justify-content: center;
   align-items: center;
   transition: 0.5s;
+  @media only screen and (max-width: 527px) {
+    width: 100%;
+  }
   &:hover {
     border: 1px solid var(--main);
     background: white;

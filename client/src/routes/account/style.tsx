@@ -82,6 +82,7 @@ export const InputImage = styled.label`
   }
 `
 export const InputDate = styled(Input)`
+  width: 100%;
   &::-webkit-calendar-picker-indicator {
     cursor: pointer;
   }
