@@ -5,7 +5,6 @@ import Loading from './components/Loading'
 import Routes from './Routes'
 function App() {
   const [loading, setLoading] = useState(true)
-  console.log(process.env.REACT_APP_API_URL)
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/refresh_token`, {
       method: 'POST',
