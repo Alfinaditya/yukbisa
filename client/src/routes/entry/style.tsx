@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button } from '../../components/Button'
 import { Input, Label } from '../../components/Form'
@@ -11,6 +10,13 @@ export const StayAtHome = styled.h1`
 export const HeaderEntry = styled(HeaderForm)`
   color: var(--main);
   margin-bottom: 40px;
+  text-align: center;
+  @media only screen and (max-width: 337px) {
+    font-size: 24px;
+  }
+  @media only screen and (max-width: 324px) {
+    font-size: 22px;
+  }
 `
 export const Entry = styled.div`
   width: 100%;
@@ -29,6 +35,10 @@ export const FormEntry = styled.form`
   height: 600px;
   border: 1px solid var(--shadow);
   box-shadow: var(--shadow);
+  @media only screen and (max-width: 425px) {
+    font-size: 22px;
+    width: 100%;
+  }
 `
 export const EntryLink = styled.span`
   font-size: 12px;
@@ -49,9 +59,20 @@ export const EntryInputContainer = styled.div`
   justify-content: center;
   background: #f9f9f9;
   padding: 0 40px;
+  width: 100%;
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 20px;
+  }
+  @media only screen and (max-width: 357px) {
+    padding: 0 10px;
+  }
 `
 export const EntryImageContainer = styled.div`
   margin-left: 40px;
+  @media only screen and (max-width: 843px) {
+    display: none;
+  }
 `
 export const SubmitEntryButton = styled(Button)`
   background: var(--main);
