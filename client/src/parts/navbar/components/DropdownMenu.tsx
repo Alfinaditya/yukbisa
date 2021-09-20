@@ -28,12 +28,7 @@ const DropdownMenu: React.FC<Props> = ({ showMenu, setShowMenu }) => {
 
   return (
     <Menu onMouseLeave={() => setShowMenu(!showMenu)}>
-      <MenuLink
-        to='/account'
-        activeStyle={{ fontWeight: 700, color: '#00AEEF' }}
-      >
-        Lihat Akun
-      </MenuLink>
+      <MenuLink to='/account'>Lihat Akun</MenuLink>
       <Logout onClick={handleLogout}>Log out</Logout>
     </Menu>
   )

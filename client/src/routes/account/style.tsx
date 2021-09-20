@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { Input, Label } from '../../components/Form'
 import { Exit } from '@styled-icons/ionicons-outline/Exit'
 
+export const Logout = styled.span`
+  cursor: pointer;
+`
 export const MeContainer = styled.div`
   display: flex;
   align-items: center;

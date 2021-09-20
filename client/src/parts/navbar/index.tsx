@@ -21,6 +21,7 @@ const ACTIVE_STYLE = {
 }
 const Navbar = () => {
   const history = useHistory()
+  const { pathname } = useLocation()
   const [showMenu, setShowMenu] = useState(false)
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -33,7 +34,7 @@ const Navbar = () => {
     })
   useEffect(() => (window.onresize = updateSize), [])
   const { data, loading } = useQuery(GET_ME)
-  const { pathname } = useLocation()
+
   if (loading) return <></>
   const me: Me = data.me
   return (
@@ -54,7 +55,10 @@ const Navbar = () => {
           </StyledNavLink>
           {!loading && me && (
             <ContainerDropdownMenu>
-              <TriggerDropdown onClick={() => setShowMenu(!showMenu)}>
+              <TriggerDropdown
+                activeStyle={pathname == '/account' ? true : false}
+                onClick={() => setShowMenu(!showMenu)}
+              >
                 Akun
               </TriggerDropdown>
               {showMenu && (

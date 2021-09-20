@@ -1,6 +1,8 @@
-import { useQuery } from '@apollo/client'
-import { useState, useEffect } from 'react'
+import { useMutation, useQuery, gql } from '@apollo/client'
+import { useState, useEffect, FormEvent } from 'react'
+import { useHistory } from 'react-router'
 import { GET_ME } from '../../apollo/queries/user'
+import { setAccessToken } from '../../auth/accessToken'
 import { Container } from '../../components/Container'
 import Loading from '../../components/Loading'
 import { convertDate } from '../../helpers/helper'
@@ -12,10 +14,19 @@ import {
   MeLabel,
   EditLink,
   ExitSvg,
+  Logout,
 } from './style'
-
+const LOGOUT = gql`
+  mutation Logout {
+    logout
+  }
+`
 const Account = () => {
+  const history = useHistory()
   const { loading, data } = useQuery(GET_ME)
+  const [logout, { client }] = useMutation(LOGOUT, {
+    fetchPolicy: 'network-only',
+  })
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
@@ -26,13 +37,20 @@ const Account = () => {
       y: window.innerHeight,
     })
   useEffect(() => (window.onresize = updateSize), [])
+  async function handleLogout(e: FormEvent) {
+    e.preventDefault()
+    await logout()
+    setAccessToken('')
+    await client.resetStore()
+    history.push('/login')
+  }
   if (loading) return <Loading />
   const me: Me = data.me
   return (
     <Container me={true}>
-      <span>
+      <Logout onClick={handleLogout}>
         <ExitSvg /> Log out
-      </span>
+      </Logout>
       {me && (
         <MeContainer>
           <MeImage src={me.displayImage} alt={me.email} />

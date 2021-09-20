@@ -1,6 +1,5 @@
 import { NavLink, Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import { Input } from '../../components/Form'
 import { HandHoldingHeart } from '@styled-icons/fa-solid/HandHoldingHeart'
 import { HeartCircle } from '@styled-icons/boxicons-solid/HeartCircle'
 import { ClipboardHeart } from '@styled-icons/fluentui-system-filled/ClipboardHeart'
@@ -78,22 +77,25 @@ export const NavLinkContainer = styled.div<any | undefined>`
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  /* width: 60%;
-  justify-content: flex-end; */
 
   @media only screen and (max-width: 1330px) {
     display: none;
   }
 `
 export const ContainerDropdownMenu = styled.div`
-  background: aqua;
   position: relative;
 `
-export const TriggerDropdown = styled.div`
+export const TriggerDropdown = styled.div<any | undefined>`
   cursor: pointer;
   margin-right: 15px;
   color: var(--black);
   font-size: 15px;
+  ${props =>
+    props.activeStyle &&
+    css`
+      font-weight: 700;
+      color: var(--main);
+    `}
   &:hover {
     color: var(--main);
   }
@@ -105,12 +107,11 @@ export const Menu = styled.div`
   right: 0px;
   border-radius: 7px;
   position: absolute;
-  top: 20px;
+  top: 30px;
   z-index: 10;
-  /* transform: translateX(-20%); */
   box-shadow: var(--shadow);
   font-size: 14px;
-  background: green;
+  transform: translateX(25%);
 `
 
 export const MenuLink = styled(NavLink)`

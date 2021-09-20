@@ -82,6 +82,9 @@ export const SubmitEntryButton = styled(Button)`
   border: 0;
   margin-bottom: 10px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: white;
