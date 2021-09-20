@@ -2,21 +2,38 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Input, Label } from '../../components/Form'
 import { Exit } from '@styled-icons/ionicons-outline/Exit'
+
 export const MeContainer = styled.div`
   display: flex;
   align-items: center;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 export const MeImage = styled.img`
   width: 424px;
-  height: 441px;
+  height: 424px;
+  border-radius: 50%;
+  @media only screen and (max-width: 566px) {
+    width: 215px;
+    height: 215px;
+  }
 `
 export const EditLink = styled(Link)`
-  margin-top: 20px;
+  margin-top: 40px;
   color: var(--main);
   display: block;
 `
 export const MeDetails = styled.div`
   margin-left: 20px;
+  @media only screen and (max-width: 768px) {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+  }
+  @media only screen and (max-width: 566px) {
+    flex-direction: column;
+  }
 `
 export const MeLabel = styled(Label)`
   color: #a3a2a2;
@@ -67,5 +84,5 @@ export const InputDate = styled(Input)`
   }
 `
 export const ExitSvg = styled(Exit)`
-  width: 20px;
+  width: var(--icon--size--sm);
 `
