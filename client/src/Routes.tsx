@@ -13,7 +13,6 @@ import Donation from './routes/addDonation'
 import MyDonations from './routes/donasiSaya'
 import DetailsCampaign from './routes/campaign[slug]'
 import Footer from './parts/footer'
-import NoMatch from './routes/404'
 import { Wrapper } from './style'
 
 const Routes = () => {

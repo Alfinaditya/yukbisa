@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client'
 import { FormEvent, useState } from 'react'
-import CurrencyInput from 'react-currency-input-field'
 import { useLocation } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 import { useHistory } from 'react-router'

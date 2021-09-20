@@ -21,7 +21,7 @@ import {
 
 const MyDonations = () => {
   const token: Token = jwtDecode(getAccessToken())
-  const { loading, data, error } = useQuery(GET_MY_DONATIONS, {
+  const { loading, data } = useQuery(GET_MY_DONATIONS, {
     variables: { input: token.id },
   })
   if (loading) return <Loading />

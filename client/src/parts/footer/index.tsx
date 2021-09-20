@@ -1,4 +1,4 @@
-import { useLocation, useParams, useRouteMatch } from 'react-router'
+import { useRouteMatch } from 'react-router'
 import LeftSection from './components/LeftSection'
 import RightSection from './components/RightSection'
 import { FooterContainer, FooterSection } from './style'

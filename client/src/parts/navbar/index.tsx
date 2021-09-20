@@ -43,7 +43,7 @@ const Navbar = () => {
         <StyledBrandLink to='/'>
           <BrandSvg /> <span>YukBisa</span>
         </StyledBrandLink>
-        <NavLinkContainer otherRoutes={pathname != '/' ? true : false}>
+        <NavLinkContainer otherRoutes={pathname !== '/' ? true : false}>
           <StyledNavLink exact to='/' activeStyle={ACTIVE_STYLE}>
             Donasi
           </StyledNavLink>
@@ -56,7 +56,7 @@ const Navbar = () => {
           {!loading && me && (
             <ContainerDropdownMenu>
               <TriggerDropdown
-                activeStyle={pathname == '/account' ? true : false}
+                activeStyle={pathname === '/account' ? true : false}
                 onClick={() => setShowMenu(!showMenu)}
               >
                 Akun

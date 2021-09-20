@@ -35,7 +35,7 @@ const Login = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<Inputs>()
   if (loading) return <Loading />
 

@@ -33,13 +33,13 @@ const Register = () => {
   const [nameDuplicateErrorMessage, setNameDuplicateErrorMessage] = useState('')
   const [emailDuplicateErrorMessage, setEmailDuplicateErrorMessage] =
     useState('')
-  const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
+  const [createUser, { loading, error }] = useMutation(CREATE_USER, {
     fetchPolicy: 'network-only',
   })
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = async data => {
     try {
