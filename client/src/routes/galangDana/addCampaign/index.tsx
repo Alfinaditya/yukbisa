@@ -1,4 +1,3 @@
-import { SubmitHandler } from 'react-hook-form'
 import Beneficiary from './Beneficiary'
 import Details from './Details'
 import ProtectedRoute from '../../ProtectedRoute'

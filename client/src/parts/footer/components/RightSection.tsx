@@ -12,7 +12,7 @@ const RightSection = () => {
           {link.link.map(link => (
             <>
               <li>
-                <a href={link.URL} target='_blank'>
+                <a href={link.URL} target='_blank' rel='noreferrer'>
                   {link.name}
                 </a>
               </li>

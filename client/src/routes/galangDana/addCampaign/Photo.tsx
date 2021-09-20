@@ -1,11 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react'
-import {
-  ContainerImage,
-  HeaderForm,
-  InputImage,
-  PreviewImage,
-  UploadSvg,
-} from './style'
+import React, { useContext } from 'react'
+import { HeaderForm, InputImage, PreviewImage, UploadSvg } from './style'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Redirect, useHistory } from 'react-router'
 import { AddCampaignContext } from '../../../context/addCampaignContext'

@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { GET_CAMPAIGNS } from '../../apollo/queries/campaign'
 import { calcProgress, convertCurrency } from '../../helpers/helper'
-import { Container } from '../../components/Container'
 import { Campaigns } from '../../ts/campaign'
 import {
   Card,

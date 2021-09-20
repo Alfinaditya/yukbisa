@@ -1,14 +1,8 @@
-import { useMutation } from '@apollo/client'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useHistory, useRouteMatch } from 'react-router'
-import { DELETE_CAMPAIGN } from '../../../apollo/mutations/campaign'
-import {
-  GET_CAMPAIGNS,
-  GET_MY_CAMPAIGNS,
-} from '../../../apollo/queries/campaign'
+
 import { getAccessToken } from '../../../auth/accessToken'
 import { Image } from '../../../components/Image'
-import Loading from '../../../components/Loading'
 import { Progress } from '../../../components/Progress'
 import { CampaignDetailsContext } from '../../../context/campaignDetailsContext'
 import { convertCurrency, calcProgress } from '../../../helpers/helper'

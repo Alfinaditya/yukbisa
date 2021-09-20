@@ -1,6 +1,5 @@
 import {
   ApolloCache,
-  ApolloError,
   DefaultContext,
   MutationFunctionOptions,
   OperationVariables,
@@ -8,7 +7,7 @@ import {
   useQuery,
 } from '@apollo/client'
 import jwtDecode from 'jwt-decode'
-import { useState, createContext } from 'react'
+import { createContext } from 'react'
 import { useParams } from 'react-router'
 import { DELETE_CAMPAIGN } from '../apollo/mutations/campaign'
 import {
