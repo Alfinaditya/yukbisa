@@ -16,6 +16,7 @@ import cookieParser from 'cookie-parser'
 import axios from 'axios'
 import { URLSearchParams } from 'url'
 import { generateRandomNumber } from './helpers/helper'
+import { prod } from './modules/constant'
 dotenv.config()
 
 async function startApolloServer() {
@@ -111,7 +112,7 @@ async function startApolloServer() {
       try {
         if (user) {
           sendRefreshToken(res, createRefreshToken(user))
-          res.redirect('http://localhost:3000/')
+          res.redirect(prod)
         } else {
           const isNameAvailable = await UserModel.findOne({
             name: profile.name,
@@ -135,7 +136,7 @@ async function startApolloServer() {
           try {
             await newUser.save()
             sendRefreshToken(res, createRefreshToken(newUser))
-            res.redirect('http://localhost:3000/')
+            res.redirect(prod)
           } catch (error) {
             console.log(error)
           }
@@ -184,9 +185,10 @@ async function startApolloServer() {
   await server.start()
 
   server.applyMiddleware({ app, cors: false })
+
   const PORT = process.env.PORT || 3001
   app.listen(PORT, () => {
-    console.log('server running on port http://localhost:3001')
+    console.log(`server running on port ${PORT}`)
   })
 }
 startApolloServer()
