@@ -10,3 +10,6 @@ export function validURL(str: string) {
   ) // fragment locator
   return !!pattern.test(str)
 }
+export function generateRandomNumber() {
+  return Math.floor(Math.random() * 10000 + 100)
+}

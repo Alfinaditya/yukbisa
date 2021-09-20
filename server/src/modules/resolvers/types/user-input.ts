@@ -19,7 +19,7 @@ export class UserRegisterInput {
   password!: string
 
   @IsString({ message: 'Masukan nama dengan benar' })
-  @MaxLength(15, { message: 'Nama Terlalu panjang' })
+  @MaxLength(20, { message: 'Nama Terlalu panjang' })
   @Field()
   name!: string
 }

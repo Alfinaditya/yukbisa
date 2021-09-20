@@ -74,7 +74,9 @@ const Register = () => {
     }
   }
   if (loading) return <Loading />
-  if (error) return <p>Error</p>
+  if (error) {
+    console.log(JSON.stringify(error, null, 2))
+  }
   return (
     <Entry>
       {getAccessToken() && <Redirect to={'/'} />}
@@ -122,6 +124,9 @@ const Register = () => {
           {errors.name?.type === 'required' && <p>Wajib memasukan nama</p>}
           {errors.name?.type === 'minLength' && (
             <ErrorText>Nama teralu pendek (minimal 5 huruf)</ErrorText>
+          )}
+          {errors.name?.type === 'maxLength' && (
+            <ErrorText>Nama teralu panjang (maximal 20 huruf)</ErrorText>
           )}
           {nameDuplicateErrorMessage && <p>{nameDuplicateErrorMessage}</p>}
 

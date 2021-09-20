@@ -1,10 +1,5 @@
 import { ObjectType, Field, ID } from 'type-graphql'
-import {
-  prop as Property,
-  getModelForClass,
-  pre,
-  index,
-} from '@typegoose/typegoose'
+import { prop as Property, getModelForClass, pre } from '@typegoose/typegoose'
 import bcrypt from 'bcrypt'
 
 @pre<User>('save', async function () {

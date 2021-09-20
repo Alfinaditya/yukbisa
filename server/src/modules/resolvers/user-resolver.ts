@@ -65,7 +65,6 @@ class UserResolver {
 
   @Mutation(() => Boolean)
   async logout(@Ctx() { res, req }: MyContext) {
-    req.logout()
     sendRefreshToken(res, '')
     return true
   }

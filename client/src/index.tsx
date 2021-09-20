@@ -16,7 +16,7 @@ import jwtDecode from 'jwt-decode'
 import { GlobalStyle } from './style'
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: `${process.env.REACT_APP_API_URL}/graphql`,
   credentials: 'include',
 })
 
@@ -52,7 +52,7 @@ const tokenRefresh = new TokenRefreshLink({
     }
   },
   fetchAccessToken: () => {
-    return fetch('http://localhost:3001/refresh_token', {
+    return fetch(`${process.env.REACT_APP_API_URL}/refresh_token`, {
       method: 'POST',
       credentials: 'include',
     })
@@ -80,7 +80,6 @@ const errorLink = onError(
             // Modify the operation context with a new token
             const oldHeaders = operation.getContext().headers
             const accessToken = getAccessToken()
-            console.log('iki token e ' + accessToken)
             operation.setContext({
               headers: {
                 ...oldHeaders,
