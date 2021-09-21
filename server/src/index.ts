@@ -34,7 +34,25 @@ async function startApolloServer() {
   app.get('/', (_req, res) => {
     res.send('hello from express')
   })
+  function getGoogleAuthURL() {
+    const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
+    const options = {
+      redirect_uri: redirectUri,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      access_type: 'offline',
+      response_type: 'code',
+      prompt: 'consent',
+      scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+      ].join(' '),
+    }
 
+    return `${rootUrl}?${new URLSearchParams(options)}`
+  }
+  app.get('/auth/google/url', (_req, res) => {
+    res.send(getGoogleAuthURL())
+  })
   function getTokens({
     code,
     clientId,
