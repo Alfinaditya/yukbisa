@@ -35,8 +35,8 @@ const Routes = () => {
           <Wrapper>
             <Navbar />
             <Route exact path='/' component={Home} />
-            <ProtectedRoute path='/account' component={Account} />
-            <ProtectedRoute path='/galang-dana' component={MyCampaigns} />
+            <Route path='/account' component={Account} />
+            <Route path='/galang-dana' component={MyCampaigns} />
             <ProtectedRoute path='/my-donations' component={MyDonations} />
             <Route path='/campaign/:slug' component={DetailsCampaign} />
             {/* <Route exact path='*' component={NoMatch} /> */}
