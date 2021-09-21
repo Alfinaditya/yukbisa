@@ -99,6 +99,8 @@ const EditAccount = () => {
     }
   }
   if (loading) return <Loading />
+  if (mutationLoading)
+    return <Loading message={'Tunggu sebentar,sedang mengganti profile'} />
   const me: Me = data.me
   return (
     <div>

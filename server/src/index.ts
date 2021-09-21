@@ -148,6 +148,7 @@ async function startApolloServer() {
               email: profile.email,
               name: profile.name,
               provider: 'google',
+              displayImageId: 'gid',
               displayImage: profile.picture,
             })
           }

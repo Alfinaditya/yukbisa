@@ -219,7 +219,7 @@ class CampaignResolver {
         },
         {
           beneficiaryName: input.beneficiaryName,
-          title: input.beneficiaryName,
+          title: input.title,
           target: input.target,
           phoneNumber: input.phoneNumber,
           purposeDescription: input.purposeDescription,

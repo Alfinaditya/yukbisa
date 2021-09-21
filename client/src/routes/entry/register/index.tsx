@@ -74,9 +74,7 @@ const Register = () => {
     }
   }
   if (loading) return <Loading />
-  if (error) {
-    console.log(JSON.stringify(error, null, 2))
-  }
+  if (error) console.log(JSON.stringify(error, null, 2))
   return (
     <Entry>
       {getAccessToken() && <Redirect to={'/'} />}
