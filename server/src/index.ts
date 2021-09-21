@@ -16,7 +16,7 @@ import cookieParser from 'cookie-parser'
 import axios from 'axios'
 import { URLSearchParams } from 'url'
 import { generateRandomNumber } from './helpers/helper'
-import { prod } from './modules/constant'
+import { clientUrl, redirectUri } from './modules/constant'
 dotenv.config()
 
 async function startApolloServer() {
@@ -86,7 +86,7 @@ async function startApolloServer() {
       code,
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      redirectUri: `http://localhost:3001/auth/google/callback`,
+      redirectUri: redirectUri,
     })
 
     // Fetch the user's profile with the access token and bearer
@@ -112,7 +112,7 @@ async function startApolloServer() {
       try {
         if (user) {
           sendRefreshToken(res, createRefreshToken(user))
-          res.redirect(prod)
+          res.redirect(clientUrl)
         } else {
           const isNameAvailable = await UserModel.findOne({
             name: profile.name,
@@ -136,7 +136,7 @@ async function startApolloServer() {
           try {
             await newUser.save()
             sendRefreshToken(res, createRefreshToken(newUser))
-            res.redirect(prod)
+            res.redirect(clientUrl)
           } catch (error) {
             console.log(error)
           }
