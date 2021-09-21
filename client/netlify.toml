@@ -1,2 +1,6 @@
 [build]
    ignore = "/bin/false"
+
+[context.staging] # “staging” is a branch name
+  command = "echo 'staging'"
+  base = "staging"
