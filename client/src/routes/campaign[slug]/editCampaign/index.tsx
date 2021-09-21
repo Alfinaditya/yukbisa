@@ -38,7 +38,7 @@ const EditCampaign = () => {
   const { loading, data } = useQuery(GET_CAMPAIGN, {
     variables: { endPoint: slug },
   })
-  const [editCampaign] = useMutation(EDIT_CAMPAIGN, {
+  const [editCampaign, { error }] = useMutation(EDIT_CAMPAIGN, {
     fetchPolicy: 'network-only',
   })
   const {
@@ -49,6 +49,7 @@ const EditCampaign = () => {
     mode: 'onChange',
   })
   if (loading) return <Loading />
+  if (error) console.log(JSON.stringify(error, null, 2))
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const body = {

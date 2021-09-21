@@ -60,10 +60,6 @@ const Account = () => {
               <p>{me.name}</p>
               <MeLabel>Email</MeLabel>
               <p>{me.email}</p>
-
-              {size.x > 566 && (
-                <EditLink to='/account/edit-account'>Edit Profile</EditLink>
-              )}
             </div>
 
             <div>
@@ -79,9 +75,7 @@ const Account = () => {
               )}
               <MeLabel>Bio Singkat</MeLabel>
               <p>{me.bio}</p>
-              {size.x <= 566 && (
-                <EditLink to='/account/edit-account'>Edit Profile</EditLink>
-              )}
+              <EditLink to='/account/edit-account'>Edit Profile</EditLink>
             </div>
           </MeDetails>
         </MeContainer>

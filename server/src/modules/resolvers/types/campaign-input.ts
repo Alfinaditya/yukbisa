@@ -22,7 +22,7 @@ export class CampaignInput {
 
   @IsString({ message: 'Masukan nomor telepon dengan benar' })
   @IsNotEmpty({ message: 'Nomor telepon Tidak boleh kosong' })
-  @MaxLength(13, { message: 'Nomor telepon Terlalu panjang' })
+  @MaxLength(15, { message: 'Nomor telepon Terlalu panjang' })
   @Field()
   phoneNumber!: string
 
@@ -60,7 +60,7 @@ export class EditCampaignInput {
 
   @IsString({ message: 'Masukan nomor telepon dengan benar' })
   @IsNotEmpty({ message: 'Nomor telepon Tidak boleh kosong' })
-  @MaxLength(13, { message: 'Nomor telepon Terlalu panjang' })
+  @MaxLength(15, { message: 'Nomor telepon Terlalu panjang' })
   @Field()
   phoneNumber!: string
 
