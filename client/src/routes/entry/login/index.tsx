@@ -22,6 +22,7 @@ import {
 } from '../style'
 import { ErrorText } from '../../../components/ErrorText'
 import Loading from '../../../components/Loading'
+import { googleAuthUrl } from '../../../constant/constants'
 type Inputs = {
   email: string
   password: string
@@ -63,9 +64,7 @@ const Login = () => {
   }
 
   function handleLoginGoogle() {
-    window.location.replace(
-      'https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fauth%2Fgoogle%2Fcallback&client_id=393153154334-1fjjfm7829t7u38hs9fap51s32argd1d.apps.googleusercontent.com&access_type=offline&response_type=code&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email'
-    )
+    window.location.replace(googleAuthUrl)
   }
   return (
     <Entry>

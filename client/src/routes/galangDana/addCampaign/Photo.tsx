@@ -25,7 +25,6 @@ const Photo = () => {
   })
   const watchImageField = watch('image')
   const onSubmit: SubmitHandler<Inputs> = async data => {
-    console.log(data)
     ctx?.setImage(data.image[0])
     history.push('/galang-dana/add-campaign/story')
   }

@@ -25,7 +25,6 @@ const MyDonations = () => {
     variables: { input: token.id },
   })
   if (loading) return <Loading />
-  if (data) console.log(data.myDonations)
   const myDonations: Mydonations[] = data.myDonations
   return (
     <MyDonationsContainer>

@@ -45,7 +45,6 @@ const Donation = () => {
       endPoint: slug,
       anonymous: anonymous,
     }
-    console.log(body)
     await addDonation({ variables: { input: body } })
     history.push(`/campaign/${slug}`)
   }
