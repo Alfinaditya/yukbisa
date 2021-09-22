@@ -7,6 +7,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router'
 import Finish from './Finish'
 import Result from './Result'
 import { AddCampaignProvider } from '../../../context/addCampaignContext'
+import { Helmet } from 'react-helmet'
 
 export type Inputs = {
   beneficiaryName: string
@@ -22,6 +23,14 @@ const AddCampaign = () => {
 
   return (
     <AddCampaignProvider>
+      <Helmet>
+        <title>Galang Dana</title>
+        <meta name='description' content='Galang Dana sekarang !!!' />
+        <link
+          rel='canonical'
+          href='https://yukbisa.netlify.app/galang-dana/add-campaign/beneficiary'
+        />
+      </Helmet>
       <Switch>
         <Route exact path={`${path}`}>
           <Redirect to={`${path}beneficiary`} />

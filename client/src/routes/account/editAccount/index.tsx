@@ -11,7 +11,7 @@ import { ProfileImage } from '../../../components/Image'
 import Loading from '../../../components/Loading'
 import { encodedImage } from '../../../helpers/helper'
 import { Me } from '../../../ts/user'
-
+import { Helmet } from 'react-helmet'
 import { InputImage, InputDate } from '../style'
 
 type Inputs = {
@@ -104,6 +104,14 @@ const EditAccount = () => {
   const me: Me = data.me
   return (
     <div>
+      <Helmet>
+        <title>Edit akun</title>
+        <meta name='description' content='Edit akun' />
+        <link
+          rel='canonical'
+          href='https://yukbisa.netlify.app/account/edit-account'
+        />
+      </Helmet>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputImage>
           <div>

@@ -16,6 +16,7 @@ import {
 import { Image } from '../../components/Image'
 import { Progress } from '../../components/Progress'
 import Loading from '../../components/Loading'
+import { Helmet } from 'react-helmet'
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
   if (loading) {
@@ -24,6 +25,14 @@ const Home = () => {
   const campaigns: Campaigns[] = data.campaigns
   return (
     <HomeContainer>
+      <Helmet>
+        <title>Yukbisa</title>
+        <meta
+          name='description'
+          content='YukBisa adalah aplikasi penggalangan dana bagi kaum milenial yang ingin cepat kaya tanpa bekerja.'
+        />
+        <link rel='canonical' href='https://yukbisa.netlify.app/' />
+      </Helmet>
       <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />
       {data && campaigns.length ? (
         campaigns.map(campaign => {

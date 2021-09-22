@@ -18,6 +18,7 @@ import {
   CardDescription,
   MyDonationsContainer,
 } from './style'
+import { Helmet } from 'react-helmet'
 
 const MyDonations = () => {
   const token: Token = jwtDecode(getAccessToken())
@@ -28,6 +29,14 @@ const MyDonations = () => {
   const myDonations: Mydonations[] = data.myDonations
   return (
     <MyDonationsContainer>
+      <Helmet>
+        <title>Donasi saya</title>
+        <meta name='description' content='Donasi saya' />
+        <link
+          rel='canonical'
+          href={`https://yukbisa.netlify.app/my-donations`}
+        />
+      </Helmet>
       <MyDonationstitle>Riwayat Donasi</MyDonationstitle>
       {myDonations && myDonations.length ? (
         myDonations.map(myDonation => {

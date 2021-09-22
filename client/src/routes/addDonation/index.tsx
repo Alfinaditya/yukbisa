@@ -14,6 +14,7 @@ import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
 import { Form, Label, TextArea } from '../../components/Form'
 import { CancelLink, NextButton } from '../../components/Button'
 import { Currency } from '../galangDana/addCampaign/style'
+import { Helmet } from 'react-helmet'
 
 const Donation = () => {
   const history = useHistory()
@@ -23,7 +24,7 @@ const Donation = () => {
   const search = useLocation().search
   const token: Token = jwtDecode(getAccessToken())
   const slug = new URLSearchParams(search).get('slug')
-
+  console.log(slug)
   const [addDonation, { loading, error }] = useMutation(ADD_DONATION, {
     fetchPolicy: 'network-only',
     refetchQueries: [
@@ -50,6 +51,14 @@ const Donation = () => {
   }
   return (
     <div>
+      <Helmet>
+        <title>Donasi sekarang</title>
+        <meta name='description' content='Donasi sekarang' />
+        <link
+          rel='canonical'
+          href={`https://yukbisa.netlify.app/campaign/${slug}/donation?slug=${slug}`}
+        />
+      </Helmet>
       <Form onSubmit={handleSubmit}>
         <Label>
           Isi nominal donasi <span>*</span>

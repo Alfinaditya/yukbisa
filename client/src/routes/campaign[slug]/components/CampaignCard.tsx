@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { Helmet } from 'react-helmet'
 import { useHistory, useRouteMatch } from 'react-router'
 
 import { getAccessToken } from '../../../auth/accessToken'
@@ -25,7 +26,6 @@ const CampaignCard = () => {
   const { url } = useRouteMatch()
   const ctx = useContext(CampaignDetailsContext)
   const history = useHistory()
-
   async function handleDelete() {
     await ctx?.deleteCampaign({
       variables: {
@@ -37,6 +37,14 @@ const CampaignCard = () => {
   }
   return (
     <Campaign>
+      <Helmet>
+        <title>{ctx?.campaignDetails.title}</title>
+        <meta name='description' content={ctx?.campaignDetails.story} />
+        <link
+          rel='canonical'
+          href={`https://yukbisa.netlify.app/${ctx?.slug}`}
+        />
+      </Helmet>
       <CampaignImage>
         <Image src={ctx?.campaignDetails.image} />
       </CampaignImage>
