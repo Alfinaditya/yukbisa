@@ -3,7 +3,7 @@ alt="Yuk Bisa Banner"
 style="margin:auto; display:block;margin-bottom:30px"/>
 
 # Description
-Yukbisa is a crowdfunding platform where tenageers can have a lot of money many without having to work.
+Yukbisa is a crowdfunding platform where teenagers can have a lot of money many without having to work.
 
 # Technologies i used
 * ReactJs
