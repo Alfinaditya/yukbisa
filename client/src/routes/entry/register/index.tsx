@@ -21,6 +21,7 @@ import { ErrorText } from '../../../components/ErrorText'
 import { ReactComponent as EntryImage } from '../../../assets/entryImage.svg'
 import { Link } from 'react-router-dom'
 import Loading from '../../../components/Loading'
+import { Helmet } from 'react-helmet'
 
 type Inputs = {
   email: string
@@ -77,6 +78,11 @@ const Register = () => {
   if (error) console.log(JSON.stringify(error, null, 2))
   return (
     <Entry>
+      <Helmet>
+        <title>Daftar</title>
+        <meta name='description' content='Daftar sekarang !!!!' />
+        <link rel='canonical' href='https://yukbisa.netlify.app/register' />
+      </Helmet>
       {getAccessToken() && <Redirect to={'/'} />}
       <FormEntry onSubmit={handleSubmit(onSubmit)}>
         <EntryInputContainer>

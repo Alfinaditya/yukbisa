@@ -17,6 +17,8 @@ import {
   CardImage,
   MyCampaignsContainer,
 } from './style'
+import { Helmet } from 'react-helmet'
+
 import { v4 as uuidv4 } from 'uuid'
 import Loading from '../../../components/Loading'
 
@@ -33,6 +35,11 @@ const MyCampaigns = () => {
   const myCampaigns: Mycampaigns[] = data.myCampaigns
   return (
     <MyCampaignsContainer>
+      <Helmet>
+        <title>Galang Dana saya</title>
+        <meta name='description' content='Campaign saya' />
+        <link rel='canonical' href='https://yukbisa.netlify.app/galang-dana' />
+      </Helmet>
       <Cards>
         {myCampaigns && myCampaigns.length ? (
           myCampaigns.map(myCampaign => (

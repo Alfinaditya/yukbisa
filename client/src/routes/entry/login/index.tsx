@@ -23,6 +23,7 @@ import {
 import { ErrorText } from '../../../components/ErrorText'
 import Loading from '../../../components/Loading'
 import { googleAuthUrl } from '../../../constant/constants'
+import { Helmet } from 'react-helmet'
 type Inputs = {
   email: string
   password: string
@@ -68,6 +69,11 @@ const Login = () => {
   }
   return (
     <Entry>
+      <Helmet>
+        <title>Login</title>
+        <meta name='description' content='Login sekarang !!!!' />
+        <link rel='canonical' href='https://yukbisa.netlify.app/login' />
+      </Helmet>
       {getAccessToken() && <Redirect to={'/'} />}
       <FormEntry onSubmit={handleSubmit(onSubmit)}>
         <EntryInputContainer>
