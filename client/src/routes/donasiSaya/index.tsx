@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode'
 import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
 import { getAccessToken } from '../../auth/accessToken'
 import Loading from '../../components/Loading'
-
+import { v4 as uuidv4 } from 'uuid'
 import { convertCurrency, convertDate } from '../../helpers/helper'
 import { Mydonations } from '../../ts/donations'
 import { Token } from '../../ts/token'
@@ -35,7 +35,7 @@ const MyDonations = () => {
             myDonation.userDonations.createdAt as any
           )
           return (
-            <Card to={`/campaign/${myDonation.endPoint}`}>
+            <Card key={uuidv4()} to={`/campaign/${myDonation.endPoint}`}>
               <CardImage>
                 <MyDonationsImage
                   src={myDonation.image}

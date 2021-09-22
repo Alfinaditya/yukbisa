@@ -22,7 +22,6 @@ const Home = () => {
     return <Loading />
   }
   const campaigns: Campaigns[] = data.campaigns
-
   return (
     <HomeContainer>
       <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />

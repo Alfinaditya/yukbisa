@@ -31,7 +31,6 @@ const MyCampaigns = () => {
   }
 
   const myCampaigns: Mycampaigns[] = data.myCampaigns
-
   return (
     <MyCampaignsContainer>
       <Cards>
