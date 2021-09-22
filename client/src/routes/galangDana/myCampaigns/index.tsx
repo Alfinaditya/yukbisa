@@ -5,7 +5,7 @@ import { GET_MY_CAMPAIGNS } from '../../../apollo/queries/campaign'
 import { getAccessToken } from '../../../auth/accessToken'
 import { Image } from '../../../components/Image'
 import { Progress } from '../../../components/Progress'
-import { calcProgress, convertCurrency } from '../../../helpers/helper'
+import { calcProgress, convertCurrency, gotoTop } from '../../../helpers/helper'
 import { Mycampaigns } from '../../../ts/campaign'
 import { Token } from '../../../ts/token'
 import { CardDescription, CardText, CurrentAmount } from '../../home/style'
@@ -31,7 +31,7 @@ const MyCampaigns = () => {
   }
 
   const myCampaigns: Mycampaigns[] = data.myCampaigns
-
+  gotoTop()
   return (
     <MyCampaignsContainer>
       <Cards>

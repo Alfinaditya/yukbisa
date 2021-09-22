@@ -57,3 +57,7 @@ export function calcProgress(currentAmount: number, target: number) {
   const progress = Math.ceil((currentAmount / target) * 100)
   return progress
 }
+
+export function gotoTop() {
+  window.scrollTo(0, 0)
+}

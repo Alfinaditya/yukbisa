@@ -38,9 +38,6 @@ export const CardImage = styled.div`
   @media only screen and (max-width: 768px) {
     height: 206.17px;
   }
-  @media only screen and (max-width: 425px) {
-    height: 108px;
-  }
 `
 export const CardTitle = styled(Title)`
   width: 100%;
