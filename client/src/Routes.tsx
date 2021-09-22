@@ -14,10 +14,12 @@ import MyDonations from './routes/donasiSaya'
 import DetailsCampaign from './routes/campaign[slug]'
 import Footer from './parts/footer'
 import { Wrapper } from './style'
+import ScrollToTop from './routes/ScrollToTop'
 
 const Routes = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />

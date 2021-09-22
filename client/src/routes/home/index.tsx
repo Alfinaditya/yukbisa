@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { GET_CAMPAIGNS } from '../../apollo/queries/campaign'
-import { calcProgress, convertCurrency, gotoTop } from '../../helpers/helper'
+import { calcProgress, convertCurrency } from '../../helpers/helper'
 import { Campaigns } from '../../ts/campaign'
 import {
   Card,
@@ -22,7 +22,6 @@ const Home = () => {
     return <Loading />
   }
   const campaigns: Campaigns[] = data.campaigns
-  gotoTop()
   return (
     <HomeContainer>
       <SearchInput placeholder='Coba cari “Bantu saya”' type='search' />
