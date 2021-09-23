@@ -14,6 +14,7 @@ import { TokenRefreshLink } from 'apollo-link-token-refresh'
 import { getAccessToken, setAccessToken } from './auth/accessToken'
 import jwtDecode from 'jwt-decode'
 import { GlobalStyle } from './style'
+import { HelmetProvider } from 'react-helmet-async'
 
 const httpLink = new HttpLink({
   uri: `${process.env.REACT_APP_API_URL}/graphql`,
@@ -106,11 +107,13 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <React.StrictMode>
-      <GlobalStyle />
-      <App />
-    </React.StrictMode>
-  </ApolloProvider>,
+  <HelmetProvider>
+    <ApolloProvider client={client}>
+      <React.StrictMode>
+        <GlobalStyle />
+        <App />
+      </React.StrictMode>
+    </ApolloProvider>
+  </HelmetProvider>,
   document.getElementById('root')
 )

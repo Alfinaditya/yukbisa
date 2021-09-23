@@ -18,7 +18,7 @@ import {
   CardDescription,
   MyDonationsContainer,
 } from './style'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 const MyDonations = () => {
   const token: Token = jwtDecode(getAccessToken())

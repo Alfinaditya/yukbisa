@@ -7,7 +7,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router'
 import Finish from './Finish'
 import Result from './Result'
 import { AddCampaignProvider } from '../../../context/addCampaignContext'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 export type Inputs = {
   beneficiaryName: string

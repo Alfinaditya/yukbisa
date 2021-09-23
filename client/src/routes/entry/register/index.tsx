@@ -21,7 +21,7 @@ import { ErrorText } from '../../../components/ErrorText'
 import { ReactComponent as EntryImage } from '../../../assets/entryImage.svg'
 import { Link } from 'react-router-dom'
 import Loading from '../../../components/Loading'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 type Inputs = {
   email: string

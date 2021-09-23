@@ -23,7 +23,7 @@ import {
 import { ErrorText } from '../../../components/ErrorText'
 import Loading from '../../../components/Loading'
 import { googleAuthUrl } from '../../../constant/constants'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 type Inputs = {
   email: string
   password: string

@@ -17,7 +17,7 @@ import {
   CardImage,
   MyCampaignsContainer,
 } from './style'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 import { v4 as uuidv4 } from 'uuid'
 import Loading from '../../../components/Loading'
