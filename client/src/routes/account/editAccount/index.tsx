@@ -11,7 +11,7 @@ import { ProfileImage } from '../../../components/Image'
 import Loading from '../../../components/Loading'
 import { encodedImage } from '../../../helpers/helper'
 import { Me } from '../../../ts/user'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { InputImage, InputDate } from '../style'
 
 type Inputs = {

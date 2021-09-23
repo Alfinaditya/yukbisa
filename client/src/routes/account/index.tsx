@@ -1,6 +1,6 @@
 import { useMutation, useQuery, gql } from '@apollo/client'
 import { useState, useEffect, FormEvent } from 'react'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { useHistory } from 'react-router'
 import { GET_ME } from '../../apollo/queries/user'
 import { setAccessToken } from '../../auth/accessToken'
@@ -38,6 +38,7 @@ const Account = () => {
       y: window.innerHeight,
     })
   useEffect(() => (window.onresize = updateSize), [])
+
   async function handleLogout(e: FormEvent) {
     e.preventDefault()
     await logout()
@@ -50,8 +51,8 @@ const Account = () => {
   return (
     <Container me={true}>
       <Helmet>
-        <title>{me.name}</title>
-        <meta name='description' content={me.bio} />
+        <title>{'Account'}</title>
+        <meta name='description' content={'Hi saya orang baik!!'} />
         <link rel='canonical' href='https://yukbisa.netlify.app/account' />
       </Helmet>
       <Logout onClick={handleLogout}>

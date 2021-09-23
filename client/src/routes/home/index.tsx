@@ -16,7 +16,7 @@ import {
 import { Image } from '../../components/Image'
 import { Progress } from '../../components/Progress'
 import Loading from '../../components/Loading'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 const Home = () => {
   const { loading, data } = useQuery(GET_CAMPAIGNS)
   if (loading) {

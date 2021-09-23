@@ -18,7 +18,7 @@
     "react": "^17.0.2",
     "react-currency-input-field": "^3.4.3",
     "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^1.1.2",
     "react-hook-form": "^7.14.0",
     "react-phone-input-2": "^2.14.0",
     "react-router-dom": "^5.2.0",
@@ -57,7 +57,6 @@
     ]
   },
   "devDependencies": {
-    "@types/react-helmet": "^6.1.2",
     "@types/react-router-dom": "^5.1.8",
     "@types/uuid": "^8.3.1"
   }

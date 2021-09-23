@@ -14,7 +14,7 @@ import { GET_MY_DONATIONS } from '../../apollo/queries/userDonation'
 import { Form, Label, TextArea } from '../../components/Form'
 import { CancelLink, NextButton } from '../../components/Button'
 import { Currency } from '../galangDana/addCampaign/style'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 const Donation = () => {
   const history = useHistory()
