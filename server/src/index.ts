@@ -22,9 +22,9 @@ dotenv.config()
 async function startApolloServer() {
   const app = express()
   const allowedDomains = [
-    'http://yukbisa.netlify.app',
+    'https://yukbisa.netlify.app',
     'http://localhost:3000',
-    process.env.NODE_ENV ? 'https://studio.apollographql.com' : '',
+    'https://studio.apollographql.com',
   ]
   app.use(
     cors({
