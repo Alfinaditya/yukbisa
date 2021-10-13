@@ -117,7 +117,7 @@ export const FundraiserTitle = styled.h1`
   font-size: 15px;
 `
 export const FundraiserName = styled.p`
-  font-weight: 100;
+  font-weight: 300;
   font-size: 14px;
   margin-left: 10px;
 `
@@ -134,7 +134,7 @@ export const BeneficiaryProfile = styled.h1`
   margin: 20px 0;
 `
 export const BeneficiaryName = styled.p`
-  font-weight: 100;
+  font-weight: 300;
   font-size: 14px;
   margin-left: 10px;
 `
@@ -142,7 +142,7 @@ export const BeneficiaryDescription = styled.p`
   background: #f8f8f8;
 `
 export const PurposeDescription = styled.p`
-  font-weight: 100;
+  font-weight: 300;
   font-size: 12px;
   padding: 10px;
 `
@@ -192,13 +192,13 @@ export const UserDonationAmount = styled.div`
 `
 export const UserDonationDate = styled.p`
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 300;
   color: #a3a2a2;
   margin-bottom: 15px;
 `
 export const UserDonationMessage = styled.p`
   font-size: 14px;
-  font-weight: 100;
+  font-weight: 300;
 `
 export const UserDonationDetails = styled.div`
   margin-left: 30px;
